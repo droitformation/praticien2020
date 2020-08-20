@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Praticien\Api\UserApi;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    protected $user;
+
     public function __construct()
     {
         $this->middleware('auth');
+
+        $api  = new UserApi();
+        $this->user = $api->getUser(15);
     }
 
     /**
@@ -23,6 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home')->with(['user' => $this->user]);
     }
 }

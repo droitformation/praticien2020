@@ -6547,10 +6547,16 @@ label.error{
 }
 
 .sidebar__single p {
-	margin: 0;
-	font-size: 16px;
-	line-height: 28px;
-	color: #686868;
+    margin: 0;
+    font-size: 16px;
+    line-height: 20px;
+    color: #686868;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+}
+
+.sidebar__single p a:hover{
+    color: #000;
 }
 
 .sidebar__cat-list {

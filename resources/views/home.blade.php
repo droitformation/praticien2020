@@ -13,7 +13,11 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <?php
+                        echo '<pre>';
+                        print_r($user);
+                        echo '</pre>';
+                    ?>
                 </div>
             </div>
         </div>
