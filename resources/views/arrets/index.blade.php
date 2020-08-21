@@ -7,7 +7,7 @@
                 <div class="py-5 d-flex flex-row justify-content-between flex-wrap">
                     @if(!$parents->isEmpty())
                         @foreach($parents as $parent)
-                            <a href="{{ secure_url('categorie/'.$parent->slug) }}" class="arret-bloc">{{ $parent->name }}</a>
+                            <a href="{{ secure_url('theme/'.$parent->slug) }}" class="arret-bloc">{{ $parent->name }}</a>
                         @endforeach
                     @endif
                 </div>

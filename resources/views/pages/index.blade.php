@@ -23,7 +23,7 @@
                             <div class="cta-two__box d-flex flex-row align-items-center px-4">
                                 <div class="cta-two__icon m-2"><i class="fas fa-quote-right"></i></div><!-- /.cta-two__icon -->
                                 <div class="text-left m-2 ml-4">
-                                    <a href="{{ secure_url('arret/publication') }}">
+                                    <a href="{{ secure_url('decisions') }}">
                                         <h3 class="mb-0">Autres Arrêts</h3>
                                         <span class="text-white-50">Consulter</span>
                                     </a>

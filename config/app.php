@@ -165,7 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        App\Providers\DecisionServiceProvider::class,
+        App\Providers\CollectionExtensions::class,
         /*
          * Application Service Providers...
          */

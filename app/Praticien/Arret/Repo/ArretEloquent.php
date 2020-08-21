@@ -24,7 +24,7 @@ class ArretEloquent implements ArretInterface{
 
     public function byCategory($slug)
     {
-        return $this->arret->whereHas('categories', function ($query) use ($slug) {
+        return $this->arret->whereHas('themes', function ($query) use ($slug) {
             $query->where('slug', '=', $slug);
         })->paginate(10);
 	}
@@ -54,9 +54,9 @@ class ArretEloquent implements ArretInterface{
             }
         }
 
-        if(isset($data['categories']) && !empty($data['categories'])){
-            foreach ($data['categories'] as $categorie){
-                $arret->categories()->attach($categorie);
+        if(isset($data['themes']) && !empty($data['themes'])){
+            foreach ($data['themes'] as $theme){
+                $arret->themes()->attach($theme);
             }
         }
 

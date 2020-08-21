@@ -16,14 +16,14 @@ class Arret extends Model {
         return $this->getMeta('atf') ?? null;
     }
 
-    public function categories()
+    public function themes()
     {
-        return $this->belongsToMany('\App\Praticien\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categorie_id');
+        return $this->belongsToMany('\App\Praticien\Theme\Entities\Theme', 'arret_themes', 'arret_id', 'theme_id');
     }
 
-    public function subcategories()
+    public function subthemes()
     {
-        return $this->belongsToMany('\App\Praticien\Categorie\Entities\Categorie', 'arret_categories', 'arret_id', 'categorie_id')
-            ->where('categories.parent_id','!=',0);
+        return $this->belongsToMany('\App\Praticien\Theme\Entities\Theme', 'arret_themes', 'arret_id', 'theme_id')
+            ->where('themes.parent_id','!=',0);
     }
 }

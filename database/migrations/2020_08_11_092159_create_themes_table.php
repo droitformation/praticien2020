@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArretCategoriesTable extends Migration
+class CreateThemesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateArretCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('arret_categories', function (Blueprint $table) {
+        Schema::create('themes', function (Blueprint $table) {
             $table->id();
-            $table->integer('arret_id')->unsigned()->index();
-            $table->integer('categorie_id')->unsigned()->index();
+            $table->string('name');
+            $table->string('slug');
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +30,6 @@ class CreateArretCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arret_categories');
+        Schema::dropIfExists('themes');
     }
 }

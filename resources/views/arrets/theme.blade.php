@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-8 py-5">
                         <div class="block-title">
-                            <h3>{{ $categorie->name }}</h3>
+                            <h3>{{ $theme->name }}</h3>
                         </div>
 
                         @if(!$arrets->isEmpty())
@@ -22,18 +22,18 @@
                     </div>
                     <div class="col-lg-4 py-5">
                         <div class="sidebar">
-                            @if(\Request::is('subcategorie/*'))
+                            @if(\Request::is('subtheme/*'))
                             <p class="sidebar_link sidebar_link_main">
-                                <a href="{{ secure_url('categorie/'.$categorie->slug) }}"><i class="fas fa-arrow-alt-circle-left"></i> &nbsp;{{ $categorie->name }}</a>
+                                <a href="{{ secure_url('theme/'.$theme->slug) }}"><i class="fas fa-arrow-alt-circle-left"></i> &nbsp;{{ $theme->name }}</a>
                             </p>
                             @endif
                             <div class="sidebar__single">
-                                <h3 class="sidebar__title">Sous-Catégories</h3>
+                                <h3 class="sidebar__title">Sous-Thème</h3>
                             </div><!-- /.sidebar__single -->
                             <div class="sidebar__single">
-                                @if(!$categorie->subcategory->isEmpty())
-                                    @foreach($categorie->subcategory as $subcategory)
-                                        <p class="sidebar_link"><a href="{{ secure_url('subcategorie/'.$subcategory->slug) }}">{{ $subcategory->name }}</a></p>
+                                @if(!$theme->subthemes->isEmpty())
+                                    @foreach($theme->subthemes as $subtheme)
+                                        <p class="sidebar_link"><a href="{{ secure_url('subtheme/'.$subtheme->slug) }}">{{ $subtheme->name }}</a></p>
                                     @endforeach
                                 @endif
                             </div><!-- /.sidebar__single -->

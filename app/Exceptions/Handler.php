@@ -50,6 +50,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \App\Exceptions\ProblemFetchException){
+
+            \Log::info('Problem with fetching. '.$exception->getMessage());
+            \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\ErrorNotification($exception->getMessage()));
+        }
+
+        if ($exception instanceof \App\Exceptions\TransfertException){
+            return redirect('praticien/archive')->with(['status' => 'warning', 'message' => $exception->getMessage()]);
+        }
+
+        if ($exception instanceof \GuzzleHttp\Exception\ClientException){
+            return response()->json(['status' => 404]);
+        }
+
         return parent::render($request, $exception);
     }
 }

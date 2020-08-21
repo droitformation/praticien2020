@@ -1,4 +1,4 @@
-<?php namespace App\Praticien\Wordpress;
+<?php namespace App\Praticien\WordpressBak;
 
 use Illuminate\Support\Facades\DB;
 

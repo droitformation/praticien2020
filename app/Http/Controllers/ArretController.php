@@ -2,40 +2,40 @@
 
 use Illuminate\Http\Request;
 use App\Praticien\Arret\Repo\ArretInterface;
-use App\Praticien\Categorie\Repo\CategorieInterface;
+use App\Praticien\Theme\Repo\ThemeInterface;
 
 class ArretController extends Controller
 {
     protected $arret;
-    protected $categorie;
+    protected $theme;
 
-    public function __construct(ArretInterface $arret, CategorieInterface $categorie)
+    public function __construct(ArretInterface $arret, ThemeInterface $theme)
     {
         $this->arret = $arret;
-        $this->categorie = $categorie;
+        $this->theme = $theme;
     }
 
     public function index()
     {
-        $parents = $this->categorie->findParent(0);
+        $parents = $this->theme->findParent(0);
 
         return view('arrets.index')->with(['parents' => $parents]);
     }
 
-    public function categorie($slug)
+    public function theme($slug)
     {
-        $categorie = $this->categorie->bySlug($slug);
-        $arrets    = $this->arret->byCategory($slug);
+        $theme  = $this->theme->bySlug($slug);
+        $arrets = $this->arret->byCategory($slug);
 
-        return view('arrets.categorie')->with(['categorie' => $categorie, 'arrets' => $arrets]);
+        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets]);
     }
 
-    public function subcategorie($slug)
+    public function subtheme($slug)
     {
-        $subcategorie = $this->categorie->bySlug($slug);
-        $categorie    =  $subcategorie->parent;
-        $arrets       = $this->arret->byCategory($slug);
+        $subtheme = $this->theme->bySlug($slug);
+        $theme    =  $subtheme->parent;
+        $arrets   = $this->arret->byCategory($slug);
 
-        return view('arrets.categorie')->with(['categorie' => $categorie, 'arrets' => $arrets, 'subcategories' => $subcategorie]);
+        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets, 'subthemes' => $subtheme]);
     }
 }

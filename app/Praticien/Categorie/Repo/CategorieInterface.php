@@ -1,13 +1,14 @@
-<?php namespace App\Praticien\Categorie\Repo;
+<?php namespace  App\Praticien\Categorie\Repo;
 
 interface CategorieInterface {
 
     public function getAll();
-	public function find($data);
-    public function findParent($id);
-	public function create(array $data);
-	public function update(array $data);
-	public function delete($id);
-    public function getTree($rootid);
+    public function getParents();
+    public function getGlobal();
+    public function searchByName($name);
+    public function find($data);
+    public function create(array $data);
+    public function update(array $data);
+    public function delete($id);
 
 }

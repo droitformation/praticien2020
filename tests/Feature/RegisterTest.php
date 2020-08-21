@@ -17,7 +17,7 @@ class RegisterTest extends TestCase
     {
         $response = $this->get('/access');
 
-        $code = factory(\App\Praticien\Code\Entities\Arret::class)->create();
+        $code = factory(\App\Praticien\Code\Entities\Code::class)->create();
 
         $data = [
             'first_name'    => 'Marc',
@@ -45,7 +45,7 @@ class RegisterTest extends TestCase
     }
     public function testRegisterNotValidCode()
     {
-        $code = factory(\App\Praticien\Code\Entities\Arret::class)->create([
+        $code = factory(\App\Praticien\Code\Entities\Code::class)->create([
             'valid_at' => \Carbon\Carbon::yesterday()->toDateString(),
         ]);
 

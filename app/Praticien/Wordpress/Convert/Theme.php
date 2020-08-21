@@ -1,6 +1,6 @@
 <?php namespace App\Praticien\Wordpress\Convert;
 
-class Categorie
+class Theme
 {
     static function convert($data)
     {

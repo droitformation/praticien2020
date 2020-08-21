@@ -1,4 +1,4 @@
-<?php namespace App\Praticien\Wordpress\Entites;
+<?php namespace App\Praticien\Wordpress\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use \Corcel\Model\Post as Corcel;
@@ -6,6 +6,7 @@ use \Corcel\Model\Post as Corcel;
 class Post extends Corcel {
 
     protected $fillable = ['ID'];
+
     public function getContentAttribute()
     {
         return wpautop($this->post_content);

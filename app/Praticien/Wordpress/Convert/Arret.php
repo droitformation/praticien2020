@@ -14,8 +14,8 @@ class Arret
             'guid'         => $data->guid,
             'lang'         => self::getLang($data->post_title),
             'metas'        => self::getMetas($data->meta),
-            'categories'   => $data->taxonomies->where('taxonomy','category')->map(function ($categorie) {
-                return $categorie->term->term_id;
+            'themes'   => $data->taxonomies->where('taxonomy','category')->map(function ($theme) {
+                return $theme->term->term_id;
             }),
         ];
     }

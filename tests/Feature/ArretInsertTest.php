@@ -31,7 +31,7 @@ class ArretInsertTest extends TestCase
                 ['meta_key' => 'auteur', 'meta_value' => 'Cindy Leschaud'],
                 ['meta_key' => 'termes_rechercher', 'meta_value' => '16:Cst.:3,20:LIPAD/GE'],
             ]),
-            'categories'   => collect([25])
+            'themes'   => collect([25])
         ];
 
         $converted = \App\Praticien\Wordpress\Convert\Arret::convert($post);
@@ -62,7 +62,7 @@ class ArretInsertTest extends TestCase
         $this->assertDatabaseHas('meta', ['key' => 'auteur', 'value' => 'Cindy Leschaud','owner_id' => 123]);
         $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '16:Cst.:3,20:LIPAD/GE','owner_id' => 123]);
 
-        $this->assertDatabaseHas('arret_categories', ['categorie_id' => 25,'arret_id' => 123]);
+        $this->assertDatabaseHas('arret_themes', ['theme_id' => 25,'arret_id' => 123]);
     }
 
     public function makeDataWordpressPost()

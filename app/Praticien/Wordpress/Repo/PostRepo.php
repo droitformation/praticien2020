@@ -1,6 +1,6 @@
 <?php namespace App\Praticien\Wordpress\Repo;
 
-use \App\Praticien\Wordpress\Entites\Post as Post;
+use \App\Praticien\Wordpress\Entities\Post as Post;
 
 class PostRepo
 {

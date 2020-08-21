@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerUserService();
         $this->registerCodeService();
         $this->registerArretService();
-        $this->registerCategorieService();
+        $this->registerThemeService();
        // $this->registerCodeWorkerService();
     }
 
@@ -61,12 +61,12 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Categorie
+     * Theme
      */
-    protected function registerCategorieService(){
+    protected function registerThemeService(){
 
-        $this->app->singleton('App\Praticien\Categorie\Repo\CategorieInterface', function() {
-            return new \App\Praticien\Categorie\Repo\CategorieEloquent( new \App\Praticien\Categorie\Entities\Categorie );
+        $this->app->singleton('App\Praticien\Theme\Repo\ThemeInterface', function() {
+            return new \App\Praticien\Theme\Repo\ThemeEloquent( new \App\Praticien\Theme\Entities\Theme );
         });
     }
 

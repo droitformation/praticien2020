@@ -18,9 +18,11 @@ Route::get('about', ['uses' => 'FrontendController@about']);
 Route::get('access', ['uses' => 'FrontendController@access']);
 Route::get('contact', ['uses' => 'FrontendController@contact']);
 
+Route::get('decisions', ['uses' => 'DecisionController@index']);
+
 Route::get('arrets', ['uses' => 'ArretController@index']);
-Route::get('categorie/{id}', ['uses' => 'ArretController@categorie']);
-Route::get('subcategorie/{id}', ['uses' => 'ArretController@subcategorie']);
+Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
+Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
 
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
@@ -33,11 +35,99 @@ Route::get('message', function() {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'backend'], function () {
+
+    Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
+    Route::match(['get', 'post'], 'letter','Praticien\NewsletterController@letter');
+    Route::get('send','Praticien\NewsletterController@send');
+
+    Route::post('date/update','Praticien\DateController@update');
+    Route::post('date/delete','Praticien\DateController@delete');
+
+    Route::post('search','Praticien\SearchController@search');
+
+    Route::get('/','Praticien\ArchiveController@index');
+    Route::get('/archive','Praticien\ArchiveController@archive');
+    Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
+
+    Route::post('transfert','Praticien\ArchiveController@transfert');
+    Route::match(['get', 'post'], 'testing','Praticien\ArchiveController@testing');
+    Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
+
+    Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');
+    Route::post('decision/update','Praticien\DecisionController@update');
+});
+
+Route::group(['prefix' => 'api'], function () {
+    Route::post('/search','Api\MainController@search');
+    Route::get('/categories','Api\MainController@categories');
+    Route::get('/categorie/{id}','Api\MainController@categorie');
+    Route::get('/decisions','Api\MainController@decisions');
+    Route::get('/decision/{id}/{year}','Api\MainController@decision');
+
+    Route::post('/user','Api\UserController@show');
+    Route::post('/abo/make','Api\AboController@make');
+    Route::post('/abo/remove','Api\AboController@remove');
+    Route::post('/abo/cadence','Api\AboController@cadence');
+});
+
+Route::get('alert', function () {
+
+    $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
+    $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
+    $user  = $repo->find(2744);
+
+    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+    $decisions = $repo->search(['terms' => null, 'categorie' => 226, 'published' => 1, 'publication_at' => '2019-05-10']);
+
+    $alert->setCadence('daily')->setDate(weekRange('2019-05-16')->toArray());
+    $abos = $alert->getUserAbos($user);
+
+    return new \App\Mail\AlerteDecision($user, weekRange('2019-05-16')->toArray(), $abos);
+});
+
+Route::get('handlealert', function () {
+
+    $alert = new \App\Jobs\SendEmailAlert(weekRange('2019-05-10')->toArray(), 'weekly');
+    $abos  = $alert->handle();
+
+    foreach ($abos as $abo){
+        echo (new \App\Mail\AlerteDecision($abo['user'], weekRange('2019-05-10')->toArray(), $abo['abos']))->render();
+    }
+    return view('test');
+});
+
+/*
+ * Transfert
+ * */
+
+
+Route::get('posts','TransfertController@posts');
+Route::get('themes','TransfertController@themes');
+
 Route::get('test', function() {
-    //$wordpress = new \App\Praticien\Wordpress\Category();
+
+/*    $abo = \App\Praticien\Abo\Entities\Abo::create([
+        'user_id'      => 1,
+        'categorie_id' => 1,
+        'keywords'     => 'words',
+    ]);*/
+
+
+    $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create([
+        'user_id'      => 1,
+        'categorie_id' => 1,
+        'keywords'     => 'words',
+    ]);
+
+    echo '<pre>';
+    print_r($abo);
+    echo '</pre>';
+    exit;
+    //
+    // $wordpress = new \App\Praticien\Wordpress\Category();
   //  $results = $wordpress->getCategories();
     /* $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
          //->where('parent','=',0)
@@ -45,9 +135,9 @@ Route::get('test', function() {
          ->get();
 
      $results = $categories->map(function ($categorie, $key) {
-         $convert = \App\Praticien\Wordpress\Convert\Categorie::convert($categorie);
+         $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
 
-         $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+         $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
          $repo->create($convert);
      });
      exit;
@@ -68,15 +158,15 @@ Route::get('test', function() {
         ->get();
 
     $results = $categories->map(function ($categorie, $key) {
-        $convert = \App\Praticien\Wordpress\Convert\Categorie::convert($categorie);
+        $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
 
-        $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+        $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
         $repo->create($convert);
     });
 
 
 
-    $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+    $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
     $results = $repo->getTree(0);
 
     echo '<pre>';
@@ -92,9 +182,9 @@ Route::get('test', function() {
         ->get();
 
     $results = $categories->map(function ($categorie, $key) {
-        $convert = \App\Praticien\Wordpress\Convert\Categorie::convert($categorie);
+        $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
 
-        $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+        $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
         $repo->create($convert);
     });*/
 
@@ -108,7 +198,7 @@ Route::get('test', function() {
         $repo->create($arret);
     }*/
 
-    $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+    $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
     $cat = $repo->find(71);
 
     echo '<pre>';

@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CategorieTest extends TestCase
+class ThemeTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -14,9 +14,9 @@ class CategorieTest extends TestCase
      *
      * @return void
      */
-    public function testConvertCategorie()
+    public function testConvertTheme()
     {
-        $taxonomy = $this->makeDataWordpressCategorie();
+        $taxonomy = $this->makeDataWordpressTheme();
 
         $expected = [
             'id'        => 123,
@@ -25,21 +25,21 @@ class CategorieTest extends TestCase
             'parent_id' => 0,
         ];
 
-        $converted = \App\Praticien\Wordpress\Convert\Categorie::convert($taxonomy);
+        $converted = \App\Praticien\Wordpress\Convert\Theme::convert($taxonomy);
 
         $this->assertEquals($expected,$converted);
     }
 
-    public function testInsertCategorie()
+    public function testInsertTheme()
     {
-        $taxonomy = $this->makeDataWordpressCategorie();
+        $taxonomy = $this->makeDataWordpressTheme();
 
-        $converted = \App\Praticien\Wordpress\Convert\Categorie::convert($taxonomy);
+        $converted = \App\Praticien\Wordpress\Convert\Theme::convert($taxonomy);
 
-        $repo = \App::make('App\Praticien\Categorie\Repo\CategorieInterface');
+        $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
         $repo->create($converted);
 
-        $this->assertDatabaseHas('categories', [
+        $this->assertDatabaseHas('themes', [
             'id'        => 123,
             'name'      => 'Général',
             'slug'      => 'general',
@@ -47,7 +47,7 @@ class CategorieTest extends TestCase
         ]);
     }
 
-    public function makeDataWordpressCategorie(){
+    public function makeDataWordpressTheme(){
         $taxonomy = new \stdClass();
         $taxonomy->term_id = 123;
         $taxonomy->parent = 0;

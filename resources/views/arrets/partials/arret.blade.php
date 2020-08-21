@@ -1,8 +1,8 @@
 <div class="blog-one__content">
     <ul class="blog-one__meta list-unstyled">
-        @if(!$arret->subcategories->isEmpty())
-            @foreach($arret->subcategories as $subcat)
-                <li><a href="{{ secure_url('categorie/'.$subcat->id) }}">{{ $subcat->name }}</a></li>
+        @if(!$arret->subthemes->isEmpty())
+            @foreach($arret->subthemes as $subtheme)
+                <li><a href="{{ secure_url('theme/'.$subtheme->id) }}">{{ $subtheme->name }}</a></li>
             @endforeach
         @endif
     </ul>

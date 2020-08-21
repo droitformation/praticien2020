@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->string('npa');
             $table->string('ville');
 
+            $table->string('cadence')->nullable();
+            $table->dateTime('active_until')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

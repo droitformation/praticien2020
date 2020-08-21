@@ -1,91 +1,104 @@
-<?php namespace App\Praticien\Categorie\Repo;
+<?php namespace  App\Praticien\Categorie\Repo;
 
-use App\Praticien\Categorie\Repo\CategorieInterface;
-use App\Praticien\Categorie\Entities\categorie as M;
+use  App\Praticien\Categorie\Repo\CategorieInterface;
+use  App\Praticien\Categorie\Entities\Categorie as M;
+use  App\Praticien\Categorie\Entities\Parent_categorie as P;
 
 class CategorieEloquent implements CategorieInterface{
 
-	protected $categorie;
+    protected $categorie;
+    protected $parent;
 
-	public function __construct(M $categorie)
-	{
-		$this->categorie = $categorie;
-	}
-
-    public function getAll(){
-
-        return $this->categorie->get();
+    public function __construct(M $categorie, P $parent)
+    {
+        $this->categorie = $categorie;
+        $this->parent    = $parent;
     }
 
-	public function find($id)
+    public function getAll()
     {
-		return $this->categorie->with(['arrets','subcategory'])->find($id);
-	}
-
-    public function findParent($id)
-    {
-        return $this->categorie->where('parent_id','=',$id)->get();
+        return $this->categorie->with(['parent'])->get();
     }
 
-    public function bySlug($slug)
+    public function getGlobal()
     {
-        return $this->categorie->where('slug','=',$slug)->first();
+        return $this->categorie->whereNotNull('global')->orderBy('name')->get();
     }
 
-	public function create(array $data){
-
-		$categorie = $this->categorie->create(array(
-            'id'           => $data['id'],
-            'name'         => $data['name'],
-            'slug'         => $data['slug'],
-            'parent_id'    => isset($data['parent_id']) && $data['parent_id'] > 0 ? $data['parent_id'] : 0,
-            'created_at'   => date('Y-m-d G:i:s'),
-            'updated_at'   => date('Y-m-d G:i:s')
-		));
-
-		if( ! $categorie ) {
-			return false;
-		}
-
-		return $categorie;
-	}
-
-	public function update(array $data)
+    public function getParents()
     {
-        $categorie = $this->categorie->find($data['id']);
+        return $this->parent->with(['categories'])->orderBy('nom')->get();
+    }
 
-		if( ! $categorie ){
-			return false;
-		}
-
-        $categorie->fill($data);
-        $categorie->updated_at = date('Y-m-d G:i:s');
-		$categorie->save();
-
-		return $categorie;
-	}
-
-	public function delete($id)
+    public function searchByName($name, $connection = 'mysql')
     {
-        $categorie = $this->categorie->find($id);
+        $model = $this->categorie->setConnection($connection);
 
-		return $categorie->delete($id);
-	}
+        // if we have a variant like "(general)" or "(en general)" test it
+        $find = ' (en ';
+        $pos  = strpos($name, $find);
 
-    public function getTree($rootid)
-    {
-        $arr = [];
+        // Select categorie where the string provided sounds the same
+        $query = 'soundex(name)=soundex("'.$name.'")';
 
-        $result = $this->findParent($rootid);
-
-        foreach ($result as $row) {
-            $arr[] = array(
-                "id"       => $row->id,
-                "name"     => $row->name,
-                "children" => $this->getTree($row->id)
-            );
+        if($pos)
+        {
+            $without = str_replace($find, ' (', $name);
+            $query   .= ' OR soundex(name)=soundex("'.$without.'")';
         }
 
-        return $arr;
+        $query .= ' OR soundex(name_de)=soundex("'.$name.'") OR soundex(name_it)=soundex("'.$name.'")';
+
+        $categorie = $model->whereRaw($query)->get();
+
+        return !$categorie->isEmpty() ? $categorie->first() : null;
     }
+
+    public function find($id){
+
+        return $this->categorie->with(['arrets'])->findOrFail($id);
+    }
+
+    public function create(array $data){
+
+        $categorie = $this->categorie->create(array(
+            'name'      => $data['name'],
+            'name_de'   => $data['name_de'],
+            'name_it'   => $data['name_it'],
+            'parent_id' => isset($data['parent_id']) ? $data['parent_id'] : 0,
+            'rang'      => isset($data['rang']) ? $data['rang'] : 0,
+            'general'   => isset($data['general']) ? $data['general'] : '',
+        ));
+
+        if( ! $categorie )
+        {
+            return false;
+        }
+
+        return $categorie;
+
+    }
+
+    public function update(array $data){
+
+        $categorie = $this->categorie->findOrFail($data['id']);
+
+        if( ! $categorie )
+        {
+            return false;
+        }
+
+        $categorie->fill($data);
+        $categorie->save();
+
+        return $categorie;
+    }
+
+    public function delete($id){
+
+        $categorie = $this->categorie->find($id);
+
+        return $categorie->delete();
+    }
+
 }

@@ -1,27 +1,16 @@
 <?php namespace App\Praticien\Categorie\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Categorie extends Model {
 
-    use SoftDeletes;
+    protected $table    = 'categories';
+	protected $fillable = ['name','name_de','name_it','parent_id','rang','general'];
 
-    protected $table = 'categories';
+    public $timestamps  = false;
 
-    protected $fillable = ['id','name','slug','parent_id'];
-    protected $dates    = ['deleted_at'];
-
-    public function subcategory(){
-        return $this->hasMany('\App\Praticien\Categorie\Entities\Categorie', 'parent_id');
-    }
-
-    public function arrets()
+    public function parent()
     {
-        return $this->belongsToMany('\App\Praticien\Arret\Entities\Arret', 'arret_categories', 'categorie_id', 'arret_id');
-    }
-
-    public function parent(){
-        return $this->hasOne('\App\Praticien\Categorie\Entities\Categorie', 'id','parent_id');
+        return $this->belongsTo('App\Praticien\Categorie\Entities\Parent_categorie');
     }
 }
