@@ -56,10 +56,7 @@
 
         dynamicCurrentMenuClass(mainNavUL);
         dynamicCurrentMenuClass(mobileNavUL);
-
-
     }
-
 
     if ($('.mc-form').length) {
         var mcURL = $('.mc-form').data('url');
@@ -90,16 +87,13 @@
                 }
             }
         });
-
     }
-
-
-
 
     if ($('.datepicker').length) {
         $('.datepicker').datepicker();
     }
 
+    $('#decisions').DataTable();
 
     if ($('.plan-visit__tab-links').length) {
         var planVisitLink = $('.plan-visit__tab-links').find('.nav-link');
