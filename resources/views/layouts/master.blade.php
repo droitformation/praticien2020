@@ -28,7 +28,8 @@
     <link rel="stylesheet" href="{{ secure_asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/hover-min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/muzex-icons.css') }}">
-{{--    <link rel="stylesheet" href="{{ secure_asset('css/datatables.css') }}">--}}
+    <link rel="stylesheet" href="{{ secure_asset('css/datatables.css') }}">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}">

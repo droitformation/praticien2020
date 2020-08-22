@@ -36,7 +36,8 @@ class DecisionEloquent implements DecisionInterface{
             ->select($name.'.id',$name.'.numero',$name.'.categorie_id',$name.'.remarque',$name.'.publication_at',$name.'.decision_at',$name.'.langue',$name.'.publish')
             //->selectRaw($cast)
             ->orderBy('publication_at','DESC')
-            ->take(20)->get();
+            ->whereBetween('publication_at', [\Carbon\Carbon::today()->subWeek()->startOfDay(), \Carbon\Carbon::today()->startOfDay()])
+            ->get();
     }
 
     public function getest($categorie_id)

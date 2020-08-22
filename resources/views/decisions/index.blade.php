@@ -4,7 +4,7 @@
     <section class="event-one">
         <div class="container">
             <div class="block-title-two text-center">
-                <h3>Décisions</h3>
+                <h3>Décisions du </h3>
             </div><!-- /.block-title-two -->
             <div class="row">
                 <div class="col-lg-12">
@@ -19,7 +19,7 @@
                                 <th>Référence</th>
                                 <th>Catégorie</th>
                                 <th>Lang.</th>
-                                <th>A publication</th>
+                                <th width="60px">A publ.</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>{{ $decision->publication_at->format('d/m/Y') }}</td>
                                     <td>{{ $decision->decision_at->format('d/m/Y') }}</td>
-                                    <td>{{ $decision->numero }}</td>
+                                    <td class="font-weight-bold">{{ $decision->numero }}</td>
                                     <td>
                                         {{ $decision->categorie->name }}<br>
                                         {{ $decision->remarque }}

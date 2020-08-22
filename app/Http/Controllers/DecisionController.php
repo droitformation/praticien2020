@@ -11,7 +11,7 @@ class DecisionController extends Controller
 
     public function __construct(DecisionInterface $decision, CategorieInterface $categorie)
     {
-        $this->decision = $decision;
+        $this->decision  = $decision;
         $this->categorie = $categorie;
     }
 

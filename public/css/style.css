@@ -3036,7 +3036,7 @@ a:focus {
 			rgba(245, 247, 250, 0.8) 100%);
 }
 
-.event-one::before {
+/*.event-one::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -3048,7 +3048,7 @@ a:focus {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: url(../images/event-bg-1-1.jpg);
-}
+}*/
 
 .event-one__moc {
 	position: absolute;
@@ -3068,7 +3068,7 @@ a:focus {
 }
 
 .event-one .container .row>[class*="col-"]+[class*="col-"] {
-	margin-top: 30px;
+
 }
 
 .event-one__single {
