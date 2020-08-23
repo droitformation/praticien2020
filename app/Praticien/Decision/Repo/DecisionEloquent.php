@@ -27,16 +27,23 @@ class DecisionEloquent implements DecisionInterface{
         return $this;
     }
 
+    public function count(){
+        return $this->decision->count();
+    }
+
     public function getAll()
     {
         $name = 'decisions';
         $cast = 'Year(publication_at) as year';
 
+        $start = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->startOfWeek()->startOfDay() : \Carbon\Carbon::today()->subWeek()->startOfDay();
+        $end   = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->endOfWeek()->startOfDay() : \Carbon\Carbon::today()->startOfDay();
+
         return $this->decision
             ->select($name.'.id',$name.'.numero',$name.'.categorie_id',$name.'.remarque',$name.'.publication_at',$name.'.decision_at',$name.'.langue',$name.'.publish')
             //->selectRaw($cast)
             ->orderBy('publication_at','DESC')
-            ->whereBetween('publication_at', [\Carbon\Carbon::today()->subWeek()->startOfDay(), \Carbon\Carbon::today()->startOfDay()])
+            ->whereBetween('publication_at', [$start, $end])
             ->get();
     }
 

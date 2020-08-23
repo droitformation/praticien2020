@@ -22,21 +22,7 @@
                                 <th width="60px">A publ.</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($decisions as $decision)
-                                <tr>
-                                    <td>{{ $decision->publication_at->format('d/m/Y') }}</td>
-                                    <td>{{ $decision->decision_at->format('d/m/Y') }}</td>
-                                    <td class="font-weight-bold">{{ $decision->numero }}</td>
-                                    <td>
-                                        {{ $decision->categorie->name }}<br>
-                                        {{ $decision->remarque }}
-                                    </td>
-                                    <td>{{ $decision->lang }}</td>
-                                    <td>{!! $decision->publish ? '<i class="fas fa-check"></i>' : '' !!}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
+                            <tbody></tbody>
                         </table>
 
                     @endif

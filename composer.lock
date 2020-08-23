@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d63b2c50077eb90f0d94cab50fad639",
+    "content-hash": "6047a171b8aa3153bf85555051123b0c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1617,16 +1617,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e"
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
-                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9be3b16c877d477357c015cec057548cf9b2a14a",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a",
                 "shasum": ""
             },
             "require": {
@@ -1704,7 +1704,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2020-08-18T10:57:55+00:00"
+            "time": "2020-08-23T07:39:11+00:00"
         },
         {
             "name": "league/glide",
@@ -3794,16 +3794,16 @@
         },
         {
             "name": "spatie/laravel-tags",
-            "version": "2.6.2",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-tags.git",
-                "reference": "94193bf61a6263a7b4f38ac4f5c2470728f3b334"
+                "reference": "a4300342b5eea9da84348c5167ceb3b755b24666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/94193bf61a6263a7b4f38ac4f5c2470728f3b334",
-                "reference": "94193bf61a6263a7b4f38ac4f5c2470728f3b334",
+                "url": "https://api.github.com/repos/spatie/laravel-tags/zipball/a4300342b5eea9da84348c5167ceb3b755b24666",
+                "reference": "a4300342b5eea9da84348c5167ceb3b755b24666",
                 "shasum": ""
             },
             "require": {
@@ -3849,11 +3849,11 @@
             ],
             "funding": [
                 {
-                    "url": "https://www.patreon.com/spatie",
-                    "type": "patreon"
+                    "url": "https://github.com/spatie",
+                    "type": "github"
                 }
             ],
-            "time": "2020-05-28T08:29:51+00:00"
+            "time": "2020-08-22T09:03:17+00:00"
         },
         {
             "name": "spatie/laravel-translatable",

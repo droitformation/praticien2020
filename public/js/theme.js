@@ -93,7 +93,27 @@
         $('.datepicker').datepicker();
     }
 
+    let base_url = location.protocol + "//" + location.host+"/";
+
     $('#decisions').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url":  base_url + 'api/decisions',
+            "type": "POST",
+            "data": function ( d ) {
+                d._token = $("meta[name='_token']").attr('content')
+            }
+        },
+        select: true,
+        "columns": [
+            { "data": "publication_at" },
+            { "data": "decision_at" },
+            { "data": "numero" },
+            { "data": "categorie" },
+            { "data": "lang" },
+            { "data": "publish" }
+        ],
         language: {
             processing:     "Traitement en cours...",
             search:         "Rechercher&nbsp;:",
@@ -126,7 +146,6 @@
             $('html, body').animate({
                 scrollTop: $(target).offset().top - 50
             }, 1000);
-
 
             planVisitLink.removeClass('active');
             $(this).addClass('active');

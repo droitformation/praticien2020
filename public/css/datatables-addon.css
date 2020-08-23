@@ -1,0 +1,137 @@
+/*
+ * This combined file was created by the DataTables downloader builder:
+ *   https://datatables.net/download
+ *
+ * To rebuild or modify this file with the latest versions of the included
+ * software please visit:
+ *   https://datatables.net/download/#bs/dt-1.10.21
+ *
+ * Included libraries:
+ *   DataTables 1.10.21
+ */
+
+#decisions_wrapper .row{
+    width: 100%;
+}
+
+div#decisions_length,
+div#decisions_filter{
+    margin-bottom: 20px !important;
+    background: #fff;
+    padding:15px 10px;
+    border: 1px solid #f1f1f1;
+}
+
+table.dataTable{
+    background: #fff;
+    padding:0 0 15px 0;
+    border: 1px solid #f1f1f1;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    justify-content: start;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    justify-content: end;
+}
+
+table.dataTable th,
+table.dataTable td{
+    padding:5px 15px;
+    color: #555555;
+}
+
+table.dataTable th{
+    padding:10px 15px 10px 15px;
+    background: #f1f1f1;
+}
+
+table.dataTable td{
+    padding:7px 15px;
+    color: #555555;
+}
+
+/*table.dataTable th:first-child,
+table.dataTable td:first-child{
+   padding-left: 0;
+}
+
+table.dataTable th:last-child,
+table.dataTable td:last-child{
+    padding-right: 0;
+}*/
+
+li.paginate_button{
+    padding: 5px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+li.paginate_button a{
+    ccolor: var(--thm-black);
+    font-size: 18px;
+    font-weight: 700;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    padding-left: 13.5px;
+    padding-right: 13.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+li.paginate_button.previous a,
+li.paginate_button.next a,
+li.paginate_button:not(.active) a{
+    color: var(--thm-black);
+    font-size: 18px;
+    font-weight: 700;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e3e9ec;
+    padding-left: 13.5px;
+    padding-right: 13.5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+li.paginate_button.previous.disabled a,
+li.paginate_button.next.disabled a{
+    color: #e3e9ec;
+}
+
+/*
+li.paginate_button.previous a,
+li.paginate_button.next a{
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: var(--thm-base);
+    padding: 2px 10px;
+    border-radius: 3px;
+    text-align: center;
+}
+*/
+
+table.dataTable td{
+    vertical-align: top !important;
+    line-height: 22px;
+}
+
+#decisions_length label select{
+    margin:0 5px;
+}
