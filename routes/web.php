@@ -17,14 +17,17 @@ Route::get('/', ['uses' => 'FrontendController@index']);
 Route::get('about', ['uses' => 'FrontendController@about']);
 Route::get('access', ['uses' => 'FrontendController@access']);
 Route::get('contact', ['uses' => 'FrontendController@contact']);
-
-Route::get('decisions', ['uses' => 'DecisionController@index']);
-
-Route::get('arrets', ['uses' => 'ArretController@index']);
-Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
-Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
-
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('decisions', ['uses' => 'DecisionController@index']);
+
+    Route::get('arrets', ['uses' => 'ArretController@index']);
+    Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
+    Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
+});
+
 
 Route::get('message', function() {
     return new \App\Mail\ContactMessage([
@@ -35,6 +38,7 @@ Route::get('message', function() {
 });
 
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'backend'], function () {
@@ -106,8 +110,27 @@ Route::get('handlealert', function () {
 
 Route::get('posts','TransfertController@posts');
 Route::get('themes','TransfertController@themes');
+Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
+
+/*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
+
+    echo '<pre>';
+    print_r($metas->pluck('meta_key')->unique());
+    echo '</pre>';
+    exit;*/
+
+    $users = \App\Praticien\Wordpress\Entities\User::all();
+
+    foreach ($users as $user){
+        $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
+        echo '<pre>';
+        print_r($converted);
+        echo '</pre>';
+    }
+
+    exit;
 
 /*    $abo = \App\Praticien\Abo\Entities\Abo::create([
         'user_id'      => 1,

@@ -46,5 +46,24 @@ class TransfertController extends Controller
     }
 
     // User + metas + abo => User + abo
+    public function users()
+    {
+        $users = \App\Praticien\Wordpress\Entities\User::all();
+
+        $results = $users->map(function ($user, $key) {
+            $convert = \App\Praticien\Wordpress\Convert\User::convert($user);
+            return $convert;
+           // $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
+            //$repo->create($convert);
+        })->reject(function ($user) {
+            return count(array_filter($user)) == 3;
+        });
+
+        echo '<pre>';
+        print_r($results);
+        echo '</pre>';
+        exit;
+
+    }
 
 }

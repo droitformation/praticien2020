@@ -15,6 +15,11 @@ class UserApi
         $this->base_url = (\App::environment() == 'local' ? 'https://apitf.test/api' : 'http://hub.droitpraticien.ch/api');
     }
 
+    public function getUsers()
+    {
+        return $this->getData('users');
+    }
+
     public function getUser($id)
     {
         return $this->getData('user', ['id' => $id]);

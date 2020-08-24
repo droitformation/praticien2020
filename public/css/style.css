@@ -119,6 +119,17 @@ a:focus {
 	color: var(--thm-black);
 }
 
+.main-nav-one .main-nav__right a.thm-btn.login-btn{
+    padding: 5px 20px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.logout{
+    padding: 5px;
+    background: #f2f2f2;
+}
+
 /* Cursor*/
 
 .cursor {
@@ -942,6 +953,16 @@ a:focus {
 
 	visibility: hidden;
 	opacity: 0;
+}
+
+.main-nav__main-navigation .main-nav__navigation-box > li > ul.right {
+    top: 100%;
+    right: 0;
+    left: initial;
+    -webkit-transform: perspective(300px) scaleY(0) translateZ(30px);
+    transform: perspective(300px) scaleY(0) translateZ(30px);
+    visibility: hidden;
+    opacity: 0;
 }
 
 .main-nav__main-navigation .main-nav__navigation-box>li:hover>ul {

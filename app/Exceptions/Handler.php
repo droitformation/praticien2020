@@ -51,7 +51,6 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof \App\Exceptions\ProblemFetchException){
-
             \Log::info('Problem with fetching. '.$exception->getMessage());
             \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\ErrorNotification($exception->getMessage()));
         }
