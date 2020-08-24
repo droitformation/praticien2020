@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name', 'email', 'password', 'adresse','npa','ville','cadence','active_until'
+        'id','first_name','last_name', 'email', 'password', 'adresse','npa','ville','cadence','active_until'
     ];
 
     /**
@@ -72,6 +72,6 @@ class User extends Authenticatable
 
     public function published()
     {
-        return $this->hasMany('App\Praticien\Abo\Entities\Abo_publish');
+        return $this->hasMany('App\Praticien\Abo\Entities\Abo_keyword');
     }
 }

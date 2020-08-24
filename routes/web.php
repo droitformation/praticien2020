@@ -121,8 +121,18 @@ Route::get('test', function() {
     echo '</pre>';
     exit;*/
 
-    $users = \App\Praticien\Wordpress\Entities\User::all();
+/*  */
+
+    $user = \App\Praticien\Wordpress\Entities\User::find(15);
+    $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
+
+    echo '<pre>';
+    print_r($converted);
+    echo '</pre>';
+    exit;
+
     foreach ($users as $user){
+
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
         echo '<pre>';
         print_r($converted);
@@ -133,18 +143,31 @@ Route::get('test', function() {
 
     $user = \App\Praticien\Wordpress\Entities\User::find(15);
 
-    $results = $user->abos->mapToGroups(function ($abo, $key) use ($user) {
+    $results = $user->abos->map(function ($abo, $key) {
+            return $abo->refCategorie;
+        })->unique()->map(function ($categorie, $key) use ($user) {
+            $words = $user->abos->where('refCategorie', $categorie);
+
+            return [
+                'categorie_id' => $categorie,
+                'keywords'     => $words->pluck('keywords')->unique()->toArray(),
+                'isPub'        => !$user->published->where('refCategorie', $categorie)->pluck('ispub')->unique()->isEmpty()
+            ];
+        })
+        /* ->mapToGroups(function ($abo, $key) use ($user) {
         return [
             $abo->refCategorie => array_filter([
-                'keywords' => $abo->keywords,
+                'keywords' => $user->abos->where('refCategorie', $abo->refCategorie),
                 'isPub'    => $user->published->contains('refCategorie', $abo->refCategorie)
             ])
         ];
-    })->map(function ($keywords, $categorie_id) {
+    })
+   ->map(function ($keywords, $categorie_id) {
         return $keywords->reject(function ($keyword) {
             return empty(array_filter($keyword));
         })->toArray();
-    })->toArray();
+    })*/
+        ->toArray();
 
     echo '<pre>';
     print_r($results);

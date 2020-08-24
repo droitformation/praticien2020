@@ -2,7 +2,7 @@
 
 use  App\Praticien\Abo\Repo\AboInterface;
 use  App\Praticien\Abo\Entities\Abo as M;
-use  App\Praticien\Abo\Entities\Abo_publish as P;
+use  App\Praticien\Abo\Entities\Abo_keyword as P;
 
 class AboEloquent implements AboInterface{
 

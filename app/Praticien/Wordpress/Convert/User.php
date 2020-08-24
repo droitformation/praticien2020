@@ -6,7 +6,7 @@ class User
     {
         $metas = self::getMetas($data->meta);
 
-        return [
+        return array_filter([
             'id'           => $data->ID,
             'first_name'   => $metas['first_name'] ?? $data->user_nicename,
             'last_name'    => $metas['last_name'] ?? '',
@@ -18,7 +18,7 @@ class User
             'cadence'      => $metas['rythme_abo'] ?? null,
             'active_until' => $metas['date_abo_active'] ?? $metas['valid_date'] ?? null,
             'abos'         => Self::getAbos($data->abos,$data)
-        ];
+        ]);
     }
 
     static function getMetas($metas){
@@ -31,17 +31,16 @@ class User
     }
 
     static function getAbos($abos,$user){
-        return $abos->mapToGroups(function ($abo, $key) use ($user) {
-            return [
-                $abo->refCategorie => array_filter([
-                    'keywords' => $abo->keywords,
-                    'isPub'    => $user->published->contains('refCategorie', $abo->refCategorie)
-                ])
-            ];
-        })->map(function ($keywords, $categorie_id) {
-            return $keywords->reject(function ($keyword) {
-                return empty(array_filter($keyword));
-            })->toArray();
+        return $abos->map(function ($abo, $key) {
+            return $abo->refCategorie;
+        })->unique()->map(function ($categorie, $key) use ($user) {
+            $words = $user->abos->where('refCategorie', $categorie);
+
+            return array_filter([
+                'categorie_id' => $categorie,
+                'keywords'     => array_filter($words->pluck('keywords')->unique()->toArray()),
+                'isPub'        => !$user->published->where('refCategorie', $categorie)->pluck('ispub')->unique()->isEmpty()
+            ]);
         })->toArray();
     }
 }

@@ -67,7 +67,7 @@ class DecisionServiceProvider extends ServiceProvider
         {
             return new \App\Praticien\Abo\Repo\AboEloquent(
                 new \App\Praticien\Abo\Entities\Abo(),
-                new \App\Praticien\Abo\Entities\Abo_publish()
+                new \App\Praticien\Abo\Entities\Abo_keyword()
             );
         });
     }

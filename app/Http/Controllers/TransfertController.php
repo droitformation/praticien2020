@@ -59,10 +59,12 @@ class TransfertController extends Controller
         })->map(function ($user, $key) {
             // $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
             //$repo->create($convert);
+
+            return $user;
         });
 
         echo '<pre>';
-        print_r($results->count());
+        print_r($results);
         echo '</pre>';
         exit;
 

@@ -17,7 +17,6 @@ class CreateAbosTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('categorie_id');
-            $table->text('keywords')->nullable();
         });
     }
 

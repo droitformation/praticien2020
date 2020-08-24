@@ -62,24 +62,31 @@ class UserEloquent implements UserInterface{
     public function convert(array $data){
 
         $user = $this->user->create(array(
-            'first_name' => $data['first_name'],
-            'last_name'  => $data['last_name'],
-            'adresse'    => $data['adresse'],
-            'npa'        => $data['npa'],
-            'ville'      => $data['ville'],
-            'email'      => $data['email'],
-            'password'   => $data['password'],
-            'created_at' => date('Y-m-d G:i:s'),
-            'updated_at' => date('Y-m-d G:i:s')
+            'id'           => $data['id'],
+            'first_name'   => $data['first_name'] ?? null,
+            'last_name'    => $data['last_name'] ?? null,
+            'adresse'      => $data['adresse'] ?? null,
+            'npa'          => $data['npa'] ?? null,
+            'ville'        => $data['ville'] ?? null,
+            'cadence'      => $data['cadence'] ?? null,
+            'email'        => $data['email'],
+            'password'     => $data['password'],
+            'active_until' =>  $data['active_until'] ?? null,
+            'created_at'   => date('Y-m-d G:i:s'),
+            'updated_at'   => date('Y-m-d G:i:s')
         ));
 
         if( ! $user ) {
             return false;
         }
 
-        if(isset($data['abos'])){
+   /*     if(isset($data['abos'])){
+            foreach ($data['abos'] as $categorie_id => $keyword){
+                if(!empty($keyword)){
 
-        }
+                }
+            }
+        }*/
 
         return $user;
     }

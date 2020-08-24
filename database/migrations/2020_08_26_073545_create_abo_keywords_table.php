@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAboPublishTable extends Migration
+class CreateAboKeywordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAboPublishTable extends Migration
      */
     public function up()
     {
-        Schema::create('abo_publish', function (Blueprint $table) {
+        Schema::create('abo_keywords', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('categorie_id');
+            $table->integer('abo_id');
+            $table->text('keywords');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateAboPublishTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('abo_publish');
+        Schema::dropIfExists('abo_keywords');
     }
 }
