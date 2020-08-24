@@ -8,4 +8,5 @@ class UserAbo extends Model
     protected $connection = 'wordpress';
     protected $fillable = ['id_abo','refUser','refCategorie','keywords'];
 
+
 }

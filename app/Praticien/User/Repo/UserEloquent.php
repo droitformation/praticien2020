@@ -59,6 +59,32 @@ class UserEloquent implements UserInterface{
 
     }
 
+    public function convert(array $data){
+
+        $user = $this->user->create(array(
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'adresse'    => $data['adresse'],
+            'npa'        => $data['npa'],
+            'ville'      => $data['ville'],
+            'email'      => $data['email'],
+            'password'   => $data['password'],
+            'created_at' => date('Y-m-d G:i:s'),
+            'updated_at' => date('Y-m-d G:i:s')
+        ));
+
+        if( ! $user ) {
+            return false;
+        }
+
+        if(isset($data['abos'])){
+
+        }
+
+        return $user;
+    }
+
+
     public function update(array $data){
 
         $user = $this->user->findOrFail($data['id']);

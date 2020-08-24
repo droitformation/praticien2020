@@ -122,7 +122,6 @@ Route::get('test', function() {
     exit;*/
 
     $users = \App\Praticien\Wordpress\Entities\User::all();
-
     foreach ($users as $user){
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
         echo '<pre>';
@@ -132,11 +131,36 @@ Route::get('test', function() {
 
     exit;
 
-/*    $abo = \App\Praticien\Abo\Entities\Abo::create([
-        'user_id'      => 1,
-        'categorie_id' => 1,
-        'keywords'     => 'words',
-    ]);*/
+    $user = \App\Praticien\Wordpress\Entities\User::find(15);
+
+    $results = $user->abos->mapToGroups(function ($abo, $key) use ($user) {
+        return [
+            $abo->refCategorie => array_filter([
+                'keywords' => $abo->keywords,
+                'isPub'    => $user->published->contains('refCategorie', $abo->refCategorie)
+            ])
+        ];
+    })->map(function ($keywords, $categorie_id) {
+        return $keywords->reject(function ($keyword) {
+            return empty(array_filter($keyword));
+        })->toArray();
+    })->toArray();
+
+    echo '<pre>';
+    print_r($results);
+    print_r($user->abos->toArray());
+    print_r($user->published->toArray());
+    echo '</pre>';
+    exit;
+
+    /*
+
+
+    /*    $abo = \App\Praticien\Abo\Entities\Abo::create([
+            'user_id'      => 1,
+            'categorie_id' => 1,
+            'keywords'     => 'words',
+        ]);*/
 
 
     $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create([

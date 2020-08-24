@@ -17,6 +17,7 @@ class User
             'ville'        => $metas['ville'] ?? $metas['ville_prof'] ?? '',
             'cadence'      => $metas['rythme_abo'] ?? null,
             'active_until' => $metas['date_abo_active'] ?? $metas['valid_date'] ?? null,
+            'abos'         => Self::getAbos($data->abos,$data)
         ];
     }
 
@@ -26,6 +27,21 @@ class User
                 'ville','profession','adresse_professionnelle','npa_prof','ville_prof','tel_prof','date_abo_active','valid_date','user_meta_user_status']);
         })->mapWithKeys(function ($meta, $key) {
             return [$meta->meta_key => $meta->meta_value];
+        })->toArray();
+    }
+
+    static function getAbos($abos,$user){
+        return $abos->mapToGroups(function ($abo, $key) use ($user) {
+            return [
+                $abo->refCategorie => array_filter([
+                    'keywords' => $abo->keywords,
+                    'isPub'    => $user->published->contains('refCategorie', $abo->refCategorie)
+                ])
+            ];
+        })->map(function ($keywords, $categorie_id) {
+            return $keywords->reject(function ($keyword) {
+                return empty(array_filter($keyword));
+            })->toArray();
         })->toArray();
     }
 }

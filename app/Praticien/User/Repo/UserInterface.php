@@ -6,6 +6,7 @@ interface UserInterface {
     public function find($data);
     public function findByEmail($email);
     public function getByCadence($cadence, $exclude = []);
+    public function convert(array $data);
     public function create(array $data);
     public function update(array $data);
     public function delete($id);
