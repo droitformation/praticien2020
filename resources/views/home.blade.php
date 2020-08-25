@@ -44,12 +44,23 @@
                 <div class="card">
                     <div class="card-body">
 
+                        @if(!$parents->isEmpty())
+                            @foreach($parents as $parent)
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p>{{ $parent->nom }}</p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if(!$parent->categories->isEmpty())
+                                            @foreach($parent->categories as $categorie)
+                                                <p>{{ $categorie->name }}</p>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
 
-                    <?php
-                            echo '<pre>';
-                            print_r($user->abos->toArray());
-                            echo '</pre>';
-                        ?>
                     </div>
                 </div>
             </div>
