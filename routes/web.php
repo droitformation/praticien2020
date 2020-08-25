@@ -64,16 +64,18 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 });
 
 Route::group(['prefix' => 'api'], function () {
-    Route::post('/search','Api\MainController@search');
+
+    Route::post('/decisions','Api\DecisionController@index');
+
+/*    Route::post('/search','Api\MainController@search');
     Route::get('/categories','Api\MainController@categories');
     Route::get('/categorie/{id}','Api\MainController@categorie');
-    Route::get('/decisions','Api\MainController@decisions');
     Route::get('/decision/{id}/{year}','Api\MainController@decision');
 
     Route::post('/user','Api\UserController@show');
     Route::post('/abo/make','Api\AboController@make');
     Route::post('/abo/remove','Api\AboController@remove');
-    Route::post('/abo/cadence','Api\AboController@cadence');
+    Route::post('/abo/cadence','Api\AboController@cadence');*/
 });
 
 Route::get('alert', function () {

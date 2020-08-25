@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Droit pour le praticien</title>
+    <meta name="author" content="@Designpond | Cindy Leschaud">
+    <meta name="description" content="Droit pour le praticien">
+    <meta name="_token" content="<?php echo csrf_token(); ?>">
 
-    <!-- favicons -->
-{{--    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">--}}
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
+
     <link rel="manifest" href="images/favicon/site.webmanifest">
 
     <!-- Fonts URL -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700%7CPlayfair+Display:400,500,600,700,800,900%7CWork+Sans:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link href="{{ secure_asset('css/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/datatables-addon.css') }}" rel="stylesheet" >
 
     <link href="{{ secure_asset('css/all.css') }}" rel="stylesheet">
 
@@ -27,6 +35,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/hover-min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/muzex-icons.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}?{{ rand(1,3000) }}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?{{ rand(1,3000) }}">
@@ -77,7 +86,8 @@
 
 <!-- Template JS -->
 
-<script src="{{ secure_asset('js/jquery.min.js') }}"></script>
+<script src="{{ secure_asset('js/jquery-3.5.1.min.js') }}"></script>
+{<script src="{{ secure_asset('js/datatables.min.js') }}"></script>
 <script src="{{ secure_asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ secure_asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ secure_asset('js/isotope.js') }}"></script>
@@ -97,6 +107,7 @@
 <!-- Custom Scripts -->
 <script src="{{ secure_asset('js/theme.js') }}"></script>
 <script src="{{ secure_asset('js/app.js') }}"></script>
+
 </body>
 
 </html>

@@ -30,7 +30,17 @@ class Decision extends Model
 
     public function getLangAttribute()
     {
-        return $this->langue == 0 ? 'Français' : 'Allemand';
+        switch ($this->langue){
+            case 0:
+                return "Français";
+                break;
+            case 1:
+                return "Allemand";
+                break;
+            case 2:
+                return "Italien";
+                break;
+        }
     }
 
     public function scopeSearch($query,$terms)

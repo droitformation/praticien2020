@@ -2,6 +2,7 @@
 
 interface DecisionInterface {
 
+    public function count();
     public function getAll();
     public function setConnection($connexion);
     public function countByYear();

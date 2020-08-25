@@ -56,10 +56,7 @@
 
         dynamicCurrentMenuClass(mainNavUL);
         dynamicCurrentMenuClass(mobileNavUL);
-
-
     }
-
 
     if ($('.mc-form').length) {
         var mcURL = $('.mc-form').data('url');
@@ -90,16 +87,56 @@
                 }
             }
         });
-
     }
-
-
-
 
     if ($('.datepicker').length) {
         $('.datepicker').datepicker();
     }
 
+    let base_url = location.protocol + "//" + location.host+"/";
+
+    $('#decisions').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url":  base_url + 'api/decisions',
+            "type": "POST",
+            "data": function ( d ) {
+                d._token = $("meta[name='_token']").attr('content')
+            }
+        },
+        select: true,
+        "columns": [
+            { "data": "publication_at" },
+            { "data": "decision_at" },
+            { "data": "numero" },
+            { "data": "categorie" },
+            { "data": "lang" },
+            { "data": "publish" }
+        ],
+        language: {
+            processing:     "Traitement en cours...",
+            search:         "Rechercher&nbsp;:",
+            lengthMenu:     "Afficher _MENU_ &eacute;l&eacute;ments",
+            info:           "Affichage de _START_ &agrave; _END_ sur _TOTAL_ lignes",
+            infoEmpty:      "Affichage de 0 &agrave; 0 sur 0 lignes",
+            infoFiltered:   "(filtr&eacute; de _MAX_ lignes au total)",
+            infoPostFix:    "",
+            loadingRecords: "Chargement en cours...",
+            zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+            emptyTable:     "Aucune donnée disponible",
+            paginate: {
+                first:      "Premier",
+                previous:   "Pr&eacute;c&eacute;dent",
+                next:       "Suivant",
+                last:       "Dernier"
+            },
+            aria: {
+                sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+            }
+        }
+    });
 
     if ($('.plan-visit__tab-links').length) {
         var planVisitLink = $('.plan-visit__tab-links').find('.nav-link');
@@ -109,7 +146,6 @@
             $('html, body').animate({
                 scrollTop: $(target).offset().top - 50
             }, 1000);
-
 
             planVisitLink.removeClass('active');
             $(this).addClass('active');
