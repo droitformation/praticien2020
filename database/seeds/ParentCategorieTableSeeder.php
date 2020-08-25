@@ -38,7 +38,6 @@ class ParentCategorieTableSeeder extends Seeder
             array('id' => '24','nom' => 'Poste et télécommunications')
         );
 
-
         \DB::table('parent_categories')->insert($parent_categories);
     }
 }

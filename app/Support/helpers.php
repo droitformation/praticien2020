@@ -494,3 +494,30 @@ function setEnv($key, $value)
         file_get_contents(app()->environmentFilePath())
     ));
 }
+
+function getCadence($string){
+    switch ($string) {
+        case 'all':
+            return 'daily';
+            break;
+        case 'one':
+            return 'weekly';
+            break;
+        default:
+            return $string;
+    }
+}
+
+function getRole($array){
+    if(in_array('administrator',$array)){
+        return 1;
+    }
+
+    if(in_array('editor',$array) || in_array('author',$array) ){
+        return 2;
+    }
+
+    if(in_array('subscriber',$array)){
+        return 3;
+    }
+}

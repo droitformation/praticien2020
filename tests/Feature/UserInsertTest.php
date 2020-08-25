@@ -9,6 +9,19 @@ class UserInsertTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh');
+        $this->artisan('db:seed');
+    }
+
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     /**
      * A basic test example.
      *
@@ -28,14 +41,15 @@ class UserInsertTest extends TestCase
             'npa'           => '1234' ,
             'ville'         => 'Manhattan',
             'active_until'  => '2020-12-31',
-            'cadence'       => 'all', // weekly, daily
+            'cadence'       => 'daily', // weekly, daily
             'abos' => [
                 [
                     'categorie_id' => 2,
-                    'keywords' => ['test1, test2'],
-                    'isPub' => 1
+                    'keywords'  => ['test1, test2'],
+                    'toPublish' => 1
                 ]
-            ]
+            ],
+            'role' => 1
         ];
 
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
@@ -50,7 +64,7 @@ class UserInsertTest extends TestCase
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
 
         $repo = \App::make('App\Praticien\User\Repo\UserInterface');
-        $repo->create($converted);
+        $repo->convert($converted);
 
         $this->assertDatabaseHas('users', [
             'id'            => 321,
@@ -62,8 +76,35 @@ class UserInsertTest extends TestCase
             'npa'           => '1234' ,
             'ville'         => 'Manhattan',
             'active_until'  => '2020-12-31',
-            'cadence'       => 'all',
+            'cadence'       => 'daily',
         ]);
+
+        $this->assertDatabaseHas('abos', [
+            'user_id'      => 321,
+            'categorie_id' => 2,
+            'toPublish'    => 1,
+        ]);
+
+        $this->assertDatabaseHas('abo_keywords', [
+            'keywords' => 'test1, test2',
+        ]);
+
+        $this->assertDatabaseHas('user_roles', [
+            'user_id' => 321,
+            'role_id' => 1,
+        ]);
+    }
+
+    public function testConvertCadence()
+    {
+        $result = getCadence('all');
+        $this->assertEquals('daily',$result);
+
+        $result = getCadence('one');
+        $this->assertEquals('weekly',$result);
+
+        $result = getCadence('daily');
+        $this->assertEquals('daily',$result);
     }
 
     public function makeDataWordpressUser(){
@@ -81,6 +122,7 @@ class UserInsertTest extends TestCase
             'npa'             => '1234' ,
             'ville'           => 'Manhattan',
             'date_abo_active' => '2020-12-31',
+            'wp_capabilities' => serialize([['administrator' => 1]])
         ];
 
         $items = [];

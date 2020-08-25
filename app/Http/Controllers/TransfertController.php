@@ -34,7 +34,6 @@ class TransfertController extends Controller
 
         $results = $categories->map(function ($categorie, $key) {
             $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
-
             $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
             $repo->create($convert);
         });
@@ -52,13 +51,12 @@ class TransfertController extends Controller
 
         $results = $users->map(function ($user, $key) {
             return \App\Praticien\Wordpress\Convert\User::convert($user);
-           // $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-            //$repo->create($convert);
         })->reject(function ($user) {
+            // Remove if they only have email/password => it's spam
             return count(array_filter($user)) == 3;
         })->map(function ($user, $key) {
-            // $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-            //$repo->create($convert);
+            $repo = \App::make('App\Praticien\User\Repo\UserInterface');
+            $repo->convert($user);
 
             return $user;
         });

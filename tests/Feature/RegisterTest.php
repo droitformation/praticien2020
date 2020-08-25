@@ -8,6 +8,20 @@ use Tests\TestCase;
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh');
+        $this->artisan('db:seed');
+    }
+
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     /**
      * A basic test example.
      *
@@ -42,6 +56,11 @@ class RegisterTest extends TestCase
         $code = $code->fresh();
 
         $this->assertNotNull($code->user_id);
+
+        $user = $code->user;
+
+        $this->assertTrue($user->roles->contains('id',2));
+
     }
     public function testRegisterNotValidCode()
     {

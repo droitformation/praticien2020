@@ -7,9 +7,9 @@
     <title>Droit pour le praticien</title>
 
     <!-- favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+{{--    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">--}}
     <link rel="manifest" href="images/favicon/site.webmanifest">
 
     <!-- Fonts URL -->
@@ -20,8 +20,6 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/bootstrap-datepicker.min.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/jquery.mCustomScrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/owl.carousel.min.css') }}">
@@ -32,6 +30,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?{{ rand(1,3000) }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/home.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}">
 
 </head>
@@ -81,7 +80,6 @@
 <script src="{{ secure_asset('js/jquery.min.js') }}"></script>
 <script src="{{ secure_asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ secure_asset('js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ secure_asset('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ secure_asset('js/isotope.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.ajaxchimp.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.counterup.min.js') }}"></script>
@@ -98,6 +96,7 @@
 
 <!-- Custom Scripts -->
 <script src="{{ secure_asset('js/theme.js') }}"></script>
+<script src="{{ secure_asset('js/app.js') }}"></script>
 </body>
 
 </html>

@@ -71,7 +71,7 @@ class UserEloquent implements UserInterface{
             'cadence'      => $data['cadence'] ?? null,
             'email'        => $data['email'],
             'password'     => $data['password'],
-            'active_until' =>  $data['active_until'] ?? null,
+            'active_until' => $data['active_until'] ?? null,
             'created_at'   => date('Y-m-d G:i:s'),
             'updated_at'   => date('Y-m-d G:i:s')
         ));
@@ -80,17 +80,27 @@ class UserEloquent implements UserInterface{
             return false;
         }
 
-   /*     if(isset($data['abos'])){
-            foreach ($data['abos'] as $categorie_id => $keyword){
-                if(!empty($keyword)){
+        /*
+        '* abos' => [['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"] ],'toPublish' => 1]]
+         * */
 
+        if(isset($data['abos'])){
+            foreach ($data['abos'] as $abo){
+                $insert = $user->abos()->create(['categorie_id' => $abo['categorie_id'], 'toPublish' => $abo['toPublish'] ?? null]);
+                if(isset($abo['keywords']) && !empty($abo['keywords'])){
+                    foreach ($abo['keywords'] as $keyword){
+                        $insert->keywords()->create(['keywords' => $keyword]);
+                    }
                 }
             }
-        }*/
+        }
+
+        if(isset($data['role'])){
+            $user->roles()->attach($data['role']);
+        }
 
         return $user;
     }
-
 
     public function update(array $data){
 
@@ -108,6 +118,10 @@ class UserEloquent implements UserInterface{
 
         $user->updated_at = date('Y-m-d G:i:s');
         $user->save();
+
+        if(isset($data['role'])){
+            $user->roles()->sync($data['role']);
+        }
 
         return $user;
     }

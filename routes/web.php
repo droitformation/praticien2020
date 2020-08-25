@@ -19,7 +19,6 @@ Route::get('access', ['uses' => 'FrontendController@access']);
 Route::get('contact', ['uses' => 'FrontendController@contact']);
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('decisions', ['uses' => 'DecisionController@index']);
 
@@ -27,7 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
     Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
 });
-
 
 Route::get('message', function() {
     return new \App\Mail\ContactMessage([
@@ -40,8 +38,9 @@ Route::get('message', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/cadence', 'HomeController@cadence')->name('cadence');
 
-Route::group(['prefix' => 'backend'], function () {
+Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function () {
 
     Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
     Route::match(['get', 'post'], 'letter','Praticien\NewsletterController@letter');
@@ -121,7 +120,7 @@ Route::get('test', function() {
     echo '</pre>';
     exit;*/
 
-/*  */
+/*
 
     $user = \App\Praticien\Wordpress\Entities\User::find(15);
     $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
@@ -129,15 +128,25 @@ Route::get('test', function() {
     echo '<pre>';
     print_r($converted);
     echo '</pre>';
-    exit;
+    exit;*/
+
+    $users = \App\Praticien\Wordpress\Entities\User::all();
+
+    $roles = [];
 
     foreach ($users as $user){
-
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
         echo '<pre>';
         print_r($converted);
         echo '</pre>';
+        exit;
+        $roles[] = array_keys($converted['roles']);
     }
+
+    echo '<pre>';
+    print_r(array_unique(array_flatten($roles)));
+    echo '</pre>';
+    exit;
 
     exit;
 
