@@ -4,21 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Praticien\User\Repo\UserInterface;
+use App\Praticien\Categorie\Repo\CategorieInterface;
 
 class HomeController extends Controller
 {
     protected $user;
+    protected $categorie;
 
-    public function __construct(UserInterface $user)
+    public function __construct(UserInterface $user, CategorieInterface $categorie)
     {
         $this->middleware('auth');
 
         $this->user = $user;
+        $this->categorie = $categorie;
     }
 
     public function index()
     {
-        return view('home')->with(['user' => \Auth::user()]);
+        $categories = $this->categorie->getParents();
+
+        return view('home')->with(['user' => \Auth::user(), 'categories' => $categories]);
     }
 
     public function cadence(Request $request)

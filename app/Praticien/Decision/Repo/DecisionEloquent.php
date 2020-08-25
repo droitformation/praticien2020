@@ -17,7 +17,6 @@ class DecisionEloquent implements DecisionInterface{
         if (\App::environment('testing')) {
             $this->main_connection = 'testing';
         }
-
     }
 
     public function setConnection($connexion)
