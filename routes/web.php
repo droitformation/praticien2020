@@ -39,6 +39,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/cadence', 'HomeController@cadence')->name('cadence');
+Route::post('/subscribe', 'SubscribeController@subscribe')->name('subscribe');
 
 Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function () {
 

@@ -1,14 +1,16 @@
 <template>
     <div class="card mb-3">
         <div class="card-body">
-            <div class="d-flex flex-row justify-content-between align-items-center" style="height: 30px;">
-                <p class="d-block">{{ categorie.name }}</p>
-                <button class="btn btn-sm btn-droitpraticen d-block" @click="add"><i class="fas fa-plus-circle"></i></button>
+            <div class="categorie-header">
+                <p class="categorie-title">{{ categorie.name }}</p>
+                <button class="btn btn-sm btn-droitpraticen d-block" @click="add" data-toggle="tooltip" data-placement="top" title="Limiter par mots-clés"><i class="fas fa-plus"></i> &nbsp;Mots-cles</button>
             </div>
 
-            <div v-if="words" v-for="(keyword,index) in words" class="d-flex flex-row justify-content-between">
-                <input class="form-control" name="keyword[]" type="text" v-model="keyword.text">
-                <button class="btn btn-sm btn-danger" @click="remove(index)">x</button>
+            <div v-if="words.length" class="keywords_wrapper">
+               <div v-for="(keyword,index) in words" class="d-flex flex-row justify-content-between my-3">
+                   <input class="form-control form-control-keyword" name="keyword[]" type="text" v-model="keyword.text">
+                   <button class="btn btn-sm btn-danger btn-remove" @click="remove(index)">x</button>
+               </div>
             </div>
 
             <div class="toggle-group">
@@ -22,6 +24,14 @@
                 </div>
             </div>
 
+            <button class="btn btn-sm btn-save d-block" type="button" @click="save">
+                Enregistrer
+                <span>
+                    <transition name="fade">
+                        <i v-show="updated" class="fas fa-check"></i>
+                    </transition>
+                </span>
+            </button>
         </div>
     </div>
 </template>
@@ -35,7 +45,7 @@
                 updated: false,
                 categorie_id: this.categorie.id,
                 aPublier : this.abo ? this.abo.toPublish : null,
-                words : this.abo ? this.abo.keywords : [{text: ''}]
+                words : this.abo ? this.abo.keywords : []
             }
         },
         mounted() {
@@ -48,23 +58,78 @@
             remove(index) {
                 this.words.splice(index,1)
             },
-            update : function(){
+            save() {
                 var self = this;
-                axios.post("cadence",{ user_id: this.user_id, cadence: this.rhythm }).then(function (response) {
+                axios.post("subscribe",{
+                    user_id: this.user_id,
+                    categorie_id: this.categorie_id,
+                    keywords: this.words ,
+                    toPublish: this.aPublier
+                }).then(function (response) {
                     self.updated = true;
                     setTimeout(() => {
                         self.updated = false;
                     }, 1500);
 
                 }).catch(function (error) { console.log(error);});
-            }
+            },
         }
     }
 </script>
 <style scoped>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0
+    }
+    .keywords_wrapper{
+        margin: 30px 0 40px 0;
+    }
+    .categorie-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    .categorie-title{
+        display: block;
+        line-height: 20px;
+        font-size: 18px;
+        padding-right: 10px;
+        margin-bottom: 0;
+    }
     .btn-droitpraticen{
+        background-color: #9c8b6f;
+        color: #fff;
+        font-size: 11px;
+        width: 90px;
+        padding: 3px;
+        text-transform: uppercase;
+        height: 26px;
+    }
+    .btn-save{
         background-color: #0f4060;
         color: #fff;
+        font-size: 12px;
+        padding: 5px;
+        text-transform: uppercase;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .btn-save span{
+        width: 15px;
+        display: inline-block;
+    }
+    .btn-remove{
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        padding: .1rem .5rem;
+    }
+    .form-control-keyword{
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
     }
     .onoffswitch {
         position: relative;
@@ -139,6 +204,7 @@
         position: relative;
         height: 27px;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-top: 10px;
     }
     .toggle-group input[type=checkbox] {
         position: absolute;
@@ -166,6 +232,7 @@
         z-index: 1;
         height: 24px;
         font-weight: 200;
+        font-size: 14px;
     }
     /* ==== Accessibility ===== */
     .aural {

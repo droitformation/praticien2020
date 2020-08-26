@@ -21,10 +21,16 @@ class SubscribeController extends Controller
 
     public function subscribe(Request $request)
     {
-        //['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]],'toPublish' => 1]
-        $user = $this->user->update(['id' => $request->input('id'), 'abos' => [$request->input('abos')]]);
+        $data = [
+            'categorie_id' => $request->input('categorie_id'),
+            'keywords'     => array_flatten(array_values($request->input('keywords'))),
+            'toPublish'    => $request->input('toPublish'),
+        ];
 
-        return response()->json(['abos' => $user->abos->where('categorie_id', $request->input('abos.categorie_id'))]);
+        //['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]], 'toPublish' => 1]
+        $user = $this->user->update(['id' => $request->input('user_id'), 'abos' => [$data]]);
+
+        return response()->json(['abos' => getAboCategorie($user,$request->input('categorie_id'))]);
     }
 
     public function unsubscribe(Request $request)

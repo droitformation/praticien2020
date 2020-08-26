@@ -36,13 +36,9 @@
         let mobileNavContainer = $('.mobile-nav__container');
         let mainNavContent = $('.main-nav__main-navigation').html();
 
-
-
         mobileNavContainer.append(function () {
             return mainNavContent;
         });
-
-
 
         //Dropdown Button
         mobileNavContainer.find('li.dropdown .dropdown-btn').on('click', function () {
@@ -88,6 +84,8 @@
             }
         });
     }
+
+    $('[data-toggle="tooltip"]').tooltip()
 
     if ($('.datepicker').length) {
         $('.datepicker').datepicker();

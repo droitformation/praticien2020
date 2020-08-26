@@ -160,4 +160,26 @@ class HelperTest extends TestCase
         $this->assertEquals(true,$result['toPublish']);
         $this->assertEquals([['text' => 'Lorem, ipsum dolor']],$result['keywords']);
     }
+
+    public function testGetAboCategorieNOKeywords()
+    {
+        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+            'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
+            'cadence'      => 'daily',
+        ]);
+
+        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+
+        $abo1 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id, 'toPublish' => true]);
+        $abo2 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id]);
+
+        $user = $user->fresh();
+
+        $result = getAboCategorie($user,$categorie1->id);
+
+        $this->assertEquals($categorie1->id,$result['categorie_id']);
+        $this->assertEquals(true,$result['toPublish']);
+        $this->assertEquals([],$result['keywords']);
+    }
 }
