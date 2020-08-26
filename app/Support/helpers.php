@@ -521,3 +521,22 @@ function getRole($array){
         return 3;
     }
 }
+
+function getAboCategorie($user,$categorie_id){
+
+    $abo = $user->abos->where('categorie_id',$categorie_id);
+
+    if(!$abo->isEmpty()){
+        $keywords = $abo->first()->load('keywords');
+
+        return [
+            'categorie_id' => $abo->first()->categorie_id,
+            'toPublish'    => $abo->first()->toPublish,
+            'keywords'     => $keywords->keywords->map(function ($keyword) {
+                return ['text' => $keyword->keywords];
+            })->toArray(),
+        ];
+    }
+
+    return null;
+}

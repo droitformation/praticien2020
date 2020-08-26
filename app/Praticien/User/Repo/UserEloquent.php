@@ -51,8 +51,12 @@ class UserEloquent implements UserInterface{
             'updated_at' => date('Y-m-d G:i:s')
         ));
 
-        if( ! $user ) {
+        if(! $user) {
             return false;
+        }
+
+        if(isset($data['role'])){
+            $user->roles()->attach($data['role']);
         }
 
         return $user;
@@ -106,7 +110,7 @@ class UserEloquent implements UserInterface{
 
         $user = $this->user->findOrFail($data['id']);
 
-        if( ! $user ) {
+        if(!$user) {
             return false;
         }
 
@@ -118,6 +122,18 @@ class UserEloquent implements UserInterface{
 
         $user->updated_at = date('Y-m-d G:i:s');
         $user->save();
+
+        // abos => [['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]],'toPublish' => 1]]
+        if(isset($data['abos'])){
+            foreach($data['abos'] as $abo){
+                $insert = $user->abos()->create(['categorie_id' => $abo['categorie_id'], 'toPublish' => $abo['toPublish'] ?? null]);
+                if(isset($abo['keywords']) && !empty($abo['keywords'])){
+                    foreach ($abo['keywords'] as $keyword){
+                        $insert->keywords()->create(['keywords' => $keyword]);
+                    }
+                }
+            }
+        }
 
         if(isset($data['role'])){
             $user->roles()->sync($data['role']);

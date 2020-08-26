@@ -68,13 +68,6 @@ $factory->define(App\Praticien\Categorie\Entities\Categorie::class, function (Fa
     ];
 });
 
-$factory->define(App\Praticien\Abo\Entities\Abo::class, function (Faker $faker) {
-    return [
-        'user_id'      => 1,
-        'categorie_id' => 1,
-        'keywords'     => 'words',
-    ];
-});
 
 $factory->define(App\Praticien\Abo\Entities\Abo::class, function (Faker $faker) {
 
@@ -83,6 +76,17 @@ $factory->define(App\Praticien\Abo\Entities\Abo::class, function (Faker $faker) 
     return [
         'user_id'       => $faker->numberBetween(1,10),
         'categorie_id'  => $categorie->id,
-        'keywords'      => $faker->word,
+        'toPublish'     => null,
     ];
 });
+
+$factory->define(App\Praticien\Abo\Entities\Abo_keyword::class, function (Faker $faker) {
+
+    $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create();
+
+    return [
+        'abo_id'   => $abo->id,
+        'keywords' => $faker->words(5)
+    ];
+});
+

@@ -99,7 +99,6 @@
 <script src="{{ secure_asset('js/messages_fr.js') }}"></script>
 <script src="{{ secure_asset('js/owl.carousel.min.js') }}"></script>
 <script src="{{ secure_asset('js/TweenMax.min.js') }}"></script>
-<script src="{{ secure_asset('js/waypoints.min.js') }}"></script>
 <script src="{{ secure_asset('js/wow.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.lettering.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.circleType.js') }}"></script>

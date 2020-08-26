@@ -44,22 +44,31 @@
                 <div class="card">
                     <div class="card-body">
 
-                        @if(!$parents->isEmpty())
-                            @foreach($parents as $parent)
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <p>{{ $parent->nom }}</p>
-                                    </div>
-                                    <div class="col-md-8">
-                                        @if(!$parent->categories->isEmpty())
-                                            @foreach($parent->categories as $categorie)
-                                                <p>{{ $categorie->name }}</p>
-                                            @endforeach
-                                        @endif
-                                    </div>
+                        <div id="tab-categories">
+                            <div class="nav flex-column nav-pills" id="main-tab-nav" role="tablist" aria-orientation="vertical">
+                                @if(!$parents->isEmpty())
+                                    @foreach($parents as $parent)
+                                        <a class="nav-link {{ $loop->first ? 'active' : '' }}" data-toggle="pill" href="#v-pills-{{ $parent->id }}" role="tab" aria-controls="v-pills-{{ $parent->id }}" aria-selected="true">{{ $parent->nom }}</a>
+                                    @endforeach
+                                @endif
+                            </div>
+
+                            @if(!$parents->isEmpty())
+                                <div class="tab-content" id="main-tab-content">
+                                    @foreach($parents as $parent)
+                                        <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}" id="v-pills-{{ $parent->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $parent->id }}-tab">
+                                            @if(!$parent->categories->isEmpty())
+                                                @foreach($parent->categories as $categorie)
+
+                                                    <abo-component :categorie="{{ $categorie }}" :abo="{{ json_encode(getAboCategorie($user,$categorie->id)) }}" user_id="{{ $user->id }}"></abo-component>
+
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
-                        @endif
+                            @endif
+                        </div>
 
                     </div>
                 </div>
