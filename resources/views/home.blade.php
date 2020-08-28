@@ -59,6 +59,13 @@
                                         <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}" id="v-pills-{{ $parent->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $parent->id }}-tab">
                                             @if(!$parent->categories->isEmpty())
                                                 @foreach($parent->categories as $categorie)
+                                                    <?php
+                                               /*     echo '<pre>';
+                                                    print_r($user->abos);
+                                                    print_r(getAboCategorie($user,$categorie->id));
+                                                    echo '</pre>';*/
+
+                                                    ?>
                                                     <abo-component :categorie="{{ $categorie }}" :abo="{{ json_encode(getAboCategorie($user,$categorie->id)) }}" user_id="{{ $user->id }}"></abo-component>
                                                 @endforeach
                                             @endif

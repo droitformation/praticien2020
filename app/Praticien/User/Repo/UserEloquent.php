@@ -126,7 +126,11 @@ class UserEloquent implements UserInterface{
         // abos => [['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]],'toPublish' => 1]]
         if(isset($data['abos'])){
             foreach($data['abos'] as $abo){
+
+                $user->abos()->detach($abo['categorie_id']);
+
                 $insert = $user->abos()->create(['categorie_id' => $abo['categorie_id'], 'toPublish' => $abo['toPublish'] ?? null]);
+
                 if(isset($abo['keywords']) && !empty($abo['keywords'])){
                     foreach ($abo['keywords'] as $keyword){
                         $insert->keywords()->create(['keywords' => $keyword]);

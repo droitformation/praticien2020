@@ -116,6 +116,14 @@ Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
 
+
+    $user = \App\Praticien\USer\Entities\User::with(['abos','abos.keywords'])->find(15);
+
+    echo '<pre>';
+    print_r($user->abos);
+    echo '</pre>';
+    exit;
+
 /*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
 
     echo '<pre>';

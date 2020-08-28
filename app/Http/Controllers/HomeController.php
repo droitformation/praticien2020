@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
         $parents = $this->categorie->getParents();
 
-        return view('home')->with(['user' => \Auth::user(), 'parents' => $parents]);
+        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents]);
     }
 
     public function cadence(Request $request)

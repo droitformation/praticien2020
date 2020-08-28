@@ -47,7 +47,7 @@ class AboEloquent implements AboInterface{
         $abo = $this->abo->create(array(
             'user_id'      => $data['user_id'],
             'categorie_id' => $data['categorie_id'],
-            'keywords'     => isset($data['keywords']) ? $data['keywords'] : null
+            'toPublish'    => $data['toPublish'],
         ));
 
         if( !$abo ) {

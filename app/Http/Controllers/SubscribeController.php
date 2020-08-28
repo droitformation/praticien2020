@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Praticien\User\Repo\UserInterface;
 use App\Praticien\Categorie\Repo\CategorieInterface;
+use App\Praticien\User\Worker\SubscriptionWorker;
 
 class SubscribeController extends Controller
 {
     protected $user;
     protected $categorie;
+    protected $worker;
 
-    public function __construct(UserInterface $user, CategorieInterface $categorie)
+    public function __construct(UserInterface $user, CategorieInterface $categorie, SubscriptionWorker $worker)
     {
         $this->middleware('auth');
 
         $this->user = $user;
         $this->categorie = $categorie;
+        $this->worker = $worker;
     }
 
     public function subscribe(Request $request)
@@ -27,8 +30,7 @@ class SubscribeController extends Controller
             'toPublish'    => $request->input('toPublish'),
         ];
 
-        //['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]], 'toPublish' => 1]
-        $user = $this->user->update(['id' => $request->input('user_id'), 'abos' => [$data]]);
+        $user = $this->worker->update($request->input('user_id'), $data);
 
         return response()->json(['abos' => getAboCategorie($user,$request->input('categorie_id'))]);
     }
