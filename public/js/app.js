@@ -1951,16 +1951,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // [['categorie_id' => 244, 'keywords' => [["ATF 138 III 382"]],'toPublish' => 1]]
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['categorie', 'abo', 'user_id'],
   data: function data() {
+    var _this$abo;
+
     return {
       isOpen: false,
       updated: false,
       categorie_id: this.categorie.id,
       aPublier: this.abo ? this.abo.toPublish : null,
-      words: this.abo ? this.abo.keywords : []
+      words: this.abo ? this.abo.keywords : [],
+      active: (_this$abo = this.abo) !== null && _this$abo !== void 0 ? _this$abo : null
     };
   },
   mounted: function mounted() {
@@ -1978,6 +1983,23 @@ __webpack_require__.r(__webpack_exports__);
     remove: function remove(index) {
       this.words.splice(index, 1);
     },
+    destroy: function destroy() {
+      var self = this;
+      axios.post("unsubscribe", {
+        user_id: this.user_id,
+        categorie_id: this.categorie_id
+      }).then(function (response) {
+        console.log(response);
+        self.updated = true;
+        setTimeout(function () {
+          self.updated = false;
+          self.isOpen = false;
+          self.active = null;
+        }, 1500);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     save: function save() {
       var self = this;
       axios.post("subscribe", {
@@ -1986,10 +2008,12 @@ __webpack_require__.r(__webpack_exports__);
         keywords: this.words,
         toPublish: this.aPublier
       }).then(function (response) {
+        console.log(response);
         self.updated = true;
         setTimeout(function () {
           self.updated = false;
           self.isOpen = false;
+          self.active = response.data.abo;
         }, 1500);
       })["catch"](function (error) {
         console.log(error);
@@ -2100,7 +2124,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter-active[data-v-64e1b6cc], .fade-leave-active[data-v-64e1b6cc] {\n    transition: opacity .5s\n}\n.fade-enter[data-v-64e1b6cc], .fade-leave-to[data-v-64e1b6cc] /* .fade-leave-active below version 2.1.8 */ {\n    opacity: 0\n}\n.wrapper[data-v-64e1b6cc]{\n    margin-top: 20px;\n}\n.keywords_wrapper[data-v-64e1b6cc]{\n    margin: 30px 0 0px 0;\n}\n.categorie-header[data-v-64e1b6cc]{\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n}\n.categorie-title[data-v-64e1b6cc]{\n    display: block;\n    line-height: 20px;\n    font-size: 18px;\n    padding-right: 10px;\n    margin-bottom: 0;\n}\n.btn-open[data-v-64e1b6cc]{\n    background-color: #0f4060;\n    color: #fff;\n    font-size: 11px;\n    width: 90px;\n    padding: 3px;\n    text-transform: uppercase;\n    height: 26px;\n}\n.btn-droitpraticen[data-v-64e1b6cc]{\n    background-color: #9c8b6f;\n    color: #fff;\n    font-size: 11px;\n    width: 90px;\n    padding: 3px;\n    text-transform: uppercase;\n    height: 26px;\n}\n.btn-save[data-v-64e1b6cc]{\n    background-color: #0f4060;\n    color: #fff;\n    font-size: 12px;\n    padding: 5px;\n    text-transform: uppercase;\n    display: block;\n    width: 100%;\n    margin-top: 20px;\n}\n.btn-save span[data-v-64e1b6cc]{\n    width: 15px;\n    display: inline-block;\n}\n.btn-remove[data-v-64e1b6cc]{\n    border-bottom-left-radius: 0;\n    border-top-left-radius: 0;\n    padding: .1rem .5rem;\n}\n.form-control-keyword[data-v-64e1b6cc]{\n    border-bottom-right-radius: 0;\n    border-top-right-radius: 0;\n}\n.onoffswitch[data-v-64e1b6cc] {\n    position: relative;\n    width: 55px;\n    display: inline-block;\n    font-size: 80%;\n}\n.onoffswitch .onoffswitch-label[data-v-64e1b6cc] {\n    display: block;\n    overflow: hidden;\n    cursor: pointer;\n    border: 1px solid hsl(0, 0%, 90%);\n    border-radius: 20px;\n    margin: 0;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc] {\n    width: 200%;\n    margin-left: -100%;\n    transition: margin 0.15s ease-in-out;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:before,\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:after {\n    float: left;\n    width: 50%;\n    height: 24px;\n    padding: 0;\n    line-height: 24px;\n    font-size: 80%;\n    color: hsl(0, 0%, 100%);\n    font-weight: normal;\n    box-sizing: border-box;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:before {\n    content: \"Oui\";\n    padding-left: 10px;\n    background-color: #0f4060;\n    color: hsl(0, 0%, 100%);\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:after {\n    content: \"Non\";\n    padding-right: 10px;\n    background-color: hsl(0, 0%, 98%);\n    color: hsl(0, 0%, 24%);\n    text-align: right;\n}\n.onoffswitch .onoffswitch-switch[data-v-64e1b6cc] {\n    width: 22px;\n    height: 22px;\n    margin: 0;\n    background: hsl(0, 0%, 100%);\n    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);\n    border-radius: 50%;\n    position: absolute;\n    top: 2px;\n    bottom: 0;\n    right: 35px;\n    transition: right 0.15s ease-in-out;\n}\n.toggle-group[data-v-64e1b6cc] {\n    position: relative;\n    height: 27px;\n    font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    margin-top: 10px;\n}\n.toggle-group input[type=checkbox][data-v-64e1b6cc] {\n    position: absolute;\n    left: 10px;\n}\n.toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner[data-v-64e1b6cc] {\n    margin-left: 0;\n}\n.toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-switch[data-v-64e1b6cc] {\n    right: 1px;\n    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);\n}\n.toggle-group input[type=checkbox]:focus ~ .onoffswitch[data-v-64e1b6cc] {\n    outline: thin dotted #333;\n    outline: 0;\n}\n.toggle-group label[data-v-64e1b6cc] {\n    position: absolute;\n    cursor: pointer;\n    padding-left: 65px;\n    display: inline-block;\n    text-align: left;\n    line-height: 24px;\n    width: 100%;\n    z-index: 1;\n    height: 24px;\n    font-weight: 200;\n    font-size: 14px;\n}\n/* ==== Accessibility ===== */\n.aural[data-v-64e1b6cc] {\n    clip: rect(1px, 1px, 1px, 1px);\n    height: 1px;\n    overflow: hidden;\n    position: absolute;\n    width: 1px;\n}\n.aural[data-v-64e1b6cc]:focus {\n    clip: rect(0, 0, 0, 0);\n    font-size: 1em;\n    height: auto;\n    outline: thin dotted;\n    position: static !important;\n    width: auto;\n    overflow: visible;\n}\n\n", ""]);
+exports.push([module.i, "\n.fade-enter-active[data-v-64e1b6cc], .fade-leave-active[data-v-64e1b6cc] {\n    transition: opacity .5s\n}\n.fade-enter[data-v-64e1b6cc], .fade-leave-to[data-v-64e1b6cc] /* .fade-leave-active below version 2.1.8 */ {\n    opacity: 0\n}\n.title-btn[data-v-64e1b6cc]{\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n}\n.abo-card-active .card-body[data-v-64e1b6cc]{\n    background-color: #0f4060;\n    color: #fff;\n}\n.abo-card-active .categorie-header .btn-open[data-v-64e1b6cc]{\n    background-color: #fff;\n    color: #938164;\n}\n.abo-card-active .categorie-header .btn-open[data-v-64e1b6cc]:hover{\n    background-color: #fff;\n    color: #000;\n}\n.wrapper[data-v-64e1b6cc]{\n    margin-top: 20px;\n}\n.keywords_wrapper[data-v-64e1b6cc]{\n    margin: 30px 0 0px 0;\n}\n.categorie-header[data-v-64e1b6cc]{\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n}\n.categorie-title[data-v-64e1b6cc]{\n    display: block;\n    line-height: 20px;\n    font-size: 18px;\n    padding-right: 10px;\n    margin-bottom: 0;\n}\n.btn-delete[data-v-64e1b6cc],\n.btn-open[data-v-64e1b6cc]{\n    font-size: 11px;\n    width: 75px;\n    padding: 1px;\n    text-transform: uppercase;\n    height: 26px;\n    border: none;\n    display: block;\n}\n.btn-open[data-v-64e1b6cc]{\n    background-color: #0f4060;\n    color: #fff;\n    margin-right: -2px;\n    border-bottom-right-radius: 0;\n    border-top-right-radius: 0;\n}\n.btn-open[data-v-64e1b6cc]:hover{\n    background-color: #0c3956;\n}\n.btn-danger[data-v-64e1b6cc]{\n    background-color: #a12f10;\n    border-color:#a12f10;\n}\n.btn-delete[data-v-64e1b6cc]{\n    width: 45px;\n    background-color: #a12f10;\n    color: #fff;\n    margin-left: -2px;\n    border-bottom-left-radius: 0;\n    border-top-left-radius: 0;\n}\n.btn-delete[data-v-64e1b6cc]:hover{\n    background-color: #932406;\n}\n.btn-droitpraticen[data-v-64e1b6cc]{\n    background-color: #9c8b6f;\n    color: #fff;\n    font-size: 11px;\n    width: 90px;\n    padding: 3px;\n    text-transform: uppercase;\n    height: 26px;\n}\n.btn-save[data-v-64e1b6cc]{\n    background-color: #0f4060;\n    color: #fff;\n    font-size: 12px;\n    padding: 5px;\n    text-transform: uppercase;\n    display: block;\n    width: 100%;\n    margin-top: 20px;\n}\n.btn-save-active[data-v-64e1b6cc]{\n    background-color: #fff;\n    color: #0f4060;\n    font-size: 12px;\n    padding: 5px;\n    text-transform: uppercase;\n    display: block;\n    width: 100%;\n    margin-top: 20px;\n}\n.btn-save span[data-v-64e1b6cc]{\n    width: 15px;\n    display: inline-block;\n}\n.btn-remove[data-v-64e1b6cc]{\n    border-bottom-left-radius: 0;\n    border-top-left-radius: 0;\n    padding: .1rem .5rem;\n}\n.form-control-keyword[data-v-64e1b6cc]{\n    border-bottom-right-radius: 0;\n    border-top-right-radius: 0;\n}\n.onoffswitch[data-v-64e1b6cc] {\n    position: relative;\n    width: 55px;\n    display: inline-block;\n    font-size: 80%;\n}\n.onoffswitch .onoffswitch-label[data-v-64e1b6cc] {\n    display: block;\n    overflow: hidden;\n    cursor: pointer;\n    border: 1px solid hsl(0, 0%, 90%);\n    border-radius: 20px;\n    margin: 0;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc] {\n    width: 200%;\n    margin-left: -100%;\n    transition: margin 0.15s ease-in-out;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:before,\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:after {\n    float: left;\n    width: 50%;\n    height: 24px;\n    padding: 0;\n    line-height: 24px;\n    font-size: 80%;\n    color: hsl(0, 0%, 100%);\n    font-weight: normal;\n    box-sizing: border-box;\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:before {\n    content: \"Oui\";\n    padding-left: 10px;\n    background-color: #9c8b6f;\n    color: hsl(0, 0%, 100%);\n}\n.onoffswitch .onoffswitch-inner[data-v-64e1b6cc]:after {\n    content: \"Non\";\n    padding-right: 10px;\n    background-color: hsl(0, 0%, 98%);\n    color: hsl(0, 0%, 24%);\n    text-align: right;\n}\n.onoffswitch .onoffswitch-switch[data-v-64e1b6cc] {\n    width: 22px;\n    height: 22px;\n    margin: 0;\n    background: hsl(0, 0%, 100%);\n    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);\n    border-radius: 50%;\n    position: absolute;\n    top: 2px;\n    bottom: 0;\n    right: 35px;\n    transition: right 0.15s ease-in-out;\n}\n.toggle-group[data-v-64e1b6cc] {\n    position: relative;\n    height: 27px;\n    font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n    margin-top: 10px;\n}\n.toggle-group input[type=checkbox][data-v-64e1b6cc] {\n    position: absolute;\n    left: 10px;\n}\n.toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-inner[data-v-64e1b6cc] {\n    margin-left: 0;\n}\n.toggle-group input[type=checkbox]:checked ~ .onoffswitch .onoffswitch-label .onoffswitch-switch[data-v-64e1b6cc] {\n    right: 1px;\n    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);\n}\n.toggle-group input[type=checkbox]:focus ~ .onoffswitch[data-v-64e1b6cc] {\n    outline: thin dotted #333;\n    outline: 0;\n}\n.toggle-group label[data-v-64e1b6cc] {\n    position: absolute;\n    cursor: pointer;\n    padding-left: 65px;\n    display: inline-block;\n    text-align: left;\n    line-height: 24px;\n    width: 100%;\n    z-index: 1;\n    height: 24px;\n    font-weight: 200;\n    font-size: 14px;\n}\n/* ==== Accessibility ===== */\n.aural[data-v-64e1b6cc] {\n    clip: rect(1px, 1px, 1px, 1px);\n    height: 1px;\n    overflow: hidden;\n    position: absolute;\n    width: 1px;\n}\n.aural[data-v-64e1b6cc]:focus {\n    clip: rect(0, 0, 0, 0);\n    font-size: 1em;\n    height: auto;\n    outline: thin dotted;\n    position: static !important;\n    width: auto;\n    overflow: visible;\n}\n\n", ""]);
 
 // exports
 
@@ -3216,197 +3240,224 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card mb-3" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "categorie-header" }, [
-        _c("p", { staticClass: "categorie-title" }, [
-          _vm._v(_vm._s(_vm.categorie.name))
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-open d-block",
-            on: {
-              click: function($event) {
-                return _vm.toggle()
-              }
-            }
-          },
-          [_c("i", { staticClass: "fas fa-edit" })]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isOpen,
-              expression: "isOpen"
-            }
-          ],
-          staticClass: "wrapper"
-        },
-        [
-          _vm.words.length
-            ? _c(
-                "div",
-                { staticClass: "keywords_wrapper" },
-                _vm._l(_vm.words, function(keyword, index) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass:
-                        "d-flex flex-row justify-content-between my-3"
-                    },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: keyword.text,
-                            expression: "keyword.text"
-                          }
-                        ],
-                        staticClass: "form-control form-control-keyword",
-                        attrs: { name: "keyword[]", type: "text" },
-                        domProps: { value: keyword.text },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(keyword, "text", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-danger btn-remove",
-                          on: {
-                            click: function($event) {
-                              return _vm.remove(index)
-                            }
-                          }
-                        },
-                        [_vm._v("x")]
-                      )
-                    ]
-                  )
-                }),
-                0
-              )
-            : _vm._e(),
+  return _c(
+    "div",
+    { class: "card mb-3 " + (_vm.active ? "abo-card-active" : "") },
+    [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "categorie-header" }, [
+          _c("p", { staticClass: "categorie-title" }, [
+            _vm._v(_vm._s(_vm.categorie.name))
+          ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-right" }, [
+          _c("div", { staticClass: "title-btn" }, [
             _c(
               "button",
               {
-                staticClass: "btn btn-sm btn-droitpraticen",
-                attrs: {
-                  "data-toggle": "tooltip",
-                  "data-placement": "top",
-                  title: "Limiter par mots-clés"
-                },
-                on: { click: _vm.add }
-              },
-              [_c("i", { staticClass: "fas fa-plus" }), _vm._v("  Mots-cles")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "toggle-group" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.aPublier,
-                  expression: "aPublier"
-                }
-              ],
-              attrs: {
-                type: "checkbox",
-                name: "on-off-switch",
-                id: "on-off-switch_" + _vm.categorie.id,
-                tabindex: "1"
-              },
-              domProps: {
-                checked: Array.isArray(_vm.aPublier)
-                  ? _vm._i(_vm.aPublier, null) > -1
-                  : _vm.aPublier
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.aPublier,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.aPublier = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.aPublier = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.aPublier = $$c
+                staticClass: "btn btn-sm btn-open",
+                on: {
+                  click: function($event) {
+                    return _vm.toggle()
                   }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              { attrs: { for: "on-off-switch_" + _vm.categorie.id } },
-              [_vm._v("Limiter aux arrêts proposé pour la publication ")]
+              },
+              [
+                _c("i", {
+                  class: "fas " + (_vm.active ? "fa-edit" : "fa-plus")
+                })
+              ]
             ),
             _vm._v(" "),
-            _vm._m(0)
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-save d-block",
-              attrs: { type: "button" },
-              on: { click: _vm.save }
-            },
-            [
-              _vm._v("\n                Enregistrer "),
+            _vm.active
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-delete",
+                    on: {
+                      click: function($event) {
+                        return _vm.destroy()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-times" })]
+                )
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isOpen,
+                expression: "isOpen"
+              }
+            ],
+            staticClass: "wrapper"
+          },
+          [
+            _vm.words.length
+              ? _c(
+                  "div",
+                  { staticClass: "keywords_wrapper" },
+                  _vm._l(_vm.words, function(keyword, index) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex flex-row justify-content-between my-3"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: keyword.text,
+                              expression: "keyword.text"
+                            }
+                          ],
+                          staticClass: "form-control form-control-keyword",
+                          attrs: { name: "keyword[]", type: "text" },
+                          domProps: { value: keyword.text },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(keyword, "text", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger btn-remove",
+                            on: {
+                              click: function($event) {
+                                return _vm.remove(index)
+                              }
+                            }
+                          },
+                          [_vm._v("x")]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-right" }, [
               _c(
-                "span",
-                [
-                  _c("transition", { attrs: { name: "fade" } }, [
-                    _c("i", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.updated,
-                          expression: "updated"
-                        }
-                      ],
-                      staticClass: "fas fa-check"
-                    })
-                  ])
-                ],
-                1
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-droitpraticen",
+                  attrs: {
+                    "data-toggle": "tooltip",
+                    "data-placement": "top",
+                    title: "Limiter par mots-clés"
+                  },
+                  on: { click: _vm.add }
+                },
+                [_c("i", { staticClass: "fas fa-plus" }), _vm._v("  Mots-cles")]
               )
-            ]
-          )
-        ]
-      )
-    ])
-  ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "toggle-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.aPublier,
+                    expression: "aPublier"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "on-off-switch",
+                  id: "on-off-switch_" + _vm.categorie.id,
+                  tabindex: "1"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.aPublier)
+                    ? _vm._i(_vm.aPublier, null) > -1
+                    : _vm.aPublier
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.aPublier,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.aPublier = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.aPublier = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.aPublier = $$c
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { attrs: { for: "on-off-switch_" + _vm.categorie.id } },
+                [_vm._v("Limiter aux arrêts proposé pour la publication ")]
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                class:
+                  "btn btn-sm d-block " +
+                  (_vm.active ? "btn-save-active" : "btn-save"),
+                attrs: { type: "button" },
+                on: { click: _vm.save }
+              },
+              [
+                _vm._v("\n                Enregistrer "),
+                _c(
+                  "span",
+                  [
+                    _c("transition", { attrs: { name: "fade" } }, [
+                      _c("i", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.updated,
+                            expression: "updated"
+                          }
+                        ],
+                        staticClass: "fas fa-check"
+                      })
+                    ])
+                  ],
+                  1
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {

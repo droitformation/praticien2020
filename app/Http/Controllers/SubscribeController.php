@@ -30,13 +30,15 @@ class SubscribeController extends Controller
             'toPublish'    => $request->input('toPublish'),
         ];
 
-        $user = $this->worker->update($request->input('user_id'), $data);
+        $abo = $this->worker->update($request->input('user_id'), $data);
 
-        return response()->json(['abos' => getAboCategorie($user,$request->input('categorie_id'))]);
+        return response()->json(['abo' => $abo]);
     }
 
     public function unsubscribe(Request $request)
     {
+        $this->worker->delete($request->input('user_id'),$request->input('categorie_id'));
 
+        return response()->json(['result' => true]);
     }
 }

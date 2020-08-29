@@ -1,10 +1,13 @@
 <template>
-    <div class="card mb-3">
+    <div :class="'card mb-3 ' + (active ? 'abo-card-active' : '')">
         <div class="card-body">
 
             <div class="categorie-header">
                 <p class="categorie-title">{{ categorie.name }}</p>
-                <button class="btn btn-sm btn-open d-block" @click='toggle()'><i class="fas fa-edit"></i></button>
+                <div class="title-btn">
+                    <button class="btn btn-sm btn-open" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-plus')"></i></button>
+                    <button v-if="active" class="btn btn-sm btn-delete" @click='destroy()'><i class="fas fa-times"></i></button>
+                </div>
             </div>
 
             <div v-show="isOpen" class="wrapper">
@@ -31,11 +34,10 @@
                     </div>
                 </div>
 
-                <button class="btn btn-sm btn-save d-block" type="button" @click="save">
+                <button :class="'btn btn-sm d-block ' + (active ? 'btn-save-active' : 'btn-save') " type="button" @click="save">
                     Enregistrer <span><transition name="fade"><i v-show="updated" class="fas fa-check"></i></transition></span>
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -51,7 +53,8 @@
                 updated: false,
                 categorie_id: this.categorie.id,
                 aPublier : this.abo ? this.abo.toPublish : null,
-                words : this.abo ? this.abo.keywords : []
+                words : this.abo ? this.abo.keywords : [],
+                active: this.abo ?? null
             }
         },
         mounted() {
@@ -67,6 +70,23 @@
             remove(index) {
                 this.words.splice(index,1)
             },
+            destroy(){
+                var self = this;
+                axios.post("unsubscribe",{
+                    user_id: this.user_id,
+                    categorie_id: this.categorie_id,
+                }).then(function (response) {
+
+                    console.log(response);
+                    self.updated = true;
+                    setTimeout(() => {
+                        self.updated = false;
+                        self.isOpen = false;
+                        self.active = null;
+                    }, 1500);
+
+                }).catch(function (error) { console.log(error);});
+            },
             save() {
                 var self = this;
                 axios.post("subscribe",{
@@ -75,10 +95,13 @@
                     keywords: this.words ,
                     toPublish: this.aPublier
                 }).then(function (response) {
+
+                    console.log(response);
                     self.updated = true;
                     setTimeout(() => {
                         self.updated = false;
                         self.isOpen = false;
+                        self.active = response.data.abo;
                     }, 1500);
 
                 }).catch(function (error) { console.log(error);});
@@ -93,6 +116,28 @@
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0
     }
+
+    .title-btn{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .abo-card-active .card-body{
+        background-color: #0f4060;
+        color: #fff;
+    }
+
+    .abo-card-active .categorie-header .btn-open{
+        background-color: #fff;
+        color: #938164;
+    }
+
+    .abo-card-active .categorie-header .btn-open:hover{
+        background-color: #fff;
+        color: #000;
+    }
+
     .wrapper{
         margin-top: 20px;
     }
@@ -111,15 +156,48 @@
         padding-right: 10px;
         margin-bottom: 0;
     }
+
+    .btn-delete,
+    .btn-open{
+        font-size: 11px;
+        width: 75px;
+        padding: 1px;
+        text-transform: uppercase;
+        height: 26px;
+        border: none;
+        display: block;
+    }
+
     .btn-open{
         background-color: #0f4060;
         color: #fff;
-        font-size: 11px;
-        width: 90px;
-        padding: 3px;
-        text-transform: uppercase;
-        height: 26px;
+        margin-right: -2px;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
     }
+
+    .btn-open:hover{
+        background-color: #0c3956;
+    }
+
+    .btn-danger{
+        background-color: #a12f10;
+        border-color:#a12f10;
+    }
+
+    .btn-delete{
+        width: 45px;
+        background-color: #a12f10;
+        color: #fff;
+        margin-left: -2px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .btn-delete:hover{
+        background-color: #932406;
+    }
+
     .btn-droitpraticen{
         background-color: #9c8b6f;
         color: #fff;
@@ -139,6 +217,17 @@
         width: 100%;
         margin-top: 20px;
     }
+    .btn-save-active{
+        background-color: #fff;
+        color: #0f4060;
+        font-size: 12px;
+        padding: 5px;
+        text-transform: uppercase;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+    }
+
     .btn-save span{
         width: 15px;
         display: inline-block;
@@ -193,7 +282,7 @@
     .onoffswitch .onoffswitch-inner:before {
         content: "Oui";
         padding-left: 10px;
-        background-color: #0f4060;
+        background-color: #9c8b6f;
         color: hsl(0, 0%, 100%);
     }
     .onoffswitch .onoffswitch-inner:after {

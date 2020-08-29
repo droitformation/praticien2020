@@ -40,9 +40,7 @@ class SubscriptionWorker{
             }
         }
 
-        $user = $user->fresh();
-
-        return $user;
+        return $abo;
     }
 
     public function delete($user_id,$categorie_id)
