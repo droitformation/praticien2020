@@ -1,39 +1,44 @@
 <template>
     <div class="card mb-3">
         <div class="card-body">
+
             <div class="categorie-header">
                 <p class="categorie-title">{{ categorie.name }}</p>
-                <button class="btn btn-sm btn-droitpraticen d-block" @click="add" data-toggle="tooltip" data-placement="top" title="Limiter par mots-clés"><i class="fas fa-plus"></i> &nbsp;Mots-cles</button>
+                <button class="btn btn-sm btn-open d-block" @click='toggle()'><i class="fas fa-edit"></i></button>
             </div>
 
-            <div v-if="words.length" class="keywords_wrapper">
-               <div v-for="(keyword,index) in words" class="d-flex flex-row justify-content-between my-3">
-                   <input class="form-control form-control-keyword" name="keyword[]" type="text" v-model="keyword.text">
-                   <button class="btn btn-sm btn-danger btn-remove" @click="remove(index)">x</button>
-               </div>
-            </div>
-
-            <div class="toggle-group">
-                <input type="checkbox" name="on-off-switch" :id="'on-off-switch_' + categorie.id" v-model="aPublier" tabindex="1">
-                <label :for="'on-off-switch_' + categorie.id">Limiter aux arrêts proposé pour la publication </label>
-                <div class="onoffswitch pull-right" aria-hidden="true">
-                    <div class="onoffswitch-label">
-                        <div class="onoffswitch-inner"></div>
-                        <div class="onoffswitch-switch"></div>
+            <div v-show="isOpen" class="wrapper">
+                <div v-if="words.length" class="keywords_wrapper">
+                    <div v-for="(keyword,index) in words" class="d-flex flex-row justify-content-between my-3">
+                        <input class="form-control form-control-keyword" name="keyword[]" type="text" v-model="keyword.text">
+                        <button class="btn btn-sm btn-danger btn-remove" @click="remove(index)">x</button>
                     </div>
                 </div>
+
+                <p class="text-right">
+                    <button class="btn btn-sm btn-droitpraticen" @click="add" data-toggle="tooltip" data-placement="top" title="Limiter par mots-clés">
+                        <i class="fas fa-plus"></i> &nbsp;Mots-cles</button>
+                </p>
+
+                <div class="toggle-group">
+                    <input type="checkbox" name="on-off-switch" :id="'on-off-switch_' + categorie.id" v-model="aPublier" tabindex="1">
+                    <label :for="'on-off-switch_' + categorie.id">Limiter aux arrêts proposé pour la publication </label>
+                    <div class="onoffswitch pull-right" aria-hidden="true">
+                        <div class="onoffswitch-label">
+                            <div class="onoffswitch-inner"></div>
+                            <div class="onoffswitch-switch"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-sm btn-save d-block" type="button" @click="save">
+                    Enregistrer <span><transition name="fade"><i v-show="updated" class="fas fa-check"></i></transition></span>
+                </button>
             </div>
 
-            <button class="btn btn-sm btn-save d-block" type="button" @click="save">
-                Enregistrer
-                <span>
-                    <transition name="fade">
-                        <i v-show="updated" class="fas fa-check"></i>
-                    </transition>
-                </span>
-            </button>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -42,6 +47,7 @@
         props: ['categorie','abo','user_id'],
         data(){
             return{
+                isOpen: false,
                 updated: false,
                 categorie_id: this.categorie.id,
                 aPublier : this.abo ? this.abo.toPublish : null,
@@ -52,6 +58,9 @@
             console.log('Component mounted.')
         },
         methods: {
+            toggle: function(){
+                this.isOpen = !this.isOpen
+            },
             add() {
                 this.words.push({text: ''})
             },
@@ -69,6 +78,7 @@
                     self.updated = true;
                     setTimeout(() => {
                         self.updated = false;
+                        self.isOpen = false;
                     }, 1500);
 
                 }).catch(function (error) { console.log(error);});
@@ -83,14 +93,16 @@
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0
     }
+    .wrapper{
+        margin-top: 20px;
+    }
     .keywords_wrapper{
-        margin: 30px 0 40px 0;
+        margin: 30px 0 0px 0;
     }
     .categorie-header{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-bottom: 20px;
     }
     .categorie-title{
         display: block;
@@ -98,6 +110,15 @@
         font-size: 18px;
         padding-right: 10px;
         margin-bottom: 0;
+    }
+    .btn-open{
+        background-color: #0f4060;
+        color: #fff;
+        font-size: 11px;
+        width: 90px;
+        padding: 3px;
+        text-transform: uppercase;
+        height: 26px;
     }
     .btn-droitpraticen{
         background-color: #9c8b6f;
