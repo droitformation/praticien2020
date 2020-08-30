@@ -68,7 +68,7 @@
 
         <section class="cta-two mt-80">
             <div class="container">
-                <div class="inner-container no-shadow wow fadeInUp" data-wow-duration="1500ms">
+                <div class="inner-container no-shadow">
                     <div class="row no-gutters">
                         <div class="col-lg-4">
                             <div class="cta-two__box">

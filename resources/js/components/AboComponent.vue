@@ -132,6 +132,10 @@
         /*color: #fff;*/
     }
 
+    .abo-card-active .categorie-title{
+        color: #0f4060;
+    }
+
  /*   .abo-card-active .categorie-header .btn-open{
         background-color: #fff;
         color: #938164;
@@ -155,7 +159,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-self: center;
+        align-items: center;
     }
     .categorie-title{
         display: block;
@@ -210,10 +214,10 @@
     }
 
     .btn-delete{
-        width: 45px;
+        width: 25px;
         background-color: #a12f10;
         color: #fff;
-        margin-left: -2px;
+        margin-left: 15px;
         border-radius: 0;
     }
 

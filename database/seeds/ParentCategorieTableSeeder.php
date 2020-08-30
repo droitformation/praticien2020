@@ -35,7 +35,8 @@ class ParentCategorieTableSeeder extends Seeder
             array('id' => '20','nom' => 'Juridiction arbitrale'),
             array('id' => '21','nom' => 'Droit commercial'),
             array('id' => '23','nom' => 'Art et culture'),
-            array('id' => '24','nom' => 'Poste et télécommunications')
+            array('id' => '24','nom' => 'Poste et télécommunications'),
+            array('id' => '25','nom' => 'Général','rang' => 1),
         );
 
         \DB::table('parent_categories')->insert($parent_categories);

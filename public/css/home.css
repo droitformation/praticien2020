@@ -127,6 +127,8 @@
 
 #main-tab-content{
     width: 70%;
-    padding-left: 20px;
+    background: #fafafa;
+    border-left: 1px solid #ececec;
+    padding: 15px;
     flex-grow: 1;
 }

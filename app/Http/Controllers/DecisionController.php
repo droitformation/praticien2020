@@ -15,11 +15,23 @@ class DecisionController extends Controller
         $this->categorie = $categorie;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $decisions = $this->decision->getAll();
+        $params = $request->except(['_token']);
 
-        return view('decisions.index')->with(['decisions' => $decisions]);
+     /*  echo '<pre>';
+        print_r($params);
+        echo '</pre>';
+        exit;*/
+        //$params['terms']
+        //$params['published']
+        //$params['period']0 start, 1 end
+        //$params['categorie_id']
+
+        $decisions = empty(array_filter($params)) ? $this->decision->getAll() : $this->decision->searchArchives(array_filter($params));
+        $parents   = $this->categorie->getParents();
+
+        return view('decisions.index')->with(['parents' => $parents, 'decisions' => $decisions]);
     }
 
     public function show($slug)

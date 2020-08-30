@@ -182,4 +182,11 @@ class HelperTest extends TestCase
         $this->assertEquals(true,$result['toPublish']);
         $this->assertEquals([],$result['keywords']);
     }
+
+    public function testConvertDate()
+    {
+        $result = convertPeriod(['01/12/2020','05/12/2020']);
+
+        $this->assertEquals(['2020-12-01','2020-12-05'],$result);
+    }
 }

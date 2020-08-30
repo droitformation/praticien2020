@@ -20,7 +20,7 @@ Route::get('contact', ['uses' => 'FrontendController@contact']);
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('decisions', ['uses' => 'DecisionController@index']);
+    Route::match(['get', 'post'],'decisions', ['uses' => 'DecisionController@index']);
 
     Route::get('arrets', ['uses' => 'ArretController@index']);
     Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
@@ -38,6 +38,7 @@ Route::get('message', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user', 'HomeController@user')->name('user');
 Route::post('/cadence', 'HomeController@cadence')->name('cadence');
 Route::post('/subscribe', 'SubscribeController@subscribe')->name('subscribe');
 Route::post('/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');

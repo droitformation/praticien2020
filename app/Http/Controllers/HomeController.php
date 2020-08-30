@@ -22,9 +22,8 @@ class HomeController extends Controller
     public function index()
     {
         $parents = $this->categorie->getParents();
-        $general = $this->categorie->getGlobal();
 
-        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents, 'general' => $general->first()]);
+        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents->sortByDesc('rang')]);
     }
 
     public function cadence(Request $request)
@@ -32,5 +31,10 @@ class HomeController extends Controller
         $result = $this->user->update(['id' => $request->input('user_id'),'cadence' => $request->input('cadence')]);
 
         return response()->json(['result' => $request->all() ?? false]);
+    }
+
+    public function user()
+    {
+        return view('user')->with(['user' => \Auth::user()]);
     }
 }

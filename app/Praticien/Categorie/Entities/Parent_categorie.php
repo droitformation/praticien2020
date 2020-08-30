@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parent_categorie extends Model {
 
-	protected $fillable = ['parent_categories'];
+	protected $fillable = ['id','nom','rang'];
 
     public $timestamps  = false;
 

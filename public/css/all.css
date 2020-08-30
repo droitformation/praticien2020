@@ -1222,7 +1222,8 @@ readers do not read off random characters that represent icons */
   content: "\e000"; }
 
 .fa-caret-circle-down:before {
-  content: "\f32d"; }
+  content: "\f32d";
+}
 
 .fa-caret-circle-left:before {
   content: "\f32e"; }

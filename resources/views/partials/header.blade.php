@@ -28,8 +28,8 @@
                    <li class="dropdown">
                        <a href="{{ secure_url('home') }}" class=""><i class="fas fa-user"></i></a>
                        <ul class="right">
-                           <li><a href="{{ secure_url('home') }}">Mes données</a></li>
-                           <li><a href="{{ secure_url('abos') }}">Abonnements</a></li>
+                           <li><a href="{{ secure_url('home') }}">Abonnements</a></li>
+                           <li><a href="{{ secure_url('user') }}">Données</a></li>
                            <li>
                                <form class="logout" action="{{ route('logout') }}" method="POST"> @csrf
                                    <button class="btn btn-default btn-xs" type="submit"><i class="fas fa-power-off"></i> &nbsp;Logout</button>

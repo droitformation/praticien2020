@@ -88,7 +88,9 @@
     $('[data-toggle="tooltip"]').tooltip()
 
     if ($('.datepicker').length) {
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+        });
     }
 
     let base_url = location.protocol + "//" + location.host+"/";
@@ -134,6 +136,16 @@
                 sortDescending: ": activer pour trier la colonne par ordre décroissant"
             }
         }
+    });
+
+    $('.collapse').on('show.bs.collapse', function () {
+        $(this).siblings('.parent-link').find('i').removeClass('fa-caret-right');
+        $(this).siblings('.parent-link').find('i').addClass('fa-caret-down');
+    });
+
+    $('.collapse').on('hide.bs.collapse', function () {
+        $(this).siblings('.parent-link').find('i').removeClass('fa-caret-down');
+        $(this).siblings('.parent-link').find('i').addClass('fa-caret-right');
     });
 
     if ($('.plan-visit__tab-links').length) {

@@ -540,3 +540,11 @@ function getAboCategorie($user,$categorie_id){
 
     return null;
 }
+
+function convertPeriod($period){
+
+    $start = $period[0] ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[0])->format('Y-m-d') : \Carbon\Carbon::today()->toDateString();
+    $end   = $period[1] ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[1])->format('Y-m-d') : \Carbon\Carbon::today()->toDateString();
+
+    return [$start,$end];
+}

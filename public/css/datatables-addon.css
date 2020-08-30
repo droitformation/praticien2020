@@ -19,13 +19,18 @@ div#decisions_filter{
     margin-bottom: 20px !important;
     background: #fff;
     padding:15px 10px;
-    border: 1px solid #f1f1f1;
+}
+
+#decisions_length label select,
+div.dataTables_filter input{
+    padding: 5px;
+    height: 30px;
+    line-height: 30px;
 }
 
 table.dataTable{
     background: #fff;
     padding:0 0 15px 0;
-    border: 1px solid #f1f1f1;
 }
 
 div.dataTables_wrapper div.dataTables_length label {
@@ -129,7 +134,12 @@ li.paginate_button.next a{
 
 table.dataTable td{
     vertical-align: top !important;
-    line-height: 22px;
+    line-height: 18px;
+    font-size: 14px;
+}
+
+table.dataTable td:last-child{
+    text-align: right;
 }
 
 #decisions_length label select{
