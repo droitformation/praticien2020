@@ -22,8 +22,9 @@ class HomeController extends Controller
     public function index()
     {
         $parents = $this->categorie->getParents();
+        $general = $this->categorie->getGlobal();
 
-        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents]);
+        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents, 'general' => $general->first()]);
     }
 
     public function cadence(Request $request)

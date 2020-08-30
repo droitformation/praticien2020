@@ -1,11 +1,11 @@
 <template>
-    <div :class="'card mb-3 ' + (active ? 'abo-card-active' : '')">
+    <div :class="'card mb-3 abo-card ' + (active ? 'abo-card-active' : '')">
         <div class="card-body">
 
             <div class="categorie-header">
                 <p class="categorie-title">{{ categorie.name }}</p>
                 <div class="title-btn">
-                    <button class="btn btn-sm btn-open" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-plus')"></i></button>
+                    <button :class="'btn btn-sm btn-open ' + (!active ? 'btn-plus' : '')" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-plus')"></i></button>
                     <button v-if="active" class="btn btn-sm btn-delete" @click='destroy()'><i class="fas fa-times"></i></button>
                 </div>
             </div>
@@ -34,8 +34,8 @@
                     </div>
                 </div>
 
-                <button :class="'btn btn-sm d-block ' + (active ? 'btn-save-active' : 'btn-save') " type="button" @click="save">
-                    Enregistrer <span><transition name="fade"><i v-show="updated" class="fas fa-check"></i></transition></span>
+                <button :class="'btn btn-sm d-block ' + (active ? 'btn-save-active' : 'btn-save')" type="button" @click="save">
+                     {{ (active ? 'Enregistrer' : 'Sauvegarder') }} <span><transition name="fade"><i v-show="updated" class="fas fa-check"></i></transition></span>
                 </button>
             </div>
         </div>
@@ -117,6 +117,10 @@
         opacity: 0
     }
 
+    .abo-card .form-control{
+        border-radius: 0;
+    }
+
     .title-btn{
         display: flex;
         flex-direction: row;
@@ -124,11 +128,11 @@
     }
 
     .abo-card-active .card-body{
-        background-color: #0f4060;
-        color: #fff;
+        border:2px solid #0f4060;
+        /*color: #fff;*/
     }
 
-    .abo-card-active .categorie-header .btn-open{
+ /*   .abo-card-active .categorie-header .btn-open{
         background-color: #fff;
         color: #938164;
     }
@@ -136,18 +140,22 @@
     .abo-card-active .categorie-header .btn-open:hover{
         background-color: #fff;
         color: #000;
-    }
+    }*/
 
     .wrapper{
         margin-top: 20px;
     }
     .keywords_wrapper{
-        margin: 30px 0 0px 0;
+        margin: 30px -20px 10px -20px;
+        padding: 5px 15px;
+        background: #f3f3f3;
     }
+
     .categorie-header{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-self: center;
     }
     .categorie-title{
         display: block;
@@ -166,23 +174,39 @@
         height: 26px;
         border: none;
         display: block;
+        border-radius: 0;
     }
 
     .btn-open{
         background-color: #0f4060;
         color: #fff;
         margin-right: -2px;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
+        border-radius: 0;
     }
 
     .btn-open:hover{
-        background-color: #0c3956;
+        background-color: #0b3956;
+    }
+
+    .btn-plus{
+        width: 35px;
+        background-color: #9c8b6f;
+        color: #fff;
+        border-radius: 0;
+    }
+
+    .btn-plus:hover{
+        width: 35px;
+        background-color: #8f7e62;
+        color: #fff;
     }
 
     .btn-danger{
-        background-color: #a12f10;
-        border-color:#a12f10;
+        background-color: transparent;
+        border-color: transparent;
+        color: #a12f10;
+        font-size: 20px;
+        border-radius: 0;
     }
 
     .btn-delete{
@@ -190,8 +214,7 @@
         background-color: #a12f10;
         color: #fff;
         margin-left: -2px;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
+        border-radius: 0;
     }
 
     .btn-delete:hover{
@@ -206,8 +229,22 @@
         padding: 3px;
         text-transform: uppercase;
         height: 26px;
+        border-radius: 0;
     }
+
     .btn-save{
+        background-color: #e7e7e7;
+        color: #000;
+        font-size: 12px;
+        padding: 5px;
+        text-transform: uppercase;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 0;
+    }
+
+    .btn-save-active{
         background-color: #0f4060;
         color: #fff;
         font-size: 12px;
@@ -216,27 +253,20 @@
         display: block;
         width: 100%;
         margin-top: 20px;
-    }
-    .btn-save-active{
-        background-color: #fff;
-        color: #0f4060;
-        font-size: 12px;
-        padding: 5px;
-        text-transform: uppercase;
-        display: block;
-        width: 100%;
-        margin-top: 20px;
+        border-radius: 0;
     }
 
     .btn-save span{
         width: 15px;
         display: inline-block;
     }
+
     .btn-remove{
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
-        padding: .1rem .5rem;
+        padding: .1rem .6rem;
     }
+
     .form-control-keyword{
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
