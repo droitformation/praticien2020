@@ -44,7 +44,7 @@ font-family: 'Work Sans', sans-serif; */
 
 :root {
 	--thm-font: "Karla", sans-serif;
-	--heading-font: "Playfair Display", serif;
+	--heading-font: "Karla", serif;
 	--special-font: "Work Sans", sans-serif;
 	--thm-base: #9c8b6f;
     --thm-base-light: #cec5a9;
@@ -779,6 +779,109 @@ a:focus {
 	opacity: 40%;
 }
 
+/* decisions table search */
+#SidebarList{
+    width: 230px;
+}
+
+.decisions-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.decisions-aside{
+    width: 260px;
+    padding: 5px 20px;
+    background-color: #9c8b6f;
+}
+
+.decisions-section{
+    flex-grow: 1;
+}
+
+.decision-content{
+    padding: 40px;
+}
+
+.decisions-section-options{
+    padding: 10px 40px;
+    background: #f1f1f1;
+}
+
+.input-date{
+    width: 40%;
+    margin-right: 15px;
+}
+.input-date input{
+    padding: 5px 10px;
+}
+
+.input-terms{
+    width: 100%;
+}
+
+.input-publication{
+    width: 25%;
+    margin-left: 15px;
+}
+
+.input-publication,
+.input-publication .form-check-label{
+    line-height: 20px;
+}
+
+.decisions-section-options form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.decision-details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.decision-details div.dates{
+    display: flex;
+    flex-direction: row;
+}
+
+.decision_main{
+    line-height: 22px;
+}
+
+.decision_main h1{
+    margin-bottom: 20px;
+    font-size: 2.1rem;
+}
+
+.decision_main div{
+    margin-bottom: 10px;
+}
+
+.decision-details div{
+    padding-right: 20px;
+}
+
+.btn-print{
+    background-color: #9c8b6f;
+    border-color: #9c8b6f;
+    color: #fff;
+}
+
+strong.block{
+    display: block;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 22px;
+}
+
 /* shadowed carousel */
 
 .shadowed__carousel .owl-stage-outer {
@@ -821,6 +924,11 @@ a:focus {
 
 .logo span{
 
+}
+
+.main-nav-one{
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0px 3px 5px 0px rgba(33, 37, 43, 0.15);
 }
 
 .main-nav-one .logo-box {
@@ -2634,7 +2742,6 @@ a:focus {
     background: #fff;
     padding: 5px 7px;
     font-size: 14px;
-    margin-bottom: 2px;
     line-height: 18px;
     color: #9c8b6f !important;
     cursor: pointer;

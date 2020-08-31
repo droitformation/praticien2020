@@ -21,6 +21,11 @@ div#decisions_filter{
     padding:15px 10px;
 }
 
+div#decisions_length,
+div#decisions_filter{
+    display: none;
+}
+
 #decisions_length label select,
 div.dataTables_filter input{
     padding: 5px;
@@ -30,7 +35,8 @@ div.dataTables_filter input{
 
 table.dataTable{
     background: #fff;
-    padding:0 0 15px 0;
+    padding:0 0 0 0;
+    width: 100%;
 }
 
 div.dataTables_wrapper div.dataTables_length label {
@@ -49,12 +55,18 @@ table.dataTable td{
 
 table.dataTable th{
     padding:10px 15px 10px 15px;
-    background: #f1f1f1;
+
 }
 
 table.dataTable td{
-    padding:7px 15px;
+    padding:10px 15px;
     color: #555555;
+}
+
+.table-bordered thead td,
+.table-bordered thead th {
+    border-bottom-width: 0 !important;
+    border-top-width: 0 !important;
 }
 
 /*table.dataTable th:first-child,
@@ -134,8 +146,8 @@ li.paginate_button.next a{
 
 table.dataTable td{
     vertical-align: top !important;
-    line-height: 18px;
-    font-size: 14px;
+    line-height: 20px;
+    font-size: 16px;
 }
 
 table.dataTable td:last-child{

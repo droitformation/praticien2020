@@ -77,9 +77,7 @@
                     $('.mc-form').removeClass('successed').addClass('errored');
                     $('.mc-form__response').removeClass('successed').addClass('errored');
                     $('.mc-form').find('input').val('');
-
                     $('.mc-form__response p').fadeOut(10000);
-
                 }
             }
         });
@@ -87,16 +85,30 @@
 
     $('[data-toggle="tooltip"]').tooltip()
 
+    $.fn.datepicker.dates['fr'] = {
+        days: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+        daysShort: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
+        daysMin: ["d", "l", "ma", "me", "j", "v", "s"],
+        months: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+        monthsShort: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+        today: "Aujourd'hui",
+        monthsTitle: "Mois",
+        clear: "Effacer",
+        weekStart: 1,
+        format: "dd/mm/yyyy"
+    };
+
     if ($('.datepicker').length) {
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
+            language: 'fr',
         });
     }
 
     let base_url = location.protocol + "//" + location.host+"/";
 
     $('#decisions').DataTable({
-        "processing": true,
+  /*      "processing": true,
         "serverSide": true,
         "ajax": {
             "url":  base_url + 'api/decisions',
@@ -104,7 +116,8 @@
             "data": function ( d ) {
                 d._token = $("meta[name='_token']").attr('content')
             }
-        },
+        },*/
+        "pageLength": 25,
         select: true,
         "columns": [
             { "data": "publication_at" },

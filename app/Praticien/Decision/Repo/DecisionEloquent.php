@@ -207,8 +207,7 @@ class DecisionEloquent implements DecisionInterface{
     public function searchArchives($params)
     {
         $results = collect([]);
-        $period  = isset($params['period']) && !empty($params['period']) ? $params['period'] : null;
-        $period  = $period ? convertPeriod($period) : null;
+        $period  = $params['period'];
         $tables  = $period ? archiveTableForDates($period[0],$period[1]) : range(2012,date('Y'));
 
         foreach ($tables as $year) {
@@ -230,17 +229,8 @@ class DecisionEloquent implements DecisionInterface{
 
     public function searchTable($table,$conn,$params,$year)
     {
-  /*      echo '<pre>';
-        print_r($table);
-        print_r($conn);
-        print_r($params);
-        print_r($year);
-        echo '</pre>';
-        exit;*/
-
         $terms        = isset($params['terms']) && !empty($params['terms']) ? prepareTerms($params['terms']) : null;
         $published    = isset($params['published']) && $params['published'] == 1 ? $params['published'] : null;
-        $period       = isset($params['period']) ? $params['period'] : null;
         $categorie_id = isset($params['categorie_id']) ? $params['categorie_id'] : null;
 
         // For live
@@ -248,7 +238,7 @@ class DecisionEloquent implements DecisionInterface{
         // For dev
         $cast         = 'Year(publication_at) as year';
 
-        $model = \DB::connection($conn)->table($table)
+        $model = $this->decision->setTable($table)->setConnection($conn)
             ->select($table.'.id',$table.'.numero',$table.'.categorie_id',$table.'.remarque',$table.'.publication_at',$table.'.decision_at',$table.'.langue',$table.'.publish')
             ->selectRaw($cast);
 
@@ -264,9 +254,7 @@ class DecisionEloquent implements DecisionInterface{
             }
         }
 
-        if($period){
-            $model->whereBetween('publication_at', $period);
-        }
+        $model->whereBetween('publication_at', $params['period']);
 
         if($published){
             $model->where('publish', '=' ,1);

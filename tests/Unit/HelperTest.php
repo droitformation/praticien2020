@@ -189,4 +189,18 @@ class HelperTest extends TestCase
 
         $this->assertEquals(['2020-12-01','2020-12-05'],$result);
     }
+
+    public function testAddDatesToParams()
+    {
+        $result = addDates(['period' => ['01/12/2020','05/12/2020']]);
+
+        $this->assertEquals(['period' => ['2020-12-01','2020-12-05']],$result);
+
+        $result = addDates();
+
+        $start = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->startOfWeek()->startOfDay() : \Carbon\Carbon::today()->subWeek()->startOfDay();
+        $end   = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->endOfWeek()->startOfDay() : \Carbon\Carbon::today()->startOfDay();
+
+        $this->assertEquals(['period' => [$start->toDateString(),$end->toDateString()]],$result);
+    }
 }

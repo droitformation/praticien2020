@@ -20,10 +20,11 @@
     <!-- Fonts URL -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700%7CPlayfair+Display:400,500,600,700,800,900%7CWork+Sans:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <link href="{{ secure_asset('css/datatables.min.css') }}" rel="stylesheet">
+    <link href="//cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="{{ secure_asset('css/datatables-addon.css') }}?{{ rand(1,3000) }}" rel="stylesheet" >
 
     <link href="{{ secure_asset('css/all.css') }}" rel="stylesheet">
+    <link href="//printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
 
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/bootstrap.min.css') }}">
@@ -102,7 +103,7 @@
 <script src="{{ secure_asset('js/wow.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.lettering.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.circleType.js') }}"></script>
-
+<script src="//printjs-4de6.kxcdn.com/print.min.js"></script>
 <!-- Custom Scripts -->
 <script src="{{ secure_asset('js/theme.js') }}"></script>
 <script src="{{ secure_asset('js/app.js') }}"></script>

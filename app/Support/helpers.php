@@ -104,8 +104,14 @@ function generateDateRange($start_date, $end_date)
 
 function archiveTableForDates($start_date, $end_date){
 
-    $start_date = \Carbon\Carbon::parse($start_date);
-    $end_date   = \Carbon\Carbon::parse($end_date);
+    if (strpos($start_date, '/') !== false) {
+        $start_date = \Carbon\Carbon::createFromFormat('d/m/Y',$start_date);
+        $end_date   = \Carbon\Carbon::createFromFormat('d/m/Y',$end_date);
+    }
+    else{
+        $start_date = \Carbon\Carbon::createFromFormat('Y-m-d',$start_date);
+        $end_date   = \Carbon\Carbon::createFromFormat('Y-m-d',$end_date);
+    }
 
     $years = [];
 
@@ -543,8 +549,63 @@ function getAboCategorie($user,$categorie_id){
 
 function convertPeriod($period){
 
-    $start = $period[0] ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[0])->format('Y-m-d') : \Carbon\Carbon::today()->toDateString();
-    $end   = $period[1] ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[1])->format('Y-m-d') : \Carbon\Carbon::today()->toDateString();
+    $start = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->startOfWeek()->startOfDay() : \Carbon\Carbon::today()->subWeek()->startOfDay();
+    $end   = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->endOfWeek()->startOfDay() : \Carbon\Carbon::today()->startOfDay();
+
+    if (strpos($period[0], '/') !== false) {
+        $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[0])->format('Y-m-d') : $start->toDateString();
+        $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[1])->format('Y-m-d') : $end->toDateString();
+    }
+
+    if (strpos($period[0], '-') !== false) {
+
+        $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[0])->format('d/m/Y') : $start->toDateString();
+        $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[1])->format('d/m/Y') : $end->toDateString();
+    }
 
     return [$start,$end];
+}
+
+function converForDatePicker($period){
+    $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[0])->format('d/m/Y') : \Carbon\Carbon::today()->toDateString();
+    $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[1])->format('d/m/Y') : \Carbon\Carbon::today()->toDateString();
+
+    return [$start,$end];
+}
+
+function addDates($params = null){
+
+    $params['period'] = convertPeriod($params['period'] ?? null);
+
+    return $params;
+}
+
+function frontendDates($period){
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+    $start = \Carbon\Carbon::createFromFormat('Y-m-d',$period[0]);
+    $end   = \Carbon\Carbon::createFromFormat('Y-m-d',$period[1]);
+
+    if($start->month == $end->month){
+        $month1 = '%d';
+        $month2 = '%d %B';
+    }
+    else{
+        $month1 = '%d %B';
+        $month2 = '%d %B';
+    }
+
+    if($start->year == $end->year){
+        $year1 = '';
+        $year2 = '%Y';
+    }
+    else{
+        $year1 = '%Y';
+        $year2 = '%Y';
+    }
+
+    $format1 = trim($month1.' '.$year1);
+    $format2 = trim($month2.' '.$year2);
+
+    return $start->formatLocalized($format1).' au '.$end->formatLocalized($format2);
 }

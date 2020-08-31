@@ -19,9 +19,12 @@ Route::get('access', ['uses' => 'FrontendController@access']);
 Route::get('contact', ['uses' => 'FrontendController@contact']);
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::match(['get', 'post'],'decisions', ['uses' => 'DecisionController@index']);
+Route::match(['get', 'post'],'decisions', ['uses' => 'DecisionController@index']);
+Route::get('decision/{id}', ['uses' => 'DecisionController@show']);
+Route::get('categorie/{slug}', ['uses' => 'DecisionController@categorie']);
+Route::get('export/{id}', ['uses' => 'DecisionController@export']);
 
+Route::group(['middleware' => ['auth']], function () {
     Route::get('arrets', ['uses' => 'ArretController@index']);
     Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
     Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
