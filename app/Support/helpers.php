@@ -552,7 +552,10 @@ function convertPeriod($period){
     $start = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->startOfWeek()->startOfDay() : \Carbon\Carbon::today()->subWeek()->startOfDay();
     $end   = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->endOfWeek()->startOfDay() : \Carbon\Carbon::today()->startOfDay();
 
-    if (strpos($period[0], '/') !== false) {
+    $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[0])->format('Y-m-d') : $start->toDateString();
+    $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[1])->format('Y-m-d') : $end->toDateString();
+
+ /*   if (strpos($period[0], '/') !== false) {
         $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[0])->format('Y-m-d') : $start->toDateString();
         $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('d/m/Y',$period[1])->format('Y-m-d') : $end->toDateString();
     }
@@ -561,7 +564,7 @@ function convertPeriod($period){
 
         $start = isset($period[0]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[0])->format('d/m/Y') : $start->toDateString();
         $end   = isset($period[1]) ? \Carbon\Carbon::createFromFormat('Y-m-d',$period[1])->format('d/m/Y') : $end->toDateString();
-    }
+    }*/
 
     return [$start,$end];
 }

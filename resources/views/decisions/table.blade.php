@@ -1,5 +1,6 @@
 @extends('decisions.index')
 @section('options')
+
     <form method="post" action="{{ secure_url('decisions') }}">@csrf
         <div class="input-date"><input placeholder="Début" class="form-control datepicker" name="period[]" value="{{ converForDatePicker($params['period'])[0] }}"></div>
         <div class="input-date"><input placeholder="Fin" class="form-control datepicker" name="period[]" value="{{ converForDatePicker($params['period'])[1] }}"></div>
@@ -8,8 +9,10 @@
             <input type="checkbox" class="form-check-input" value="1" {{ isset($params['published']) ? 'checked' : '' }} name="published" id="publication">
             <label class="form-check-label" for="publication">a publication</label>
         </div>
-        <div><button class="btn btn-sm btn-success" type="submit">Ok</button></div>
+        <div><button class="btn btn-sm btn-search" type="submit">Envoyer</button></div>
+        <div class="option-btn"><a class="text-black-50" href="{{ secure_url('decisions?clear') }}">Retirer les filtres</a></div>
     </form>
+
 @endsection
 @section('section')
     @parent

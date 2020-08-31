@@ -19,19 +19,24 @@ class DecisionController extends Controller
 
     public function index(Request $request)
     {
-        if($this->hasInput($request)){
-            $params = addDates($request->all());
-            session()->put('search',$params);
-        }
-        else{
-            $params = session()->get('search');
-            $params = addDates($params);
+        if($request->input('clear')){
+            session()->forget('search');
         }
 
-        /* */ echo '<pre>';
+        $params = addDates($request->all());
+
+        if($this->hasInput($request)){
+            session()->put('search',$params);
+        }
+
+        if(session()->has('search')){
+            $params = session()->get('search');
+        }
+
+        /*  echo '<pre>';
            print_r($params);
            echo '</pre>';
-           exit;
+           exit;*/
         //$params['terms']
         //$params['published']
         //$params['period']0 start, 1 end

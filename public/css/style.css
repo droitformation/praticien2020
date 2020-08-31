@@ -821,6 +821,20 @@ a:focus {
     width: 100%;
 }
 
+.option-btn{
+    width: 20%;
+    margin-left: 20px;
+    border-left: 1px solid #9c8b6f;
+    padding-left: 10px;
+}
+
+.btn-search{
+    background-color: #9c8b6f;
+    color: #fff;
+    border-radius: 0;
+    padding: 5px 10px;
+}
+
 .input-publication{
     width: 25%;
     margin-left: 15px;

@@ -9,7 +9,7 @@
         <div class="dates">
             <div><strong class="block">Publication: </strong>{{ $decision->publication_at->format('d/m/Y') }}</div>
             <div><strong class="block">Décision: </strong>{{ $decision->decision_at->format('d/m/Y') }}</div>
-            {!! $decision->publish ? '<div><strong>A publications: </strong></div>' : '' !!}
+            {!! $decision->publish ? '<div><strong class="block">Proposé pour la publication</strong></div>' : '' !!}
         </div>
         <div><button class="btn btn-sm btn-print" type="button" onclick="printJS('print_main', 'html')">Imprimer</button></div>
     </div>

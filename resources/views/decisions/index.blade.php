@@ -12,13 +12,11 @@
                                 <span>{{ $parent->nom }}</span><i class="fas fa-caret-right"></i>&nbsp;
                             </a>
                             <div id="cat_{{ $parent->id }}" class="collapse" aria-labelledby="cat_{{ $parent->id }}" data-parent="#SidebarList">
-
                                 @if(!$parent->categories->isEmpty())
                                     @foreach($parent->categories as $categorie)
                                         <a class="child-link" href="{{ secure_url('categorie/'.$categorie->id) }}">{{ $categorie->name }}</a>
                                     @endforeach
                                 @endif
-
                             </div>
                         </div>
                     @endforeach
