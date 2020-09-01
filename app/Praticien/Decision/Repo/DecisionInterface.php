@@ -17,7 +17,7 @@ interface DecisionInterface {
     public function find($data);
     public function findByNumeroAndDate($numero,$date);
 
-    public function byCategories($categorie_id);
+    public function byCategory($categorie_id);
     public function getest($categorie_id);
 
     /* Archives */

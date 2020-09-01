@@ -4,6 +4,8 @@
 * Class to dispatch categories, subacategorie, languages
 */
 
+use \ForceUTF8\Encoding;
+
 class Dispatch
 {
     protected $categorie;
@@ -33,6 +35,8 @@ class Dispatch
 
     public function findCategory($name)
     {
+        $name = Encoding::toUTF8($name);
+
         $exist = $this->categorie->searchByName($name);
 
         if(!$exist) {

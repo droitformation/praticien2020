@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <label for="newdate">Insérer date</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control datepicker" id="newdate" name="date" placeholder="">
+                                    <input type="text" class="form-control datePicker" id="newdate" name="date" placeholder="">
                                     <div class="input-group-prepend">
                                         <button type="submit" class="btn btn-primary">Envoyer</button>
                                     </div>
@@ -62,10 +62,10 @@
                         <form action="{{ url('backend/date/update') }}" method="POST">{!! csrf_field() !!}
                             <label for="newdate1">Insérer période</label>
                             <div class="form-group">
-                                <input type="text" class="form-control datepicker" id="range1" name="range[0]" placeholder="">
+                                <input type="text" class="form-control datePicker" id="range1" name="range[0]" placeholder="">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control datepicker" id="range2" name="range[1]" placeholder="">
+                                <input type="text" class="form-control datePicker" id="range2" name="range[1]" placeholder="">
                             </div>
                             <button type="submit" class="btn btn-info">Envoyer</button>
                         </form>

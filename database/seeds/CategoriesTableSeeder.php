@@ -78,6 +78,7 @@ class CategoriesTableSeeder extends Seeder
             array('id' => '235','name' => 'Recours en matière de surveillance','name_de' => 'Zuflucht über die Überwachung','name_it' => 'Ricorso di sorveglianza','parent_id' => '15','rang' => '7','general' => '','global' => NULL),
             array('id' => '244','name' => 'Droit de l\'avocat','name_de' => 'Anwaltsgesetz','name_it' => 'Avvocatura','parent_id' => '19','rang' => '1','general' => '','global' => NULL),
             array('id' => '247','name' => 'Général','name_de' => 'Allgemeine','name_it' => 'Generale','parent_id' => '0','rang' => '0','general' => '','global' => NULL),
+            array('id' => '248','name' => 'Allocation familiale et assurance sociale cantonale','name_de' => 'Familienzulagen und kantonale Sozialversicherung','name_it' => 'Assegni familiari e assicurazione sociale cantonale','parent_id' => '0','rang' => '0','general' => '','global' => NULL),
         );
 
         \DB::table('categories')->insert($categories);

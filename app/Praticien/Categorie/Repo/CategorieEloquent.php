@@ -41,12 +41,14 @@ class CategorieEloquent implements CategorieInterface{
         // Select categorie where the string provided sounds the same
         $query = 'soundex(name)=soundex("'.$name.'")';
 
-        if($pos)
-        {
+        if($pos) {
             $without = str_replace($find, ' (', $name);
             $query   .= ' OR soundex(name)=soundex("'.$without.'")';
         }
 
+        $variant = str_replace('Prestation','Prestations',$name);
+
+        $query .= ' OR soundex(name)=soundex("'.$variant.'")';
         $query .= ' OR soundex(name_de)=soundex("'.$name.'") OR soundex(name_it)=soundex("'.$name.'")';
 
         $categorie = $model->whereRaw($query)->get();
@@ -56,7 +58,7 @@ class CategorieEloquent implements CategorieInterface{
 
     public function find($id){
 
-        return $this->categorie->with(['arrets'])->findOrFail($id);
+        return $this->categorie->findOrFail($id);
     }
 
     public function create(array $data){
@@ -67,11 +69,10 @@ class CategorieEloquent implements CategorieInterface{
             'name_it'   => $data['name_it'],
             'parent_id' => isset($data['parent_id']) ? $data['parent_id'] : 0,
             'rang'      => isset($data['rang']) ? $data['rang'] : 0,
-            'general'   => isset($data['general']) ? $data['general'] : '',
+            'general'   => isset($data['general']) ? $data['general'] : null,
         ));
 
-        if( ! $categorie )
-        {
+        if( ! $categorie ) {
             return false;
         }
 

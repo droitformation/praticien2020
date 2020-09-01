@@ -20,8 +20,8 @@ Route::get('contact', ['uses' => 'FrontendController@contact']);
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
 Route::match(['get', 'post'],'decisions', ['uses' => 'DecisionController@index']);
-Route::get('decision/{id}', ['uses' => 'DecisionController@show']);
-Route::get('categorie/{slug}', ['uses' => 'DecisionController@categorie']);
+Route::get('decision/{id}/{year}', ['uses' => 'DecisionController@show']);
+Route::match(['get', 'post'],'categorie/{id}', ['uses' => 'DecisionController@categorie']);
 Route::get('export/{id}', ['uses' => 'DecisionController@export']);
 
 Route::group(['middleware' => ['auth']], function () {

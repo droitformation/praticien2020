@@ -48,19 +48,28 @@ class DecisionController extends Controller
         return view('decisions.table')->with(['decisions' => $decisions, 'params' => $params]);
     }
 
-    public function show($id)
+    public function show($id,$year)
     {
-        $decision = $this->decision->find($id);
+        $decision = $this->decision->findArchive($id,$year);
 
         return view('decisions.show')->with(['decision' => $decision]);
     }
 
-    public function categorie($slug)
+    public function categorie($id, Request $request)
     {
-        $categorie  = $this->categorie->bySlug($slug);
-        $decisions = $this->decision->byCategory($slug);
+        if($request->input('clear')){session()->forget('search');}
 
-        return view('decisions.categorie')->with(['categorie' => $categorie, 'decisions' => $decisions]);
+        $params = addDates($request->all());
+
+        if($this->hasInput($request)){session()->put('search',$params);}
+        if(session()->has('search')){$params = session()->get('search');}
+
+        $params['categorie_id'] = $id;
+
+        $categorie = $this->categorie->find($id);
+        $decisions = $this->decision->searchArchives($params);
+
+        return view('decisions.categorie')->with(['categorie' => $categorie, 'decisions' => $decisions, 'params' => $params]);
     }
 
     public function export($id)

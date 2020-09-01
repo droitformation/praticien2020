@@ -105,6 +105,13 @@
         });
     }
 
+    if ($('.datePicker').length) {
+        $('.datePicker').datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'fr',
+        });
+    }
+
     let base_url = location.protocol + "//" + location.host+"/";
 
     $('#decisions').DataTable({

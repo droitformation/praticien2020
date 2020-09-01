@@ -1,7 +1,7 @@
 @extends('decisions.index')
 @section('options')
 
-    <form method="post" action="{{ secure_url('decisions') }}">@csrf
+    <form method="post" action="{{ secure_url('categorie/'.$categorie->id) }}">@csrf
         <div class="input-date"><input placeholder="Début" class="form-control datepicker" name="period[]" value="{{ converForDatePicker($params['period'])[0] }}"></div>
         <div class="input-date"><input placeholder="Fin" class="form-control datepicker" name="period[]" value="{{ converForDatePicker($params['period'])[1] }}"></div>
         <div class="input-terms"><input placeholder="Recherche..." class="form-control" name="terms" value="{{ $params['terms'] ?? '' }}"></div>
@@ -10,14 +10,15 @@
             <label class="form-check-label" for="publication">a publication</label>
         </div>
         <div><button class="btn btn-sm btn-search" type="submit">Envoyer</button></div>
-        <div class="option-btn"><a class="text-black-50" href="{{ secure_url('decisions?clear') }}">Retirer les filtres</a></div>
+        <div class="option-btn"><a class="text-black-50" href="{{ secure_url('categorie/'.$categorie->id.'?clear') }}">Retirer les filtres</a></div>
     </form>
 
 @endsection
 @section('section')
     @parent
 
-    <h3>Décisions du {{ frontendDates($params['period']) }}</h3>
+    <h3>{{ $categorie->name }}</h3>
+    <h4 class="decisions-period">Du {{ frontendDates($params['period']) }}</h4>
 
     @if(!$decisions->isEmpty())
         <table id="decisions" class="table table-striped table-bordered dataTable">

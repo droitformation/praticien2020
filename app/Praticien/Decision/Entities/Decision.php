@@ -67,7 +67,7 @@ class Decision extends Model
                 $term = str_replace(';',' ',$term);
                 $query->whereRaw('texte REGEXP  "[[:<:]]'.$term.'[[:>:]]"');
             }
-        };
+        }
     }
 
     public function scopeCategorie($query,$categories)

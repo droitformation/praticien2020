@@ -4,6 +4,11 @@
     <div class="decisions-wrapper">
 
         <aside class="decisions-aside">
+
+            <h3>Arrêts du TF</h3>
+
+            <a href="{{ secure_url('decisions?clear') }}" class="home-link"><span>Tous</span></a>
+
             @if(!$parents->isEmpty())
                 <div class="accordion sidebar-list" id="SidebarList">
                     @foreach($parents as $parent)

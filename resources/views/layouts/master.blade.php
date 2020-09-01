@@ -41,6 +41,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/home.css') }}?{{ rand(1,3000) }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/decisions.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}">
 
 </head>

@@ -1,9 +1,11 @@
 @extends('decisions.index')
 @section('options')
-    <a class="btn btn-sm btn-print" href="{{ secure_url('decisions') }}"><i class="fas fa-arrow-left"></i> &nbsp;Retour</a>
+    <a class="btn btn-sm btn-print" href="{{ url()->previous() }}"><i class="fas fa-arrow-left"></i> &nbsp;Retour</a>
 @endsection
 @section('section')
     @parent
+
+    @inject('clean', '\App\Praticien\Bger\Utility\Clean')
 
     <div class="decision-details">
         <div class="dates">

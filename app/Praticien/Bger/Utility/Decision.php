@@ -55,7 +55,7 @@ class Decision {
             return false;
         }
 
-        $url   = $this->makeUrl($this->decision['decision_at'],$this->decision['numero']);
+        $url = $this->makeUrl($this->decision['decision_at'],$this->decision['numero']);
 
         $categorie = cleanCategorieString($this->decision['categorie']);
 

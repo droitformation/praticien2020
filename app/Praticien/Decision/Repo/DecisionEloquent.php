@@ -179,7 +179,7 @@ class DecisionEloquent implements DecisionInterface{
             ->get();
     }
 
-    public function byCategories($categorie_id){
+    public function byCategory($categorie_id){
         $results = collect([]);
         $tables  = array_reverse(range(2012,date('Y')));
 
@@ -190,7 +190,7 @@ class DecisionEloquent implements DecisionInterface{
 
             if (Schema::connection($conn)->hasTable($name)) {
 
-                $result = \DB::connection($conn)->table($name)
+                $result = $this->decision->setTable($name)->setConnection($conn)
                     ->select($name.'.id',$name.'.numero',$name.'.categorie_id',$name.'.remarque',$name.'.publication_at',$name.'.decision_at',$name.'.langue',$name.'.publish')
                     ->selectRaw($cast)
                     ->where($name.'.categorie_id', '=' ,$categorie_id)

@@ -3,6 +3,7 @@
 /* ================================================
    Clean, remove blanks from an array or string
 ==================================================*/
+use \ForceUTF8\Encoding;
 
 class Clean
 {
