@@ -127,6 +127,28 @@ Route::get('users','TransfertController@users');
 Route::get('test', function() {
 
 
+    // set location of docx text content file
+    $xmlFile = public_path('Droitfiscalinternational.docx');
+
+    $phpWord = \PhpOffice\PhpWord\IOFactory::load($xmlFile);
+    $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
+    $htmlWriter->save(public_path('test.html'));
+
+
+    exit;
+
+    if(!$doc->get_errors()) {
+        $html = $doc->to_html();
+        $plain_text = $doc->to_plain_text();
+
+        echo $html;
+    } else {
+        echo implode(', ',$doc->get_errors());
+    }
+    echo "\n";
+
+    exit;
+
     $user = \App\Praticien\USer\Entities\User::with(['abos','abos.keywords'])->find(15);
 
     echo '<pre>';

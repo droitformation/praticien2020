@@ -25,6 +25,7 @@
         "mailjet/mailjet-apiv3-php": "^1.2",
         "mikemclin/laravel-wp-password": "^2.0",
         "msurguy/honeypot": "^1.0",
+        "nadirhamid/docx-to-html": "^0.0.1",
         "neitanod/forceutf8": "^2.0",
         "phpoffice/phpword": "^0.17.0",
         "spatie/laravel-medialibrary": "^7.0.0",
