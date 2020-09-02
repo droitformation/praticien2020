@@ -48,6 +48,10 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        return redirect('home')->with(['status' => 'success', 'message' => 'Vous êtes loggué']);
+        if($user->valid){
+            return redirect()->intended('home')->with(['status' => 'success', 'message' => 'Vous êtes loggué']);
+        }
+
+        return redirect('expired')->with(['status' => 'success', 'message' => 'Vous êtes loggué']);
     }
 }

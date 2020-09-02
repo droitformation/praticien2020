@@ -5,7 +5,8 @@
             <div class="categorie-header">
                 <p class="categorie-title">{{ categorie.name }}</p>
                 <div class="title-btn">
-                    <button :class="'btn btn-sm btn-open ' + (!active ? 'btn-plus' : '')" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-plus')"></i></button>
+                    <button v-if="!isOpen" :class="'btn btn-sm btn-open ' + (!active ? 'btn-plus' : '')" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-plus')"></i></button>
+                    <button v-if="isOpen" :class="'btn btn-sm btn-open ' + (!active ? 'btn-plus' : '')" @click='toggle()'><i :class="'fas ' + (active ? 'fa-edit' : 'fa-minus')"></i></button>
                     <button v-if="active" class="btn btn-sm btn-delete" @click='destroy()'><i class="fas fa-times"></i></button>
                 </div>
             </div>

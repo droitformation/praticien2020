@@ -41,10 +41,15 @@ Route::get('message', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/user', 'HomeController@user')->name('user');
+Route::get('/abos', 'HomeController@abos')->name('abos');
 Route::post('/cadence', 'HomeController@cadence')->name('cadence');
+Route::post('/update', 'HomeController@update')->name('update');
+
 Route::post('/subscribe', 'SubscribeController@subscribe')->name('subscribe');
 Route::post('/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');
+
+Route::get('/expired', 'CodeController@expired')->name('expired');
+Route::post('/activate', 'CodeController@activate')->name('activate');
 
 Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function () {
 

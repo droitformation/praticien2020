@@ -3,21 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Praticien\User\Repo\UserInterface;
 use App\Praticien\Categorie\Repo\CategorieInterface;
 use App\Praticien\User\Worker\SubscriptionWorker;
 
 class SubscribeController extends Controller
 {
-    protected $user;
     protected $categorie;
     protected $worker;
 
-    public function __construct(UserInterface $user, CategorieInterface $categorie, SubscriptionWorker $worker)
+    public function __construct(CategorieInterface $categorie, SubscriptionWorker $worker)
     {
         $this->middleware('auth');
 
-        $this->user = $user;
         $this->categorie = $categorie;
         $this->worker = $worker;
     }

@@ -93,6 +93,8 @@ class RegisterController extends Controller
 
         // Deactivate code used
         $code = $this->code->updateCode($data['code'], $user->id);
+        $user->active_until = $code->valid_at;
+        $user->save();
         $user->roles()->attach(2); // Abonne
 
         return $user;

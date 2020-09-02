@@ -33,15 +33,6 @@ class DecisionController extends Controller
             $params = session()->get('search');
         }
 
-        /*  echo '<pre>';
-           print_r($params);
-           echo '</pre>';
-           exit;*/
-        //$params['terms']
-        //$params['published']
-        //$params['period']0 start, 1 end
-        //$params['categorie_id']
-
         $decisions = $this->decision->searchArchives($params);
         $parents   = $this->categorie->getParents();
 

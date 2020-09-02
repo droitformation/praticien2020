@@ -40,21 +40,28 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
-        if(!empty(trim($this->first_name)) || !empty(trim($this->last_name)))
-        {
-            return trim($this->first_name.' '.$this->last_name);
-        }
+        return !empty(trim($this->first_name)) || !empty(trim($this->last_name)) ? trim($this->first_name.' '.$this->last_name) : $this->email;
+    }
 
-        return $this->email;
+    public function getValidAttribute()
+    {
+        return $this->active_until > \Carbon\Carbon::today()->startOfDay();
     }
 
     public function getAbonnementsAttribute()
     {
-        return $this->abos->groupBy('categorie_id')->map(function($keywords,$categorie_id){
-            $published    = $this->published->contains('categorie_id',$categorie_id);
+        return $this->abos->mapWithKeys(function($abo,$key){
             // Make sure we have en empty collection if no keywords, so the repo has the categorie for searching in new decisions
-            $keyword_list = !$keywords->isEmpty() ? $keywords->pluck('keywords_list') : collect([]);
-            return ['keywords' => $keyword_list, 'published' => $published];
+            $keywords = $abo->keywords->map(function ($keyword) {
+                return $keyword->keywords_list;
+            })->flatten();
+
+            return [
+                $abo->categorie_id => [
+                    'keywords'  => collect([$keywords]),
+                    'published' => $abo->toPublish
+                ]
+            ];
         });
     }
 

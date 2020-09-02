@@ -30,7 +30,7 @@ class UserEloquent implements UserInterface{
 
     public function getByCadence($cadence, $exclude = [])
     {
-        return $this->user->has('abos')->with(['abos','published'])
+        return $this->user->has('abos')->with(['abos','abos.keywords'])
             ->where('cadence','=',$cadence)
             ->whereDate('active_until', '>', \Carbon\Carbon::today()->startOfDay())
             ->exclude($exclude)

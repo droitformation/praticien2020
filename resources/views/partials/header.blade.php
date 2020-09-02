@@ -6,8 +6,10 @@
             </div><!-- /.logo-box -->
             <div class="main-nav__main-navigation">
                 <ul class="main-nav__navigation-box">
-                    <li><a href="{{ secure_url('/') }}">Accueil</a></li>
-                    <li><a href="{{ secure_url('about') }}">A propos</a></li>
+                    <li><a href="{{ secure_url('/') }}" class="{{ Request::is('/') ? 'active' : '' }}">Accueil</a></li>
+                    <li><a href="{{ secure_url('about') }}" class="{{ Request::is('about') ? 'active' : '' }}">A propos</a></li>
+                    <li><a href="{{ secure_url('arrets') }}" class="{{ Request::is('arrets') || Request::is('theme/*') || Request::is('subtheme/*') ? 'active' : '' }}">Arrêts résumés</a></li>
+                    <li><a href="{{ secure_url('decisions') }}" class="{{ Request::is('decisions') || Request::is('decision/*') ? 'active' : '' }}">TF - Jurisprudence</a></li>
                  {{--   <li class="dropdown">
                         <a href="about.html">Votre compte</a>
                         <ul>
@@ -28,8 +30,8 @@
                    <li class="dropdown">
                        <a href="{{ secure_url('home') }}" class=""><i class="fas fa-user"></i></a>
                        <ul class="right">
-                           <li><a href="{{ secure_url('home') }}">Abonnements</a></li>
-                           <li><a href="{{ secure_url('user') }}">Données</a></li>
+                           <li><a href="{{ secure_url('home') }}">Compte</a></li>
+                           <li><a href="{{ secure_url('abos') }}">Abonnements</a></li>
                            <li>
                                <form class="logout" action="{{ route('logout') }}" method="POST"> @csrf
                                    <button class="btn btn-default btn-xs" type="submit"><i class="fas fa-power-off"></i> &nbsp;Logout</button>

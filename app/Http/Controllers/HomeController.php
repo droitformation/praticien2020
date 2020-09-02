@@ -21,9 +21,14 @@ class HomeController extends Controller
 
     public function index()
     {
+        return view('home')->with(['user' => \Auth::user()]);
+    }
+
+    public function abos()
+    {
         $parents = $this->categorie->getParents();
 
-        return view('home')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents->sortByDesc('rang')]);
+        return view('abos')->with(['user' => \Auth::user()->load('abos','abos.keywords'), 'parents' => $parents->sortByDesc('rang')]);
     }
 
     public function cadence(Request $request)
@@ -33,8 +38,12 @@ class HomeController extends Controller
         return response()->json(['result' => $request->all() ?? false]);
     }
 
-    public function user()
+    public function update(Request $request)
     {
-        return view('user')->with(['user' => \Auth::user()]);
+        $user = $this->user->update($request->except(['_token']));
+
+        flash('Informations mises a jour','success');
+
+        return redirect('home');
     }
 }
