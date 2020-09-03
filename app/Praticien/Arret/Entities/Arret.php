@@ -16,6 +16,11 @@ class Arret extends Model {
         return $this->getMeta('atf') ?? null;
     }
 
+    public function getMainThemeAttribute()
+    {
+        return $this->themes->first();
+    }
+
     public function themes()
     {
         return $this->belongsToMany('\App\Praticien\Theme\Entities\Theme', 'arret_themes', 'arret_id', 'theme_id');

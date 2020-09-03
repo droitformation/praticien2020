@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCodeService();
         $this->registerArretService();
         $this->registerThemeService();
+        $this->registerMetaService();
        // $this->registerCodeWorkerService();
     }
 
@@ -67,6 +68,16 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Praticien\Theme\Repo\ThemeInterface', function() {
             return new \App\Praticien\Theme\Repo\ThemeEloquent( new \App\Praticien\Theme\Entities\Theme );
+        });
+    }
+
+    /**
+     * registerMetaService
+     */
+    protected function registerMetaService(){
+
+        $this->app->singleton('App\Praticien\Arret\Repo\MetaInterface', function() {
+            return new \App\Praticien\Arret\Repo\MetaEloquent( new \Zoha\Meta\Models\Meta );
         });
     }
 

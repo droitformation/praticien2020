@@ -17,6 +17,11 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->get();
     }
 
+    public function getNbr(){
+
+        return $this->arret->with(['themes'])->orderBy('published_at','DESC')->paginate(10);
+    }
+
 	public function find($id)
     {
 		return $this->arret->find($id);
@@ -29,7 +34,13 @@ class ArretEloquent implements ArretInterface{
         })->paginate(10);
 	}
 
-	public function create(array $data){
+    public function byYear($year)
+    {
+        return $this->arret->whereMeta('year',$year)->paginate(10);
+        //return $this->arret->whereMeta('key',$year)->paginate(10);
+    }
+
+    public function create(array $data){
 
 		$arret = $this->arret->create(array(
             'id'           =>  $data['id'],
@@ -51,6 +62,12 @@ class ArretEloquent implements ArretInterface{
 		if(isset($data['metas']) && !empty($data['metas'])){
 		    foreach ($data['metas'] as $meta){
                 $arret->createMeta($meta['meta_key'], $meta['meta_value']);
+            }
+        }
+
+        if(isset($data['year']) && !empty($data['year'])){
+            foreach ($data['year'] as $year){
+                $arret->createMeta('year', $year);
             }
         }
 

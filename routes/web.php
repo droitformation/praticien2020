@@ -53,6 +53,14 @@ Route::post('/activate', 'CodeController@activate')->name('activate');
 
 Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function () {
 
+    Route::get('arret/year/{year}','Backend\ArretController@year');
+    Route::resource('arret', 'Backend\ArretController');
+
+    Route::get('/','Praticien\ArchiveController@index');
+    Route::get('/decisions','Praticien\ArchiveController@decisions');
+    Route::get('/archive','Praticien\ArchiveController@archive');
+    Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
+
     Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
     Route::match(['get', 'post'], 'letter','Praticien\NewsletterController@letter');
     Route::get('send','Praticien\NewsletterController@send');
@@ -61,10 +69,6 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::post('date/delete','Praticien\DateController@delete');
 
     Route::post('search','Praticien\SearchController@search');
-
-    Route::get('/','Praticien\ArchiveController@index');
-    Route::get('/archive','Praticien\ArchiveController@archive');
-    Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
     Route::post('transfert','Praticien\ArchiveController@transfert');
     Route::match(['get', 'post'], 'testing','Praticien\ArchiveController@testing');
@@ -127,35 +131,6 @@ Route::get('users','TransfertController@users');
 Route::get('test', function() {
 
 
-    // set location of docx text content file
-    $xmlFile = public_path('Droitfiscalinternational.docx');
-
-    $phpWord = \PhpOffice\PhpWord\IOFactory::load($xmlFile);
-    $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
-    $htmlWriter->save(public_path('test.html'));
-
-
-    exit;
-
-    if(!$doc->get_errors()) {
-        $html = $doc->to_html();
-        $plain_text = $doc->to_plain_text();
-
-        echo $html;
-    } else {
-        echo implode(', ',$doc->get_errors());
-    }
-    echo "\n";
-
-    exit;
-
-    $user = \App\Praticien\USer\Entities\User::with(['abos','abos.keywords'])->find(15);
-
-    echo '<pre>';
-    print_r($user->abos);
-    echo '</pre>';
-    exit;
-
 /*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
 
     echo '<pre>';
@@ -171,7 +146,7 @@ Route::get('test', function() {
     echo '<pre>';
     print_r($converted);
     echo '</pre>';
-    exit;*/
+    exit;
 
     $users = \App\Praticien\Wordpress\Entities\User::all();
 
@@ -191,8 +166,8 @@ Route::get('test', function() {
     echo '</pre>';
     exit;
 
-    exit;
-
+    exit;*/
+    /*
     $user = \App\Praticien\Wordpress\Entities\User::find(15);
 
     $results = $user->abos->map(function ($abo, $key) {
@@ -205,21 +180,7 @@ Route::get('test', function() {
                 'keywords'     => $words->pluck('keywords')->unique()->toArray(),
                 'isPub'        => !$user->published->where('refCategorie', $categorie)->pluck('ispub')->unique()->isEmpty()
             ];
-        })
-        /* ->mapToGroups(function ($abo, $key) use ($user) {
-        return [
-            $abo->refCategorie => array_filter([
-                'keywords' => $user->abos->where('refCategorie', $abo->refCategorie),
-                'isPub'    => $user->published->contains('refCategorie', $abo->refCategorie)
-            ])
-        ];
-    })
-   ->map(function ($keywords, $categorie_id) {
-        return $keywords->reject(function ($keyword) {
-            return empty(array_filter($keyword));
         })->toArray();
-    })*/
-        ->toArray();
 
     echo '<pre>';
     print_r($results);
@@ -228,14 +189,11 @@ Route::get('test', function() {
     echo '</pre>';
     exit;
 
-    /*
-
-
     /*    $abo = \App\Praticien\Abo\Entities\Abo::create([
             'user_id'      => 1,
             'categorie_id' => 1,
             'keywords'     => 'words',
-        ]);*/
+        ]);
 
 
     $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create([
@@ -247,7 +205,7 @@ Route::get('test', function() {
     echo '<pre>';
     print_r($abo);
     echo '</pre>';
-    exit;
+    exit;*/
     //
     // $wordpress = new \App\Praticien\Wordpress\Category();
   //  $results = $wordpress->getCategories();
@@ -273,7 +231,6 @@ Route::get('test', function() {
 
     $results = $wordpress->getTree(0);
 
-
     $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
         //->where('parent','=',0)
         ->where('count','>',0)
@@ -285,8 +242,6 @@ Route::get('test', function() {
         $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
         $repo->create($convert);
     });
-
-
 
     $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
     $results = $repo->getTree(0);
@@ -310,15 +265,21 @@ Route::get('test', function() {
         $repo->create($convert);
     });*/
 
-/*    $wordpress = \App::make('App\Praticien\Wordpress\Repo\PostRepo');
+/**/
+    $wordpress = \App::make('App\Praticien\Wordpress\Repo\PostRepo');
     $results = $wordpress->getAll();
 
     foreach ($results as $result){
         $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
 
+        echo '<pre>';
+        print_r($arret);
+        echo '</pre>';
+        exit;
+
         $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
         $repo->create($arret);
-    }*/
+    }
 
     $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
     $cat = $repo->find(71);
@@ -364,4 +325,16 @@ exit;
     echo '</pre>';
     exit;
 
+});
+
+Route::get('test_convert', function() {
+
+
+    // set location of docx text content file
+    $xmlFile = public_path('Droitfiscalinternational.docx');
+
+    $phpWord = \PhpOffice\PhpWord\IOFactory::load($xmlFile);
+    $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
+    $htmlWriter->save(public_path('test.html'));
+    exit;
 });

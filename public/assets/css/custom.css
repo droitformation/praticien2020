@@ -1,0 +1,20 @@
+.dt-bootstrap{
+    flex-direction: column;
+}
+
+.dt-bootstrap .row{
+    width: 100%;
+}
+
+div.dataTables_wrapper div.dataTables_length,
+div.dataTables_wrapper div.dataTables_filter{
+    margin-bottom: 20px;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    justify-content: start;
+}
+
+div.dataTables_wrapper div.dataTables_filter label{
+    justify-content: end;
+}

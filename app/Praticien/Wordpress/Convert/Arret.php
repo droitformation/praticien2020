@@ -17,6 +17,9 @@ class Arret
             'themes'   => $data->taxonomies->where('taxonomy','category')->map(function ($theme) {
                 return $theme->term->term_id;
             }),
+            'year'   => $data->taxonomies->where('taxonomy','annee')->map(function ($theme) {
+                return str_replace('/','-',$theme->term->name);
+            })->values(),
         ];
     }
 

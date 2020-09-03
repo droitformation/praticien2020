@@ -43,6 +43,21 @@ class User extends Authenticatable
         return !empty(trim($this->first_name)) || !empty(trim($this->last_name)) ? trim($this->first_name.' '.$this->last_name) : $this->email;
     }
 
+    public function getRoleAttribute()
+    {
+       if($this->roles->contains('id',1)){
+            return 'Administrateur';
+       }
+
+        if($this->roles->contains('id',2)){
+            return 'Contributeur';
+        }
+
+        if($this->roles->contains('id',3)){
+            return 'Abonné';
+        }
+    }
+
     public function getValidAttribute()
     {
         return $this->active_until > \Carbon\Carbon::today()->startOfDay();

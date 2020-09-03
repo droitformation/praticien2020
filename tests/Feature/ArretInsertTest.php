@@ -31,7 +31,8 @@ class ArretInsertTest extends TestCase
                 ['meta_key' => 'auteur', 'meta_value' => 'Cindy Leschaud'],
                 ['meta_key' => 'termes_rechercher', 'meta_value' => '16:Cst.:3,20:LIPAD/GE'],
             ]),
-            'themes'   => collect([25])
+            'themes'   => collect([25]),
+            'year'     => collect(['2012/2013']),
         ];
 
         $converted = \App\Praticien\Wordpress\Convert\Arret::convert($post);
@@ -61,6 +62,7 @@ class ArretInsertTest extends TestCase
         $this->assertDatabaseHas('meta', ['key' => 'atf', 'value' => 'Lien vers atf','owner_id' => 123]);
         $this->assertDatabaseHas('meta', ['key' => 'auteur', 'value' => 'Cindy Leschaud','owner_id' => 123]);
         $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '16:Cst.:3,20:LIPAD/GE','owner_id' => 123]);
+        $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2012/2013','owner_id' => 123]);
 
         $this->assertDatabaseHas('arret_themes', ['theme_id' => 25,'arret_id' => 123]);
     }
@@ -101,7 +103,20 @@ class ArretInsertTest extends TestCase
         $term->slug    = 'procedure-administrative';
 
         $taxonomy->term = $term;
-        $post->taxonomies  = collect([$taxonomy]);
+
+        $taxonomy2 = new \stdClass();
+        $taxonomy2->taxonomy = 'annee';
+        $taxonomy2->term_id = 1;
+        $taxonomy2->parent = 0;
+
+        $term2= new \stdClass();
+        $term2->term_id = 1;
+        $term2->name    = '2012/2013';
+        $term2->slug    = '2012-2013';
+
+        $taxonomy2->term = $term2;
+
+        $post->taxonomies  = collect([$taxonomy,$taxonomy2]);
 
         return $post;
     }
