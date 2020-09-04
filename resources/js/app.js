@@ -23,6 +23,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('cadence-component', require('./components/CadenceComponent.vue').default);
 Vue.component('abo-component', require('./components/AboComponent.vue').default);
+Vue.component('publication-component', require('./components/PublicationComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

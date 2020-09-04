@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row page-title">
                     <div class="col-md-12">
-                        <h4 class="mb-1 mt-0">Éditions "Le droit pour le praticien"</h4>
+                        <h3 class="mb-0 mt-0"><a href="{{ secure_url('backend/arret') }}" class="font-size-15 text-primary"><i class="fas fa-arrow-left"></i> &nbsp; Retour</a></h3>
                     </div>
                 </div>
 
@@ -15,7 +15,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title mt-0 mb-4">Édition 2018/2019</h4>
+                                <h3 class="header-title mt-0 mb-4">Le droit pour le praticien Édition <span class="text-primary">{{ $year }}</span></h3>
 
                                 @if(!$arrets->isEmpty())
                                     <table id="arret_list" class="table table-striped table-bordered dataTable">
@@ -30,7 +30,8 @@
                                         <tbody>
                                             @foreach($arrets as $arret)
                                             <tr>
-                                                <td>{{ $arret->title }}</td>
+                                                <td class="font-weight-bold font-size-15">
+                                                    <a class="text-secondary" href="{{ secure_url('backend/arret/'.$arret->id) }}">{{ $arret->title }}</a></td>
                                                 <td>{{ $arret->getMeta('year') }}</td>
                                                 <td>{{ $arret->main_theme ? $arret->main_theme->name : ''  }}</td>
                                                 <td class="text-right"><a class="btn btn-sm btn-primary" href="{{ secure_url('backend/arret/'.$arret->id) }}"><i class="fas fa-edit"></i></a></td>
@@ -49,7 +50,6 @@
                     </div><!-- end col-->
                 </div>
                 <!-- end row-->
-
             </div>
 
         </div> <!-- container-fluid -->

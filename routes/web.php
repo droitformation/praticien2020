@@ -56,6 +56,10 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::get('arret/year/{year}','Backend\ArretController@year');
     Route::resource('arret', 'Backend\ArretController');
 
+    Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
+    Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
+    Route::get('fileJson/{id?}',  ['uses' => 'Backend\UploadController@fileJson']);
+
     Route::get('/','Praticien\ArchiveController@index');
     Route::get('/decisions','Praticien\ArchiveController@decisions');
     Route::get('/archive','Praticien\ArchiveController@archive');

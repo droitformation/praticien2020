@@ -36,7 +36,7 @@ class ArretEloquent implements ArretInterface{
 
     public function byYear($year)
     {
-        return $this->arret->whereMeta('year',$year)->paginate(10);
+        return $this->arret->whereMeta('year',$year)->take(100)->get();
         //return $this->arret->whereMeta('key',$year)->paginate(10);
     }
 

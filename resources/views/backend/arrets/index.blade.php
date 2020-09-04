@@ -4,10 +4,13 @@
     <div class="content-page">
         <div class="content">
 
-            <div class="container-fluid">
+            <div class="container-fluid mt-4">
                 <div class="row page-title">
-                    <div class="col-md-12">
-                        <h4 class="mb-1 mt-0">Éditions "Le droit pour le praticien"</h4>
+                    <div class="col-md-10">
+                        <h3 class="mb-1 mt-0">Éditions "Le droit pour le praticien"</h3>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <a href="{{ secure_url('backend/arret/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;Ajouter</a>
                     </div>
                 </div>
 

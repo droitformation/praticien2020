@@ -32,11 +32,16 @@ class ArretController extends Controller
         return view('backend.arrets.index')->with(['arrets' => $arrets ,'pending' => $pending, 'parents' => $parents, 'years' => $years]);
     }
 
+    public function create()
+    {
+        return view('backend.arrets.create');
+    }
+
     public function year($year)
     {
         $arrets = $this->arret->byYear($year);
 
-        return view('backend.arrets.edition')->with(['arrets' => $arrets]);
+        return view('backend.arrets.edition')->with(['arrets' => $arrets, 'year' => $year]);
     }
 
     public function theme($slug)
