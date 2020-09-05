@@ -54,6 +54,7 @@ Route::post('/activate', 'CodeController@activate')->name('activate');
 Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function () {
 
     Route::get('arret/year/{year}','Backend\ArretController@year');
+    Route::post('arret/atf','Backend\ArretController@atf');
     Route::resource('arret', 'Backend\ArretController');
 
     Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
@@ -137,12 +138,27 @@ Route::get('test', function() {
     $atf = '134-III-1';
     $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
 
+    $atf    = str_replace('ATF ','',$atf);
+    $atf    = str_replace(' ','-',$atf);
 
-    $grab = new \App\Praticien\Bger\Utility\Liste();
-    $result = $grab->isAtfUrl($atf);
+    $client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
+    $goutte = new \Goutte\Client;
+
+    $goutte->setClient($client);
+
+    $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
+    $fail = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2FATF%20134-III-1%3Afr&lang=fr&zoom=&type=show_document';
+
+    $response = $client->get($url);
+    $crawler  = $goutte->request('GET', $fail);
+
+    $content = $crawler->filter('.content .big')->each(function ($node) {
+        return $node->text();
+    });
 
     echo '<pre>';
-    print_r($result);
+    print_r($content);
+    print_r($response->getBody());
     echo '</pre>';
     exit;
 

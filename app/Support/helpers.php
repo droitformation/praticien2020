@@ -612,3 +612,22 @@ function frontendDates($period){
 
     return $start->formatLocalized($format1).' au '.$end->formatLocalized($format2);
 }
+
+function whatArret($string){
+
+    $regex_atf = '/(ATF\s?)\d{1,3}\s\w{1,4}\s\d{1,3}/';
+    $regex_tf  = '/(TF)\s\d\w(_)\d{1,4}\/{1,4}\d{4}/';
+
+    preg_match($regex_atf, $string, $matches);
+
+    if(!empty($matches)){
+        $atf = str_replace('ATF ','',$matches[0]);
+        return str_replace(' ','-',$atf);
+    }
+
+    preg_match($regex_tf, $string, $matches);
+
+    if(!empty($matches)){
+       return $matches[0];
+    }
+}

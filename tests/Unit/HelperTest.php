@@ -203,4 +203,16 @@ class HelperTest extends TestCase
 
         $this->assertEquals(['period' => [$start->toDateString(),$end->toDateString()]],$result);
     }
+
+    public function testWhatArret()
+    {
+        $string = 'ATF 133 V 320';
+
+        $result = whatArret($string);
+
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        exit;
+    }
 }

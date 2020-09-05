@@ -46,20 +46,11 @@ class ArretController extends Controller
         return view('backend.arrets.edition')->with(['arrets' => $arrets, 'year' => $year]);
     }
 
-    public function theme($slug)
+    public function atf(Request $request)
     {
-        $theme  = $this->theme->bySlug($slug);
-        $arrets = $this->arret->byCategory($slug);
+        $grab = new \App\Praticien\Bger\Utility\Liste();
+        $url  = $grab->isAtfUrl($request->input('title'));
 
-        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets]);
-    }
-
-    public function subtheme($slug)
-    {
-        $subtheme = $this->theme->bySlug($slug);
-        $theme    = $subtheme->parent;
-        $arrets   = $this->arret->byCategory($slug);
-
-        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets, 'subthemes' => $subtheme]);
+        return response()->json(['url' => $url ]);
     }
 }

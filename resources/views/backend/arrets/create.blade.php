@@ -12,7 +12,7 @@
                 </div>
 
                 <form action="{{ secure_url('backend/arret') }}" method="post" class="parsley-examples" novalidate="">
-                    <div class="row">
+                    <div class="row" id="app">
                         <div class="col-8">
 
                             <div class="card">
@@ -21,16 +21,16 @@
 
                                         <div class="form-group">
                                             <label for="title">Édition de l'ouvrage<span class="text-danger">*</span></label>
-                                            <select class="form-control custom-select" @change="update" v-model="status">
+                                            <select class="form-control custom-select">
                                                 @if(isset($editions))
                                                     @foreach($editions as $start => $end)
-                                                        <option value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
+                                                        <option {{ $loop->first ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                     {{--   <div class="form-group">
                                             <label for="title">Titre<span class="text-danger">*</span></label>
                                             <input type="text" name="title" required="" placeholder="Titre de l'arrêt" class="form-control" id="title">
                                         </div>
@@ -38,7 +38,9 @@
                                         <div class="form-group">
                                             <label for="atf">Lien ATF</label>
                                             <input type="text" name="meta[atf]" placeholder="https://www.bger.ch..." class="form-control" id="atf">
-                                        </div>
+                                        </div>--}}
+
+                                        <atf-component></atf-component>
 
                                         <div class="form-group">
                                             <label for="emailAddress">Contenu<span class="text-danger">*</span></label>
@@ -49,7 +51,7 @@
                             </div>
 
                         </div><!-- end col-->
-                        <div class="col-4" id="app">
+                        <div class="col-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="header-title mt-0 mb-4">Valider</h4>

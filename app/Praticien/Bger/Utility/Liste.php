@@ -154,12 +154,25 @@ class Liste
 
     public function isAtfUrl($atf)
     {
+        $regex_atf = '(ATF)\s\d{1,3}\s\w{1,4}\s\d{1,3}';
+        $regex_tf  = '(TF)\s\d\w(_)\d{1,4}\/{1,4}\d{4}';
+
+        $atf  = str_replace('ATF ','',$atf);
+        $atf  = str_replace(' ','-',$atf);
+
         $client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
+        $goutte = new \Goutte\Client;
+
+        $goutte->setClient($client);
 
         $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
 
         $response = $client->get($url);
+        $crawler  = $goutte->request('GET', $url);
+        $content  = $crawler->filter('.content .big')->each(function ($node) {
+            return $node->text();
+        });
 
-        return $response->getStatusCode() == 200 ?? null;
+        return $response->getStatusCode() == 200 && !empty($content) ? $url : '';
     }
 }
