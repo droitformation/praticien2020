@@ -34,7 +34,9 @@ class ArretController extends Controller
 
     public function create()
     {
-        return view('backend.arrets.create');
+        $editions = array_combine(range(date('Y')-1,2012),range(date('Y'),2013));
+
+        return view('backend.arrets.create')->with(['editions' => $editions]);
     }
 
     public function year($year)

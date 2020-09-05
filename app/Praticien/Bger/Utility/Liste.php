@@ -151,4 +151,15 @@ class Liste
     {
         return dateIsValid($date,$format) ? \Carbon\Carbon::parse($date)->format('Y-m-d') : null;
     }
+
+    public function isAtfUrl($atf)
+    {
+        $client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
+
+        $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
+
+        $response = $client->get($url);
+
+        return $response->getStatusCode() == 200 ?? null;
+    }
 }

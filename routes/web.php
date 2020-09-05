@@ -134,7 +134,19 @@ Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
 
+    $atf = '134-III-1';
+    $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
 
+
+    $grab = new \App\Praticien\Bger\Utility\Liste();
+    $result = $grab->isAtfUrl($atf);
+
+    echo '<pre>';
+    print_r($result);
+    echo '</pre>';
+    exit;
+
+    exit;
 /*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
 
     echo '<pre>';

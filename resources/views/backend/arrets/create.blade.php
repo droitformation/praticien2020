@@ -17,7 +17,18 @@
 
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="header-title mt-0 mb-4">Nouvel arrêt</h4>
+                                    <h3 class="header-title mt-0 mb-4">Nouvel arrêt</h3>
+
+                                        <div class="form-group">
+                                            <label for="title">Édition de l'ouvrage<span class="text-danger">*</span></label>
+                                            <select class="form-control custom-select" @change="update" v-model="status">
+                                                @if(isset($editions))
+                                                    @foreach($editions as $start => $end)
+                                                        <option value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
 
                                         <div class="form-group">
                                             <label for="title">Titre<span class="text-danger">*</span></label>

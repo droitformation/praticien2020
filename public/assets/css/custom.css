@@ -3,6 +3,28 @@ label {
     font-size: 16px;
 }
 
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-control{
+    color:#343443;
+    font-size: .95rem;
+}
+
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #aaaab8;
+    opacity: 1; /* Firefox */
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #aaaab8;
+}
+
+.form-control::-ms-input-placeholder { /* Microsoft Edge */
+    color: #aaaab8;
+}
+
 .dt-bootstrap{
     flex-direction: column;
 }
