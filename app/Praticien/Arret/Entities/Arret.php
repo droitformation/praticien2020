@@ -21,6 +21,13 @@ class Arret extends Model {
         return $this->themes->first();
     }
 
+    public function scopeEdition($query, $edition)
+    {
+        if(isset($edition)){
+            $query->whereMeta('year', $edition);
+        }
+    }
+
     public function themes()
     {
         return $this->belongsToMany('\App\Praticien\Theme\Entities\Theme', 'arret_themes', 'arret_id', 'theme_id');

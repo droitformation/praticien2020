@@ -16,7 +16,7 @@ interface DecisionInterface {
     public function searchTable($table,$conn,$params,$year);
     public function find($data);
     public function findByNumeroAndDate($numero,$date);
-
+    public function findByNumero($numero);
     public function byCategory($categorie_id);
     public function getest($categorie_id);
 

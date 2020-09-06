@@ -6,7 +6,10 @@
             @endforeach
         @endif
     </ul>
-    <h3>{!! $arret->title_link ?? '<a href="#">'.$arret->title.'</a>' !!}</h3>
-    <p>{!! $arret->content !!}</p>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <h3>{!! $arret->title_link ?? '<a href="#">'.$arret->title.'</a>' !!}</h3>
+        <span class="d-block badge badge-default">{{ $arret->getMeta('year') }}</span>
+    </div>
+    <p>{!! wpautop($arret->content) !!}</p>
     {!! $arret->getMeta('auteur') ? '<p class="blog-one__link">'.$arret->getMeta('auteur').'</p>' : '' !!}
 </div>

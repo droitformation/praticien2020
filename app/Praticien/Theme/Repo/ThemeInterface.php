@@ -3,6 +3,7 @@
 interface ThemeInterface {
 
     public function getAll();
+    public function getParents();
 	public function find($data);
     public function findParent($id);
 	public function create(array $data);

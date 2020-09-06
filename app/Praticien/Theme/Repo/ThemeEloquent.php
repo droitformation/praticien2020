@@ -17,6 +17,11 @@ class ThemeEloquent implements ThemeInterface{
         return $this->theme->get();
     }
 
+    public function getParents()
+    {
+        return $this->theme->with(['subthemes'])->where('parent_id','=',0)->get();
+    }
+
 	public function find($id)
     {
 		return $this->theme->with(['arrets','subthemes'])->find($id);
@@ -34,14 +39,14 @@ class ThemeEloquent implements ThemeInterface{
 
 	public function create(array $data){
 
-		$theme = $this->theme->create(array(
-            'id'           => $data['id'],
+		$theme = $this->theme->create(array_filter([
+            'id'           => $data['id'] ?? null,
             'name'         => $data['name'],
-            'slug'         => $data['slug'],
+            'slug'         => isset($data['slug']) ? $data['slug'] : str_slug($data['name']),
             'parent_id'    => isset($data['parent_id']) && $data['parent_id'] > 0 ? $data['parent_id'] : 0,
             'created_at'   => date('Y-m-d G:i:s'),
             'updated_at'   => date('Y-m-d G:i:s')
-		));
+        ]));
 
 		if( ! $theme ) {
 			return false;

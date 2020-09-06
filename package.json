@@ -27,6 +27,7 @@
         "datatables.net-bs4": "^1.10.21",
         "datatables.net-buttons-bs4": "^1.6.3",
         "flatpickr": "^4.6.6",
-        "moment": "^2.27.0"
+        "moment": "^2.27.0",
+        "v-select2-component": "^0.4.3"
     }
 }

@@ -13,6 +13,8 @@ class ArretController extends Controller
     {
         $this->arret = $arret;
         $this->theme = $theme;
+
+        view()->share('editions',array_combine(range(date('Y')-1,2010),range(date('Y'),2011)));
     }
 
     public function index()
@@ -22,20 +24,21 @@ class ArretController extends Controller
         return view('arrets.index')->with(['parents' => $parents]);
     }
 
-    public function theme($slug)
+    public function theme($slug,$edition = null)
     {
         $theme  = $this->theme->bySlug($slug);
-        $arrets = $this->arret->byCategory($slug);
+        $arrets = $this->arret->byCategory($slug,$edition);
 
-        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets]);
+        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets, 'edition' => $edition, 'slug' => 'subtheme']);
     }
 
-    public function subtheme($slug)
+    public function subtheme($slug,$edition = null)
     {
         $subtheme = $this->theme->bySlug($slug);
-        $theme    =  $subtheme->parent;
-        $arrets   = $this->arret->byCategory($slug);
+        $arrets   = $this->arret->byCategory($slug,$edition);
 
-        return view('arrets.theme')->with(['theme' => $theme, 'arrets' => $arrets, 'subthemes' => $subtheme]);
+        $url = $edition ? $slug.'/'.$edition : $slug;
+
+        return view('arrets.theme')->with(['theme' => $subtheme->parent, 'arrets' => $arrets, 'subtheme' => $subtheme, 'edition' => $edition, 'slug' => 'theme']);
     }
 }

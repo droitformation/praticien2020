@@ -631,3 +631,36 @@ function whatArret($string){
        return $matches[0];
     }
 }
+
+/*
+ * String = "ATF 123 V 543" or "123 V 543"
+ * return "123-V-543"
+ * */
+function isAtf($string){
+    $regex_atf = '/(ATF\d)?\d{1,3}\s\w{1,4}\s\d{1,3}/';
+
+    preg_match($regex_atf, $string, $matches);
+
+    if(!empty($matches)){
+        $atf = str_replace('ATF ','',$matches[0]);
+        return str_replace(' ','-',$atf);
+    }
+
+    return null;
+}
+
+/*
+ * String = "TF 5A_710/2009"
+ * */
+function isTf($string){
+    $regex_tf  = '/(TF)\s\d\w(_)\d{1,4}\/{1,4}\d{4}/';
+
+    preg_match($regex_tf, $string, $matches);
+
+    if(!empty($matches)){
+        $tf = str_replace('TF ','',$matches[0]);
+        return $tf;
+    }
+
+    return null;
+}

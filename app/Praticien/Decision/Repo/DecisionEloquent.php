@@ -160,6 +160,23 @@ class DecisionEloquent implements DecisionInterface{
         return !$found->isEmpty() ? $found->first() : false;
     }
 
+    public function findByNumero($numero){
+        $tables  = array_reverse(range(2012,date('Y')));
+
+        foreach ($tables as $table) {
+            $name = $table == date('Y') ? 'decisions' : 'archive_'.$table;
+            $conn = $table == date('Y') ? $this->main_connection : 'sqlite';
+
+            if (Schema::connection($conn)->hasTable($name)) {
+                $result  = $this->decision->setTable($name)->setConnection($conn)->where('numero','=',$numero)->first();
+
+                if($result){
+                    return $result;
+                }
+            }
+        }
+    }
+
     // $params array terms, categorie, published, publications_at
     public function search($params)
     {

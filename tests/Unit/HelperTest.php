@@ -204,15 +204,34 @@ class HelperTest extends TestCase
         $this->assertEquals(['period' => [$start->toDateString(),$end->toDateString()]],$result);
     }
 
-    public function testWhatArret()
+    public function testIsAtf()
     {
         $string = 'ATF 133 V 320';
+        $result = isAtf($string);
 
-        $result = whatArret($string);
+        $this->assertEquals('133-V-320',$result);
 
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
-        exit;
+        $string = 'AF 133 V few';
+        $result = isAtf($string);
+
+        $this->assertEquals(null,$result);
+
+        $string = '133 V 320';
+        $result = isAtf($string);
+
+        $this->assertEquals('133-V-320',$result);
+    }
+
+    public function testIsTf()
+    {
+        $string = 'TF 5A_710/2009';
+        $result = isTf($string);
+
+        $this->assertEquals('5A_710/2009',$result);
+
+        $string = 'TF710/2009';
+        $result = isTf($string);
+
+        $this->assertEquals(null,$result);
     }
 }

@@ -129,6 +129,20 @@ p {
 	color: var(--thm-black);
 }
 
+.thm-btn-small {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 5px;
+}
+
+.thm-btn-small.active {
+    background: #343a40;
+}
+
+.sidebar_link .active{
+    color: #343a40;
+}
+
 .main-nav-one .main-nav__right a.thm-btn.login-btn{
     padding: 5px 20px;
     color: #fff;
@@ -2727,10 +2741,24 @@ p {
 }
 
 .blog-one__link:hover::before {
-	-webkit-transform-origin: right center;
-	        transform-origin: right center;
-	-webkit-transform: scale(1, 1);
-	        transform: scale(1, 1);
+
+}
+
+.badge-default{
+    background-color: rgba(52,58,64,.10);
+    color: #565d65;
+    border-color: rgba(52,58,64,.10);
+}
+
+.reset{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    text-decoration: underline;
+}
+
+.subtheme{
+    font-size: 16px;
 }
 
 /* blog one video */

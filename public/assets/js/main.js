@@ -109,13 +109,11 @@ $(document).ready( function () {
         time_24hr: true,
     };
 
-/*    if ($('.datePicker').length) {
-        $(".datePicker").flatpickr({
-            altInput: true,
-            altFormat: "j F Y",
-            dateFormat: "Y-m-d",
-            locale: fr
-        });
-    }*/
+    $('#termes_rechercher').hunterPopup({
+        content: $('#explications'),
+        title: 'Explications',
+        width: '590px',
+        height: '100%',
+    });
 
 });

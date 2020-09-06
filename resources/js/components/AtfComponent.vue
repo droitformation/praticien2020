@@ -11,6 +11,9 @@
                 <div v-if="atf" class="input-group-prepend">
                     <span :class="'input-group-text ' + (atf ? 'bg-success text-white' : '')" id="basic-addon1"><i class="fas fa-check"></i></span>
                 </div>
+                <div v-if="working" class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-spinner"></i></span>
+                </div>
                 <input type="text" name="meta[atf]" v-model="atf" placeholder="https://www.bger.ch..." class="form-control" id="atf">
             </div>
         </div>
@@ -24,6 +27,7 @@
             return{
                 title:'',
                 atf:'',
+                working:null,
                 url: location.protocol + "//" + location.host+"/",
             }
         },
@@ -31,7 +35,10 @@
         methods: {
             search : function(){
                 let self = this;
+                this.working = true;
+                this.atf     = '';
                 axios.post(this.url + "backend/arret/atf", {title : this.title}).then(function (response) {
+                    self.working = false;
                     self.atf = response.data.url;
                 }).catch(function (error) { console.log(error);});
             }

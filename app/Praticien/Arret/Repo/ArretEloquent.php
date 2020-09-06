@@ -27,17 +27,16 @@ class ArretEloquent implements ArretInterface{
 		return $this->arret->find($id);
 	}
 
-    public function byCategory($slug)
+    public function byCategory($slug,$edition = null)
     {
         return $this->arret->whereHas('themes', function ($query) use ($slug) {
             $query->where('slug', '=', $slug);
-        })->paginate(10);
+        })->edition($edition)->orderBy('created_at','ASC')->paginate(10);
 	}
 
     public function byYear($year)
     {
         return $this->arret->whereMeta('year',$year)->take(100)->get();
-        //return $this->arret->whereMeta('key',$year)->paginate(10);
     }
 
     public function create(array $data){

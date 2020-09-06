@@ -34,9 +34,15 @@ class ArretController extends Controller
 
     public function create()
     {
-        $editions = array_combine(range(date('Y')-1,2012),range(date('Y'),2013));
+        $editions = array_combine(range(date('Y')-1,2010),range(date('Y'),2011));
+        $themes   = $this->theme->getParents();
+        $themes   = $themes->map(function ($theme) {
+            return ['id' => $theme->id, 'text' => $theme->name, 'subthemes' => $theme->subthemes->map(function ($subtheme) {
+                return ['id' => $subtheme->id, 'text' => $subtheme->name];
+            })->toArray()];
+        });
 
-        return view('backend.arrets.create')->with(['editions' => $editions]);
+        return view('backend.arrets.create')->with(['editions' => $editions, 'themes' => $themes]);
     }
 
     public function year($year)
@@ -48,9 +54,8 @@ class ArretController extends Controller
 
     public function atf(Request $request)
     {
-        $grab = new \App\Praticien\Bger\Utility\Liste();
-        $url  = $grab->isAtfUrl($request->input('title'));
+        $url = \App\Praticien\Arret\Entities\Atf::url($request->input('title'));
 
-        return response()->json(['url' => $url ]);
+        return response()->json(['url' => $url]);
     }
 }

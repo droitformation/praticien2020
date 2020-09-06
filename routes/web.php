@@ -26,8 +26,8 @@ Route::get('export/{id}', ['uses' => 'DecisionController@export']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('arrets', ['uses' => 'ArretController@index']);
-    Route::get('theme/{id}', ['uses' => 'ArretController@theme']);
-    Route::get('subtheme/{id}', ['uses' => 'ArretController@subtheme']);
+    Route::get('theme/{id}/{year?}', ['uses' => 'ArretController@theme']);
+    Route::get('subtheme/{id}/{year?}', ['uses' => 'ArretController@subtheme']);
 });
 
 Route::get('message', function() {
@@ -56,6 +56,8 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::get('arret/year/{year}','Backend\ArretController@year');
     Route::post('arret/atf','Backend\ArretController@atf');
     Route::resource('arret', 'Backend\ArretController');
+
+    Route::resource('theme', 'Backend\ThemeController');
 
     Route::post('uploadRedactor', 'Backend\UploadController@uploadRedactor');
     Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
@@ -135,8 +137,10 @@ Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
 
-    $atf = '134-III-1';
+    $atf = 'ATF 143 III 113';
     $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
+
+    return \App\Praticien\Arret\Entities\Atf::url($atf);
 
     $atf    = str_replace('ATF ','',$atf);
     $atf    = str_replace(' ','-',$atf);
