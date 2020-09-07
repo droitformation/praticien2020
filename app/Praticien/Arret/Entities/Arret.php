@@ -23,7 +23,9 @@ class Arret extends Model {
 
     public function getMainThemeSelectAttribute()
     {
-        return ['id' => $this->themes->first()->id, 'text' => $this->themes->first()->name];
+        return ['id' => $this->themes->first()->id, 'text' => $this->themes->first()->name, 'subthemes' => $this->themes->first()->subthemes->map(function ($subtheme) {
+            return ['id' => $subtheme->id, 'text' => $subtheme->name];
+        })->toArray()];
     }
 
     public function getSubthemesListAttribute()
