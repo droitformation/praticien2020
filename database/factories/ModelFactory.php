@@ -68,7 +68,6 @@ $factory->define(App\Praticien\Categorie\Entities\Categorie::class, function (Fa
     ];
 });
 
-
 $factory->define(App\Praticien\Abo\Entities\Abo::class, function (Faker $faker) {
 
     $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
@@ -90,3 +89,23 @@ $factory->define(App\Praticien\Abo\Entities\Abo_keyword::class, function (Faker 
     ];
 });
 
+$factory->define(App\Praticien\Arret\Entities\Arret::class, function (Faker $faker) {
+    return [
+        'published_at' => $faker->dateTime,
+        'title'        => $faker->word,
+        'status'       => 'publish',
+        'slug'         => str_slug($faker->word),
+        'content'      => $faker->text(200),
+        'lang'         => 1,
+        'created_at'   => \Carbon\Carbon::now(),
+        'updated_at'   => \Carbon\Carbon::now()
+    ];
+});
+
+$factory->define(App\Praticien\Theme\Entities\Theme::class, function (Faker $faker) {
+    return [
+        'name'      => 'Ma categorie',
+        'slug'      => 'ma-categorie',
+        'parent_id' => 0,
+    ];
+});

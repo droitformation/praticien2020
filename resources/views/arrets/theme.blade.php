@@ -49,8 +49,7 @@
                             <div class="sidebar__single">
                                 @if(!$theme->subthemes->isEmpty())
                                     @foreach($theme->subthemes as $sub)
-                                        <p class="sidebar_link"><a
-                                                class="{{ Request::is('subtheme/'.$sub->slug.(isset($edition) ? '/'.$edition : '')) ? 'active' : '' }}"
+                                        <p class="sidebar_link"><a class="{{ Request::is('subtheme/'.$sub->slug.(isset($edition) ? '/'.$edition : '')) ? 'active' : '' }}"
                                             href="{{ secure_url('subtheme/'.$sub->slug.(isset($edition) ? '/'.$edition : '')) }}">{{ $sub->name }}</a></p>
                                     @endforeach
                                 @endif

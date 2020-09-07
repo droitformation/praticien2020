@@ -4,8 +4,9 @@ class Prepare
 {
     static function prepare($data)
     {
-        return [
-            'metas'        => $data['meta'],
+        return array_filter([
+            'id'           => $data['id'] ?? null,
+            'metas'        => $data['metas'],
             'themes'       => isset($data['subthemes']) && !empty($data['subthemes']) ? self::themes($data['subthemes'], $data['theme_id']) : null,
             'title'        => $data['title'],
             'slug'         => str_slug($data['title']),
@@ -13,7 +14,7 @@ class Prepare
             'published_at' => $data['published_at'],
             'status'       => $data['status'],
             'lang'         => $data['lang'] ?? null,
-        ];
+        ]);
     }
 
     static function themes($array, $parent_id){

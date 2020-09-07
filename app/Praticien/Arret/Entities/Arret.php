@@ -23,15 +23,21 @@ class Arret extends Model {
 
     public function getMainThemeSelectAttribute()
     {
-        return ['id' => $this->themes->first()->id, 'text' => $this->themes->first()->name, 'subthemes' => $this->themes->first()->subthemes->map(function ($subtheme) {
-            return ['id' => $subtheme->id, 'text' => $subtheme->name];
-        })->toArray()];
+        $theme = $this->themes->where('parent_id',0)->first();
+
+        if($theme){
+            return ['id' => $theme->id, 'text' => $theme->name, 'subthemes' => $theme->subthemes->map(function ($subtheme) {
+                return ['id' => $subtheme->id, 'text' => $subtheme->name];
+            })->toArray()];
+        }
+
+        return [];
     }
 
     public function getSubthemesListAttribute()
     {
         return $this->subthemes->map(function ($theme) {
-            return ['id' => $theme->id, 'text' => $theme->name];
+            return $theme->id;
         });
     }
 

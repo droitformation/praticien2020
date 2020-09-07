@@ -13,6 +13,7 @@
 
                 <form action="{{ secure_url('backend/arret/'.$arret->id) }}" method="post" class="parsley" novalidate="">@csrf
                     <input type="hidden" name="_method" value="PUT">
+                    <input name="id" value="{{ $arret->id }}" type="hidden">
                     <div class="row" id="app">
                         <div class="col-8">
 

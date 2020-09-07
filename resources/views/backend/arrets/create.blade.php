@@ -19,44 +19,44 @@
                                 <div class="card-body">
                                     <h3 class="header-title mt-0 mb-4">Nouvel arrêt</h3>
 
-                                        <div class="form-group">
-                                            <label for="title">Édition de l'ouvrage<span class="text-danger">*</span></label>
-                                            <select class="form-control custom-select" required name="metas[year]">
-                                                @if(isset($editions))
-                                                    @foreach($editions as $start => $end)
-                                                        <option {{ $loop->first ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="title">Édition de l'ouvrage<span class="text-danger">*</span></label>
+                                        <select class="form-control custom-select" required name="metas[year]">
+                                            @if(isset($editions))
+                                                @foreach($editions as $start => $end)
+                                                    <option {{ $loop->first ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
 
-                                        <theme-component :themes="{{ $themes }}"></theme-component>
-                                        <hr>
-                                        <atf-component></atf-component>
+                                    <theme-component :themes="{{ $themes }}"></theme-component>
+                                    <hr>
+                                    <atf-component></atf-component>
 
-                                        <div class="form-group">
-                                            <label for="termes_rechercher">Termes de recherche</label>
-                                            <a href="#" id="termes_rechercher" class="ml-2"><i class="font-size-15 text-primary fas fa-question-circle"></i></a>
-                                            <div style="display: none;" id="explications">
-                                                <p>Indiquer les dispositions selon la séquence <strong>"numero:loi:alinéa:chiffre:lettre"</strong><br>
-                                                Les différentes parties séparées par un double point « : » sans espace. <br>
-                                                => <strong>46<span class="text-danger">:</span>LTF<span class="text-danger">:</span>2<span class="text-danger">:</span>1<span class="text-danger">:</span>c</strong><br>
-                                                Pour chaque disposition les séparer par une virgule.<br>
-                                                => <strong>295:LP:1 <span class="text-danger">,</span> 46:LTF:2 <span class="text-danger">,</span> 98:LTF</strong><br>
-                                                S'il n’y a pas d’alinéa continuez la séquence avec le chiffre ou la lettre.</p>
-                                            </div>
-                                            <input name="metas[termes_rechercher]" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
+                                    <div class="form-group">
+                                        <label for="termes_rechercher">Termes de recherche</label>
+                                        <a href="#" id="termes_rechercher" class="ml-2"><i class="font-size-15 text-primary fas fa-question-circle"></i></a>
+                                        <div style="display: none;" id="explications">
+                                            <p>Indiquer les dispositions selon la séquence <strong>"numero:loi:alinéa:chiffre:lettre"</strong><br>
+                                            Les différentes parties séparées par un double point « : » sans espace. <br>
+                                            => <strong>46<span class="text-danger">:</span>LTF<span class="text-danger">:</span>2<span class="text-danger">:</span>1<span class="text-danger">:</span>c</strong><br>
+                                            Pour chaque disposition les séparer par une virgule.<br>
+                                            => <strong>295:LP:1 <span class="text-danger">,</span> 46:LTF:2 <span class="text-danger">,</span> 98:LTF</strong><br>
+                                            S'il n’y a pas d’alinéa continuez la séquence avec le chiffre ou la lettre.</p>
                                         </div>
+                                        <input name="metas[termes_rechercher]" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="content">Auteur(s)</label>
-                                            <input name="metas[auteur]" class="form-control" value="" type="text">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="content">Auteur(s)</label>
+                                        <input name="metas[auteur]" class="form-control" value="" type="text">
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="content">Contenu<span class="text-danger">*</span></label>
-                                            <textarea name="content" required class="form-control redactor"></textarea>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="content">Contenu<span class="text-danger">*</span></label>
+                                        <textarea name="content" required class="form-control redactor"></textarea>
+                                    </div>
 
                                 </div>
                             </div>

@@ -7,11 +7,9 @@
         </div>
         <div class="form-group" v-show="subthemes.length || others.length">
             <label>Sous-thèmes</label>
-            <Select2 v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
+            <Select2 ref="other" v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
             <input v-if="others" v-for="other in others" name="subthemes[]" :value="other" type="hidden">
         </div>
-
-        {{ others }}
     </div>
 </template>
 
@@ -25,31 +23,20 @@
         data(){
             return{
                 selected : this.current_theme ? this.current_theme.id : null,
-                others   : this.current_subthemes ? this.current_subthemes : null,
-                subthemes: [],
+                others   : this.current_subthemes ? this.current_subthemes : [],
+                subthemes: this.current_theme ? this.current_theme.subthemes : [ 346, 367 ] ,
                 url: location.protocol + "//" + location.host+"/",
             }
         },
         mounted() {
-
+            console.log(this.$refs.other.select2);
+            this.$refs.other.select2.val(this.others).trigger('change');
         },
         methods: {
             isSelected : function($event){
                 console.log($event);
                 this.subthemes = $event.subthemes;
             },
-/*            isNew : function($event){
-                let self = this;
-
-                axios.post(this.url + "backend/theme/create", {name: term}).then(function (response) {
-
-                    return {
-                        id: response.data.id,
-                        text: term,
-                    }
-
-                }).catch(function (error) { console.log(error);});
-            },*/
             createTag : function(params){
                 let term = $.trim(params.term);
 

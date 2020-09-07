@@ -24,7 +24,7 @@ class ArretEloquent implements ArretInterface{
 
 	public function find($id)
     {
-		return $this->arret->find($id);
+		return $this->arret->with(['themes.subthemes'])->find($id);
 	}
 
     public function byCategory($slug,$edition = null)
@@ -122,8 +122,29 @@ class ArretEloquent implements ArretInterface{
 		}
 
         $arret->fill($data);
+
+		if(isset($data['published_at'])){
+            $arret->published_at = $data['published_at'];
+        }
+
         $arret->updated_at = date('Y-m-d G:i:s');
 		$arret->save();
+
+        if(isset($data['metas']) && !empty($data['metas'])){
+            $arret->deleteMeta();
+
+            foreach ($data['metas'] as $key => $meta){
+                $arret->createMeta($key, $meta);
+            }
+        }
+
+        if(isset($data['themes']) && !empty($data['themes'])){
+            $arret->themes()->detach();
+
+            foreach ($data['themes'] as $theme){
+                $arret->themes()->attach($theme);
+            }
+        }
 
 		return $arret;
 	}

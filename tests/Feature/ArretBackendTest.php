@@ -35,7 +35,7 @@ class ArretBackendTest extends TestCase
     public function testPrepareArret()
     {
         $data = [
-            'meta' => [
+            'metas' => [
                 'year' => '2019-2020',
                 'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-II-36%3Afr&lang=fr&zoom=&type=show_document',
                 'termes_rechercher' => '8:LPE,10a:LPE,37LA,37m:LA'
@@ -62,7 +62,7 @@ class ArretBackendTest extends TestCase
     public function testCreateArret()
     {
         $data = [
-            'meta' => [
+            'metas' => [
                 'year' => '2019-2020',
                 'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-II-36%3Afr&lang=fr&zoom=&type=show_document',
                 'termes_rechercher' => '8:LPE,10a:LPE,37LA,37m:LA',
@@ -97,5 +97,60 @@ class ArretBackendTest extends TestCase
         $this->assertDatabaseHas('meta', ['key' => 'auteur', 'value' => 'Cindy Leschaud']);
         $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '8:LPE,10a:LPE,37LA,37m:LA']);
         $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2019-2020']);
+    }
+
+    public function testUpdateArret()
+    {
+        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
+        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+
+        $theme3 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
+        $theme4 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme3->id]);
+
+        $arret = factory(\App\Praticien\Arret\Entities\Arret::class)->create([
+            'title'        => 'ATF 146 II 36',
+            'status'       => 'futur',
+            'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
+            'published_at' => '2020-09-30',
+        ]);
+
+        $arret->themes()->attach([$theme1->id,$theme2->id]);
+
+        $arret->setMeta([
+            'year' => '2019-2020',
+            'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-II-36%3Afr&lang=fr&zoom=&type=show_document',
+            'termes_rechercher' => '8:LPE,10a:LPE,37LA,37m:LA',
+            'auteur' => 'Cindy Leschaud',
+        ]);
+
+        $data = [
+            'id'           => $arret->id,
+            'title'        => 'ATF 146 I 37',
+            'status'       => 'futur',
+            'content'      => 'art. 6 et 38m LA; Fames pésuéré egéstat vestibulum.',
+            'published_at' => '2020-09-31',
+            'metas'    => [
+                'year' => '2018-2019',
+                'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-III-36%3Afr&lang=fr&zoom=&type=show_document',
+                'termes_rechercher' => '10a:LPE,37LA,8:LPE,37m:LA',
+                'auteur' => 'Coralie Ahmetaj',
+            ],
+            'themes'  => [$theme3->id,$theme4->id],
+        ];
+
+        $response = $this->call('PUT', 'backend/arret/'.$arret->id, $data);
+
+        $this->assertDatabaseHas('arrets', [
+            'id'           => $arret->id,
+            'title'        => 'ATF 146 I 37',
+            'status'       => 'futur',
+            'content'      => 'art. 6 et 38m LA; Fames pésuéré egéstat vestibulum.',
+            'published_at' => '2020-09-31',
+        ]);
+
+        $this->assertDatabaseHas('meta', ['key' => 'atf', 'value' => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-III-36%3Afr&lang=fr&zoom=&type=show_document']);
+        $this->assertDatabaseHas('meta', ['key' => 'auteur', 'value' => 'Coralie Ahmetaj']);
+        $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '10a:LPE,37LA,8:LPE,37m:LA']);
+        $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2018-2019']);
     }
 }

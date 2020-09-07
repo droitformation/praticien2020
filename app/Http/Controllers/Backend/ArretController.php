@@ -67,6 +67,14 @@ class ArretController extends Controller
         return view('backend.arrets.show')->with(['arret' => $arret, 'themes' => $themes]);
     }
 
+    public function update(Request $request)
+    {
+        $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
+        $arret    = $this->arret->update($prepared);
+
+        return redirect('backend/arret/'.$arret->id);
+    }
+
     public function year($year)
     {
         $arrets = $this->arret->byYear($year);

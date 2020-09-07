@@ -2309,8 +2309,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['themes', 'current_theme', 'current_subthemes'],
@@ -2320,30 +2318,20 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       selected: this.current_theme ? this.current_theme.id : null,
-      others: this.current_subthemes ? this.current_subthemes : null,
-      subthemes: [],
+      others: this.current_subthemes ? this.current_subthemes : [],
+      subthemes: this.current_theme ? this.current_theme.subthemes : [346, 367],
       url: location.protocol + "//" + location.host + "/"
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.$refs.other.select2);
+    this.$refs.other.select2.val(this.others).trigger('change');
+  },
   methods: {
     isSelected: function isSelected($event) {
       console.log($event);
       this.subthemes = $event.subthemes;
     },
-
-    /*            isNew : function($event){
-                    let self = this;
-    
-                    axios.post(this.url + "backend/theme/create", {name: term}).then(function (response) {
-    
-                        return {
-                            id: response.data.id,
-                            text: term,
-                        }
-    
-                    }).catch(function (error) { console.log(error);});
-                },*/
     createTag: function createTag(params) {
       var term = $.trim(params.term);
 
@@ -46046,6 +46034,7 @@ var render = function() {
         _c("label", [_vm._v("Sous-thèmes")]),
         _vm._v(" "),
         _c("Select2", {
+          ref: "other",
           attrs: {
             options: _vm.subthemes,
             settings: {
@@ -46074,8 +46063,7 @@ var render = function() {
         })
       ],
       2
-    ),
-    _vm._v("\n\n    " + _vm._s(_vm.others) + "\n")
+    )
   ])
 }
 var staticRenderFns = [
