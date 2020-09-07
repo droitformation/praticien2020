@@ -3,30 +3,36 @@
         <div class="form-group">
             <label>Thème principal | Domaine du droit<span class="text-danger">*</span></label>
             <Select2 v-model="selected" :options="themes" @select="isSelected($event)" :settings="{dropdownCssClass:'', placeholder: 'Choix'}" />
+            <input v-if="selected" name="theme_id" :value="selected" type="hidden">
         </div>
-        <div class="form-group" v-show="subthemes.length">
+        <div class="form-group" v-show="subthemes.length || others.length">
             <label>Sous-thèmes</label>
-            <Select2 v-model="others" :options="subthemes" @select="isNew($event)" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
+            <Select2 v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
+            <input v-if="others" v-for="other in others" name="subthemes[]" :value="other" type="hidden">
         </div>
+
+        {{ others }}
     </div>
 </template>
 
 <script>
     import Select2 from 'v-select2-component';
     export default {
-        props: ['themes'],
+        props: ['themes','current_theme','current_subthemes'],
         components:{
             Select2
         },
         data(){
             return{
-                selected:null,
-                others:null,
-                subthemes:[],
+                selected : this.current_theme ? this.current_theme.id : null,
+                others   : this.current_subthemes ? this.current_subthemes : null,
+                subthemes: [],
                 url: location.protocol + "//" + location.host+"/",
             }
         },
-        mounted() {},
+        mounted() {
+
+        },
         methods: {
             isSelected : function($event){
                 console.log($event);

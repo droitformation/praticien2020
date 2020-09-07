@@ -32,7 +32,7 @@ class ArretInsertTest extends TestCase
                 ['meta_key' => 'termes_rechercher', 'meta_value' => '16:Cst.:3,20:LIPAD/GE'],
             ]),
             'themes'   => collect([25]),
-            'year'     => collect(['2012/2013']),
+            'year'     => collect(['2012-2013']),
         ];
 
         $converted = \App\Praticien\Wordpress\Convert\Arret::convert($post);
@@ -46,7 +46,7 @@ class ArretInsertTest extends TestCase
         $arret = \App\Praticien\Wordpress\Convert\Arret::convert($post);
 
         $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
-        $repo->create($arret);
+        $repo->insert($arret);
 
         $this->assertDatabaseHas('arrets', [
             'id'           => 123,
@@ -62,7 +62,7 @@ class ArretInsertTest extends TestCase
         $this->assertDatabaseHas('meta', ['key' => 'atf', 'value' => 'Lien vers atf','owner_id' => 123]);
         $this->assertDatabaseHas('meta', ['key' => 'auteur', 'value' => 'Cindy Leschaud','owner_id' => 123]);
         $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '16:Cst.:3,20:LIPAD/GE','owner_id' => 123]);
-        $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2012/2013','owner_id' => 123]);
+        $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2012-2013','owner_id' => 123]);
 
         $this->assertDatabaseHas('arret_themes', ['theme_id' => 25,'arret_id' => 123]);
     }

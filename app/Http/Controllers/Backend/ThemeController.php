@@ -17,6 +17,6 @@ class ThemeController extends Controller
     {
         $theme = $this->theme->create($request->only('name'));
 
-        return $request->ajax() ? response()->json($theme) : response()->back();
+        return $request->ajax() ? response()->json($theme) : redirect()->back();
     }
 }

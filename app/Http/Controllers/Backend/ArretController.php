@@ -17,6 +17,8 @@ class ArretController extends Controller
         $this->arret = $arret;
         $this->theme = $theme;
         $this->meta  = $meta;
+
+        view()->share('editions',array_combine(range(date('Y')-1,2010),range(date('Y'),2011)));
     }
 
     public function index()
@@ -34,7 +36,6 @@ class ArretController extends Controller
 
     public function create()
     {
-        $editions = array_combine(range(date('Y')-1,2010),range(date('Y'),2011));
         $themes   = $this->theme->getParents();
         $themes   = $themes->map(function ($theme) {
             return ['id' => $theme->id, 'text' => $theme->name, 'subthemes' => $theme->subthemes->map(function ($subtheme) {
@@ -42,7 +43,28 @@ class ArretController extends Controller
             })->toArray()];
         });
 
-        return view('backend.arrets.create')->with(['editions' => $editions, 'themes' => $themes]);
+        return view('backend.arrets.create')->with(['themes' => $themes]);
+    }
+
+    public function store(Request $request)
+    {
+        $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
+        $arret    = $this->arret->create($prepared);
+
+        return redirect('backend/arret/'.$arret->id);
+    }
+
+    public function show($id)
+    {
+        $arret    = $this->arret->find($id);
+        $themes   = $this->theme->getParents();
+        $themes   = $themes->map(function ($theme) {
+            return ['id' => $theme->id, 'text' => $theme->name, 'subthemes' => $theme->subthemes->map(function ($subtheme) {
+                return ['id' => $subtheme->id, 'text' => $subtheme->name];
+            })->toArray()];
+        });
+
+        return view('backend.arrets.show')->with(['arret' => $arret, 'themes' => $themes]);
     }
 
     public function year($year)

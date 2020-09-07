@@ -14,7 +14,7 @@
                 <div v-if="working" class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-spinner"></i></span>
                 </div>
-                <input type="text" name="meta[atf]" v-model="atf" placeholder="https://www.bger.ch..." class="form-control" id="atf">
+                <input type="text" name="metas[atf]" v-model="atf" placeholder="https://www.bger.ch..." class="form-control" id="atf">
             </div>
         </div>
 
@@ -23,10 +23,11 @@
 
 <script>
     export default {
+        props: ['link','the_title'],
         data(){
             return{
-                title:'',
-                atf:'',
+                title:this.the_title ?? '',
+                atf:this.link ? this.link : '',
                 working:null,
                 url: location.protocol + "//" + location.host+"/",
             }

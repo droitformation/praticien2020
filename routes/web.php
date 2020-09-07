@@ -137,6 +137,14 @@ Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
 
+  /*  $text   = '';
+    $result = strip_word_html($text);
+
+    echo '<pre>';
+    print_r($result);
+    echo '</pre>';
+    exit;*/
+
     $atf = 'ATF 143 III 113';
     $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
 

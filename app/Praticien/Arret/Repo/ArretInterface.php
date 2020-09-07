@@ -8,6 +8,7 @@ interface ArretInterface {
     public function byCategory($slug,$edition = null);
     public function byYear($year);
 	public function create(array $data);
+    public function insert(array $data);
 	public function update(array $data);
 	public function delete($id);
 

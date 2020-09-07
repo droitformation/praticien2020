@@ -19,7 +19,7 @@ class CreateArretsTable extends Migration
             $table->longText('content')->nullable();;
             $table->timestamp('published_at')->nullable();
             $table->string('slug');
-            $table->string('guid');
+            $table->string('guid')->nullable();
             $table->string('status')->default('brouillon');
             $table->string('lang')->nullable();
             $table->timestamps();

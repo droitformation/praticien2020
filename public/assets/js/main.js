@@ -116,4 +116,5 @@ $(document).ready( function () {
         height: '100%',
     });
 
+    $('.parsley').parsley();
 });

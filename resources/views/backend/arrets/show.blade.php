@@ -11,28 +11,29 @@
                     </div>
                 </div>
 
-                <form action="{{ secure_url('backend/arret') }}" method="post" class="parsley" novalidate="">@csrf
+                <form action="{{ secure_url('backend/arret/'.$arret->id) }}" method="post" class="parsley" novalidate="">@csrf
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="row" id="app">
                         <div class="col-8">
 
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="header-title mt-0 mb-4">Nouvel arrêt</h3>
+                                    <h3 class="header-title mt-0 mb-4">Éditer {{ $arret->numero }}</h3>
 
                                         <div class="form-group">
                                             <label for="title">Édition de l'ouvrage<span class="text-danger">*</span></label>
                                             <select class="form-control custom-select" required name="metas[year]">
                                                 @if(isset($editions))
                                                     @foreach($editions as $start => $end)
-                                                        <option {{ $loop->first ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
+                                                        <option {{ $arret->getMeta('year') == $start.'-'.$end ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                         </div>
 
-                                        <theme-component :themes="{{ $themes }}"></theme-component>
+                                        <theme-component :themes="{{ $themes }}" :current_theme="{{ json_encode($arret->main_theme_select) }}" :current_subthemes="{{ $arret->subthemes_list }}"></theme-component>
                                         <hr>
-                                        <atf-component></atf-component>
+                                        <atf-component the_title="{{ $arret->title }}" link="{{ $arret->getMeta('atf') ?? null }}"></atf-component>
 
                                         <div class="form-group">
                                             <label for="termes_rechercher">Termes de recherche</label>
@@ -45,17 +46,17 @@
                                                 => <strong>295:LP:1 <span class="text-danger">,</span> 46:LTF:2 <span class="text-danger">,</span> 98:LTF</strong><br>
                                                 S'il n’y a pas d’alinéa continuez la séquence avec le chiffre ou la lettre.</p>
                                             </div>
-                                            <input name="metas[termes_rechercher]" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
+                                            <input name="metas[termes_rechercher]" value="{{ $arret->getMeta('termes_rechercher') }}" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="content">Auteur(s)</label>
-                                            <input name="metas[auteur]" class="form-control" value="" type="text">
+                                            <input name="metas[auteur]" class="form-control" value="{{ $arret->getMeta('auteur') }}" type="text">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="content">Contenu<span class="text-danger">*</span></label>
-                                            <textarea name="content" required class="form-control redactor"></textarea>
+                                            <textarea name="content" required class="form-control redactor">{!! $arret->content !!}</textarea>
                                         </div>
 
                                 </div>
@@ -67,19 +68,12 @@
                                 <div class="card-body">
                                     <h4 class="header-title mt-0 mb-4">Publier</h4>
 
-                                    <publication-component></publication-component>
+                                    <publication-component the_status="{{ $arret->status }}" the_date="{{ $arret->published_at->format('Y-m-d') }}"></publication-component>
 
                                     <div class="form-group mb-0 mt-4 d-flex flex-row justify-content-between">
                                         <button class="btn btn-outline-primary btn-block mr-1" type="submit">Enregistrer brouillon</button>
                                         <button class="btn btn-primary btn-block ml-1 mt-0" type="submit">Publier</button>
                                     </div>
-
-                                    slug
-                                    guid
-                                    lang
-                                    metas
-                                    year
-                                    themes
                                 </div>
                             </div>
                         </div><!-- end col-->

@@ -14,7 +14,7 @@ class TransfertController extends Controller
             $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
 
             $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
-            $repo->create($arret);
+            $repo->insert($arret);
         }
 
         echo '<pre>';

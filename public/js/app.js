@@ -2058,10 +2058,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['link', 'the_title'],
   data: function data() {
+    var _this$the_title;
+
     return {
-      title: '',
-      atf: '',
+      title: (_this$the_title = this.the_title) !== null && _this$the_title !== void 0 ? _this$the_title : '',
+      atf: this.link ? this.link : '',
       working: null,
       url: location.protocol + "//" + location.host + "/"
     };
@@ -2222,10 +2225,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['the_status', 'the_date'],
   data: function data() {
+    var _this$the_status, _this$the_date;
+
     return {
-      status: 'pending',
-      hint: false
+      status: (_this$the_status = this.the_status) !== null && _this$the_status !== void 0 ? _this$the_status : 'pending',
+      hint: false,
+      published_at: (_this$the_date = this.the_date) !== null && _this$the_date !== void 0 ? _this$the_date : null
     };
   },
   mounted: function mounted() {
@@ -2300,16 +2307,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['themes'],
+  props: ['themes', 'current_theme', 'current_subthemes'],
   components: {
     Select2: v_select2_component__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      selected: null,
-      others: null,
+      selected: this.current_theme ? this.current_theme.id : null,
+      others: this.current_subthemes ? this.current_subthemes : null,
       subthemes: [],
       url: location.protocol + "//" + location.host + "/"
     };
@@ -45643,7 +45654,7 @@ var render = function() {
           staticClass: "form-control",
           attrs: {
             type: "text",
-            name: "meta[atf]",
+            name: "metas[atf]",
             placeholder: "https://www.bger.ch...",
             id: "atf"
           },
@@ -45887,6 +45898,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control custom-select",
+          attrs: { name: "status" },
           on: {
             change: [
               function($event) {
@@ -45924,12 +45936,29 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.published_at,
+            expression: "published_at"
+          }
+        ],
         staticClass: "form-control width-sm",
         attrs: {
           type: "text",
           name: "published_at",
           placeholder: "",
           id: "published_at"
+        },
+        domProps: { value: _vm.published_at },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.published_at = $event.target.value
+          }
         }
       }),
       _vm._v(" "),
@@ -45988,7 +46017,14 @@ var render = function() {
             },
             expression: "selected"
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.selected
+          ? _c("input", {
+              attrs: { name: "theme_id", type: "hidden" },
+              domProps: { value: _vm.selected }
+            })
+          : _vm._e()
       ],
       1
     ),
@@ -46000,8 +46036,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.subthemes.length,
-            expression: "subthemes.length"
+            value: _vm.subthemes.length || _vm.others.length,
+            expression: "subthemes.length || others.length"
           }
         ],
         staticClass: "form-group"
@@ -46019,11 +46055,6 @@ var render = function() {
               createTag: _vm.createTag
             }
           },
-          on: {
-            select: function($event) {
-              return _vm.isNew($event)
-            }
-          },
           model: {
             value: _vm.others,
             callback: function($$v) {
@@ -46031,10 +46062,20 @@ var render = function() {
             },
             expression: "others"
           }
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.others, function(other) {
+          return _vm.others
+            ? _c("input", {
+                attrs: { name: "subthemes[]", type: "hidden" },
+                domProps: { value: other }
+              })
+            : _vm._e()
         })
       ],
-      1
-    )
+      2
+    ),
+    _vm._v("\n\n    " + _vm._s(_vm.others) + "\n")
   ])
 }
 var staticRenderFns = [

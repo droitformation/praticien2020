@@ -2,7 +2,7 @@
     <div>
         <div class="form-group">
             <label>Status</label>
-            <select class="form-control custom-select" @change="update" v-model="status">
+            <select class="form-control custom-select" name="status" @change="update" v-model="status">
                 <option value="pending">Brouillon</option>
                 <option value="publish">Publié</option>
                 <option value="futur">Date ultérieure</option>
@@ -11,7 +11,7 @@
 
         <div class="form-group">
             <label for="published_at">Date de publication</label>
-            <input type="text" name="published_at" placeholder="" class="form-control width-sm" id="published_at">
+            <input type="text" v-model="published_at" name="published_at" placeholder="" class="form-control width-sm" id="published_at">
             <span v-if="hint" class="d-block p-2 text-danger"><i class="fas fa-exclamation-triangle"></i> &nbsp;Choisir la date</span>
         </div>
     </div>
@@ -24,10 +24,12 @@
     import moment from 'moment';
 
     export default {
+        props: ['the_status','the_date'],
         data(){
             return{
-                status : 'pending',
+                status :this.the_status ??  'pending',
                 hint:false,
+                published_at:this.the_date ?? null
             }
         },
         mounted() {

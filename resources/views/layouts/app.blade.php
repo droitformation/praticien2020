@@ -25,7 +25,7 @@
 
     <link href="{{ secure_asset('css/all.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('assets/css/app.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/app.min.css') }}?{{ rand(1000,23456) }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/hunterPopup.css') }}?{{ rand(1000,23456) }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/redactor.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/js/plugins/filemanager.min.css') }}" rel="stylesheet">
@@ -67,6 +67,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     <script src="{{ secure_asset('js/datatables.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/parsley.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/i18n/fr.js') }}"></script>
 
     <script src="{{ secure_asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
