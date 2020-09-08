@@ -256,7 +256,7 @@
                                                         <tr>
                                                             <td valign="top" width="580">
                                                                 <a style="text-decoration: none;" href="{{ url('http://droitpraticien.ch') }}">
-                                                                    <img class="banner" src="{{ asset('images/bigImg.jpg') }}" alt="Logo" title="Logo" width="580" height="140" border="0">
+                                                                    <img class="banner" src="{{ secure_asset('images/bigImg.jpg') }}" alt="Logo" title="Logo" width="580" height="140" border="0">
                                                                 </a>
                                                             </td>
                                                         </tr>

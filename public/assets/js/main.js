@@ -59,45 +59,11 @@ $(document).ready( function () {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
-            longhand: [
-                "dimanche",
-                "lundi",
-                "mardi",
-                "mercredi",
-                "jeudi",
-                "vendredi",
-                "samedi",
-            ],
+            longhand: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi",],
         },
         months: {
-            shorthand: [
-                "janv",
-                "févr",
-                "mars",
-                "avr",
-                "mai",
-                "juin",
-                "juil",
-                "août",
-                "sept",
-                "oct",
-                "nov",
-                "déc",
-            ],
-            longhand: [
-                "janvier",
-                "février",
-                "mars",
-                "avril",
-                "mai",
-                "juin",
-                "juillet",
-                "août",
-                "septembre",
-                "octobre",
-                "novembre",
-                "décembre",
-            ],
+            shorthand: ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc",],
+            longhand: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre",],
         },
         ordinal: function (nth) {
             if (nth > 1)
@@ -110,6 +76,15 @@ $(document).ready( function () {
         toggleTitle: "Cliquer pour basculer",
         time_24hr: true,
     };
+
+    if ($('.datePicker').length) {
+        $(".datePicker").flatpickr({
+            altInput: true,
+            altFormat: "j F Y",
+            dateFormat: "Y-m-d",
+            locale: fr
+        });
+    }
 
     $('#termes_rechercher').hunterPopup({
         content: $('#explications'),
@@ -150,6 +125,10 @@ $(document).ready( function () {
             return true;
         }
         return false;
+    });
+
+    let userList = new List('user-list', {
+        valueNames: ['name', 'email']
     });
 
 });

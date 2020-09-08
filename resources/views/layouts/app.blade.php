@@ -89,6 +89,7 @@
     <script src="{{ secure_asset('assets/js/plugins/fontsize.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/plugins/imagemanager.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/jquery-popup.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/list.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/main.js') }}"></script>
     <script src="{{ secure_asset('js/app.js') }}"></script>
 

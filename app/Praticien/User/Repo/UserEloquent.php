@@ -19,7 +19,7 @@ class UserEloquent implements UserInterface{
     }
 
     public function getActives(){
-        return $this->user->with(['abos','abos.keywords'])->whereDate('active_until', '>', \Carbon\Carbon::today()->startOfDay())->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>', \Carbon\Carbon::today()->startOfDay())->get();
     }
 
     public function find($id){

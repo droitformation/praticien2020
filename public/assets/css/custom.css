@@ -190,6 +190,7 @@ div.dataTables_paginate ul.pagination li.paginate_button.active a {
 .card-categorie{
     width: 48%;
     margin: 1%;
+    color: #3b4249;
 }
 
 .card-categorie .card-body{

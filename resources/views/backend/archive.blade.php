@@ -21,7 +21,6 @@
             </div>
         </div>
 
-
         @if(!$total->isEmpty())
             @foreach($total as $year => $dates)
 
