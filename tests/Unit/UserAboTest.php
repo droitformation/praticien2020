@@ -154,8 +154,8 @@ class UserAboTest extends TestCase
         $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"recours en matière civile","canton de Genève"']);
 
         $expect = collect([
-            $categorie1->id => ['keywords' => collect([collect(['Assurance de Protection Juridique SA'])]), 'published' => null],
-            $categorie2->id => ['keywords' => collect([collect(['recours en matière civile','canton de Genève'])]), 'published' => 1],
+            $categorie1->id => ['title' => $categorie1->name, 'keywords' => collect([collect(['Assurance de Protection Juridique SA'])]), 'published' => null],
+            $categorie2->id => ['title' => $categorie1->name, 'keywords' => collect([collect(['recours en matière civile','canton de Genève'])]), 'published' => 1],
         ]);
 
         $this->assertEquals($expect->toArray(),$user->abonnements->toArray());

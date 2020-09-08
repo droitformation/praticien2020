@@ -12,7 +12,7 @@ class Prepare
             'slug'         => str_slug($data['title']),
             'content'      => $data['content'],
             'published_at' => $data['published_at'],
-            'status'       => $data['status'],
+            'status'       => ($data['status'] == 'futur' || $data['status'] == 'publish') ? 'publish' : 'pending',
             'lang'         => $data['lang'] ?? null,
         ]);
     }

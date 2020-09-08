@@ -51,6 +51,8 @@ class ArretController extends Controller
         $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
         $arret    = $this->arret->create($prepared);
 
+        flash('Arrêt crée','success');
+
         return redirect('backend/arret/'.$arret->id);
     }
 
@@ -71,6 +73,8 @@ class ArretController extends Controller
     {
         $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
         $arret    = $this->arret->update($prepared);
+
+        flash('Arrêt mis à jour','success');
 
         return redirect('backend/arret/'.$arret->id);
     }

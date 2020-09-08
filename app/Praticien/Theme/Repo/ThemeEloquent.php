@@ -13,8 +13,7 @@ class ThemeEloquent implements ThemeInterface{
 	}
 
     public function getAll(){
-
-        return $this->theme->get();
+       return $this->theme->withCount(['arrets'])->orderBy('parent_id','ASC')->get();
     }
 
     public function getParents()

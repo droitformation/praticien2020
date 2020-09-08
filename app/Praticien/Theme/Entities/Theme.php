@@ -12,6 +12,13 @@ class Theme extends Model {
     protected $fillable = ['id','name','slug','parent_id'];
     protected $dates    = ['deleted_at'];
 
+    public function getCanBeDeletedAttribute()
+    {
+        $count = $this->arrets_count ? $this->arrets_count : $this->arrets->count();
+
+        return ($this->parent_id > 0 && $this->arrets_count >= 0) || ($this->parent_id == 0 && $count == 0);
+    }
+
     public function subthemes(){
         return $this->hasMany('\App\Praticien\Theme\Entities\Theme', 'parent_id');
     }

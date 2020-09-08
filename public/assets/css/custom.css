@@ -3,6 +3,12 @@ label {
     font-size: 16px;
 }
 
+.content-page .alert{
+    margin: 0 -15px 0 -15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 .form-group {
     margin-bottom: 1.2rem;
 }
@@ -36,6 +42,13 @@ label {
 div.dataTables_wrapper div.dataTables_length,
 div.dataTables_wrapper div.dataTables_filter{
     margin-bottom: 20px;
+}
+
+div.dataTables_wrapper div.dataTables_length select{
+    margin: 0 10px;
+    line-height: 25px;
+    padding: 0 10px;
+    height: calc(1.2em + 1rem + 2px);
 }
 
 div.dataTables_wrapper div.dataTables_length label {
@@ -164,4 +177,25 @@ div.dataTables_paginate ul.pagination li.paginate_button.active a {
 .datepicker table tr td.day.active{
     color: #fff;
     background-color: #0044cc;
+}
+
+#arretForm{
+    position: relative;
+}
+
+.publication-card{
+    position: fixed;
+}
+
+.card-categorie{
+    width: 48%;
+    margin: 1%;
+}
+
+.card-categorie .card-body{
+    padding: 8px;
+}
+
+.border {
+    border: 1px solid #efefef !important;
 }

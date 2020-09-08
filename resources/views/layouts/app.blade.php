@@ -41,7 +41,15 @@
         @include('backend.partials.topbar')
         @include('backend.partials.navigation')
 
-        @yield('content')
+        <div class="content-page">
+            <div class="content">
+
+                @include('flash::message')
+
+                @yield('content')
+
+            </div> <!-- container-fluid -->
+        </div> <!-- content -->
 
         <!-- Footer Start -->
         <footer class="footer">

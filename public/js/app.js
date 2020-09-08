@@ -2221,16 +2221,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['the_status', 'the_date'],
   data: function data() {
-    var _this$the_status, _this$the_date;
+    var _this$the_date;
 
     return {
-      status: (_this$the_status = this.the_status) !== null && _this$the_status !== void 0 ? _this$the_status : 'pending',
+      status: this.the_status ? this.the_status : this.isFuture ? 'futur' : 'pending',
       hint: false,
       published_at: (_this$the_date = this.the_date) !== null && _this$the_date !== void 0 ? _this$the_date : null
     };
@@ -2254,11 +2259,13 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           self.status = today ? 'publish' : 'futur';
         }
-
-        console.log(today);
-        console.log(status);
       }
     });
+  },
+  computed: {
+    isFuture: function isFuture() {
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()().diff(this.published_at, 'days') < 0;
+    }
   },
   methods: {
     moment: function moment() {
@@ -2273,6 +2280,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.status == 'publish') {
         fp.setDate(moment__WEBPACK_IMPORTED_MODULE_2___default()().format('YYYY-MM-DD'));
+        this.published_at = moment__WEBPACK_IMPORTED_MODULE_2___default()().format('YYYY-MM-DD');
       }
 
       if (this.status == 'futur') {
@@ -45956,7 +45964,38 @@ var render = function() {
             _vm._v("  Choisir la date")
           ])
         : _vm._e()
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "form-group mb-0 mt-4 d-flex flex-row justify-content-between"
+      },
+      [
+        !_vm.the_status || _vm.status == "pending"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-primary btn-block mr-1",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Enregistrer brouillon")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.status != "pending"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-block ml-1 mt-0",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Publier")]
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []

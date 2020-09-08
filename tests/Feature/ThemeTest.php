@@ -47,6 +47,28 @@ class ThemeTest extends TestCase
         ]);
     }
 
+    public function testThemeCanBeDeleted()
+    {
+        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
+        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+        $arret  = factory(\App\Praticien\Arret\Entities\Arret::class)->create();
+
+        $arret->themes()->attach([$theme1->id,$theme2->id]);
+        $arret = $arret->fresh();
+
+        $this->assertTrue($theme2->can_be_deleted);
+        $this->assertFalse($theme1->can_be_deleted);
+    }
+
+    public function testThemeCanBeDeleted2()
+    {
+        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
+        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+
+        $this->assertTrue($theme2->can_be_deleted);
+        $this->assertTrue($theme1->can_be_deleted);
+    }
+
     public function makeDataWordpressTheme(){
         $taxonomy = new \stdClass();
         $taxonomy->term_id = 123;

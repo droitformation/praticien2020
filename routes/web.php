@@ -63,6 +63,9 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::get('imageJson/{id?}', ['uses' => 'Backend\UploadController@imageJson']);
     Route::get('fileJson/{id?}',  ['uses' => 'Backend\UploadController@fileJson']);
 
+    /*
+     * Administrator
+     * */
     Route::get('/','Praticien\ArchiveController@index');
     Route::get('/decisions','Praticien\ArchiveController@decisions');
     Route::get('/archive','Praticien\ArchiveController@archive');

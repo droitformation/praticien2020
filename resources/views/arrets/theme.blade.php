@@ -14,7 +14,7 @@
                                 @include('arrets.partials.arret', ['arrets' => $arret])
                             @endforeach
                         @else
-                            <p class="mt-4">Rien dans <strong>{{ $subtheme->name }}</strong> {{ $edition ?? '' }}</p>
+                            <p class="mt-4">Rien dans <strong>{{ $subtheme->name ?? $theme->name  }}</strong> {{ $edition ?? '' }}</p>
                         @endif
 
                         @if($arrets instanceof \Illuminate\Pagination\LengthAwarePaginator )

@@ -87,7 +87,7 @@ class ArretBackendTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('arrets', [
-            'status'       => 'futur',
+            'status'       => 'publish',
             'title'        => 'ATF 146 II 36',
             'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
             'published_at' => '2020-09-30',
@@ -109,7 +109,7 @@ class ArretBackendTest extends TestCase
 
         $arret = factory(\App\Praticien\Arret\Entities\Arret::class)->create([
             'title'        => 'ATF 146 II 36',
-            'status'       => 'futur',
+            'status'       => 'publish',
             'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
             'published_at' => '2020-09-30',
         ]);
@@ -128,7 +128,7 @@ class ArretBackendTest extends TestCase
             'title'        => 'ATF 146 I 37',
             'status'       => 'futur',
             'content'      => 'art. 6 et 38m LA; Fames pésuéré egéstat vestibulum.',
-            'published_at' => '2020-09-31',
+            'published_at' => '2020-10-01',
             'metas'    => [
                 'year' => '2018-2019',
                 'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-III-36%3Afr&lang=fr&zoom=&type=show_document',
@@ -143,9 +143,9 @@ class ArretBackendTest extends TestCase
         $this->assertDatabaseHas('arrets', [
             'id'           => $arret->id,
             'title'        => 'ATF 146 I 37',
-            'status'       => 'futur',
+            'status'       => 'publish',
             'content'      => 'art. 6 et 38m LA; Fames pésuéré egéstat vestibulum.',
-            'published_at' => '2020-09-31',
+            'published_at' => '2020-10-01',
         ]);
 
         $this->assertDatabaseHas('meta', ['key' => 'atf', 'value' => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-III-36%3Afr&lang=fr&zoom=&type=show_document']);

@@ -29,9 +29,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $users      = $this->user->getAll();
-        $categories = $this->categorie->getAll();
-        $date       = $request->input('date');
+        $date  = $request->input('date');
 
         if($request->input('user_id')){
             $user = $this->user->find($request->input('user_id'));
@@ -46,11 +44,14 @@ class UserController extends Controller
             $alert = (new \App\Mail\AlerteDecision($user, $date, $data))->render();
         }
 
+        $users      = $this->user->getActives();
+        $categories = $this->categorie->getAll();
+
         return view('backend.users')->with([
-            'users' => $users,
-            'user_id' => $request->input('user_id'),
+            'users'      => $users,
+            'user_id'    => $request->input('user_id'),
             'categories' => $categories->pluck('name','id'),
-            'alert' => isset($alert) ? $alert : null
+            'alert'      => isset($alert) ? $alert : null
         ]);
     }
 }

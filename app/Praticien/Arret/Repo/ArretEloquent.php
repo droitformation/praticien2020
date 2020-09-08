@@ -31,7 +31,7 @@ class ArretEloquent implements ArretInterface{
     {
         return $this->arret->whereHas('themes', function ($query) use ($slug) {
             $query->where('slug', '=', $slug);
-        })->edition($edition)->orderBy('created_at','ASC')->paginate(10);
+        })->edition($edition)->where('published_at','<=',\Carbon\Carbon::today()->startOfDay())->orderBy('created_at','ASC')->paginate(10);
 	}
 
     public function byYear($year)

@@ -12,4 +12,9 @@ class Abo extends Model
     {
         return $this->hasMany('\App\Praticien\Abo\Entities\Abo_keyword');
     }
+
+    public function categorie()
+    {
+        return $this->belongsTo('\App\Praticien\Categorie\Entities\Categorie');
+    }
 }

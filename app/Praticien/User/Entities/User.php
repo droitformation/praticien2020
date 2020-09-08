@@ -73,6 +73,7 @@ class User extends Authenticatable
 
             return [
                 $abo->categorie_id => [
+                    'title'     => $abo->categorie->name,
                     'keywords'  => collect([$keywords]),
                     'published' => $abo->toPublish
                 ]

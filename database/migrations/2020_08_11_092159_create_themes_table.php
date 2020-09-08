@@ -17,7 +17,7 @@ class CreateThemesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('parent_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

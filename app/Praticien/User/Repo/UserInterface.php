@@ -3,6 +3,7 @@
 interface UserInterface {
 
     public function getAll();
+    public function getActives();
     public function find($data);
     public function findByEmail($email);
     public function getByCadence($cadence, $exclude = []);

@@ -1,6 +1,7 @@
 $(document).ready( function () {
     $('#arret_list').DataTable({
         "pageLength": 10,
+        "order": [[ 1, "desc" ]],
         language: {
             processing:     "Traitement en cours...",
             search:         "Rechercher&nbsp;:",
@@ -30,6 +31,7 @@ $(document).ready( function () {
         maxHeight: '450px',
         removeEmpty : [ 'strong' , 'em' , 'span' , 'p' ],
         lang: 'fr',
+        pasteBlockTags: ['h1', 'h2','h3','p', 'strong','i'],
         plugins: ['imagemanager','filemanager','fontsize','fontcolor','alignment'],
         fileUpload : 'backend/uploadRedactor?_token=' + $('meta[name="csrf-token"]').attr('content'),
         imageUpload: 'backend/uploadRedactor?_token=' + $('meta[name="csrf-token"]').attr('content'),
@@ -117,4 +119,37 @@ $(document).ready( function () {
     });
 
     $('.parsley').parsley();
+
+    let parentElement = $('.publication-col');
+    let fixedElement  = $('.publication-card');
+
+    function changeFixedElementWidth() {
+        let parentElementWidth = parentElement.width();
+        fixedElement.css('width',parentElementWidth);
+    }
+
+    changeFixedElementWidth();
+
+    $(window).on('resize', function(){
+        changeFixedElementWidth();
+    });
+
+    /*
+   * delete action confirmation
+   * */
+    $('body').on('click','.deleteAction',function(event){
+
+        var $this  = $(this);
+        var action = $this.data('action');
+        var what   = $this.data('what');
+
+        var what = (0 === what.length ? 'supprimer' : what);
+        var answer = confirm('Voulez-vous vraiment ' + what + ' : '+ action +' ?');
+
+        if (answer){
+            return true;
+        }
+        return false;
+    });
+
 });
