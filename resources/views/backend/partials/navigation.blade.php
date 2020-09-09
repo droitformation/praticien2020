@@ -30,9 +30,8 @@
                     <li>
                         <a href="javascript: void(0);"><i class="fas fa-gavel"></i><span> Décisions TF </span></a>
                         <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="{{ secure_url('backend/decisions') }}">Année en cours</a></li>
+                            <li><a href="{{ secure_url('backend/decision') }}">Dernières décisions</a></li>
                             <li><a href="{{ secure_url('backend/archive') }}">Archives</a></li>
-                            <li><a href="{{ secure_url('backend/insert') }}">Gestion</a></li>
                         </ul>
                     </li>
                     <li>

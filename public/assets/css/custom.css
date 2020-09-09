@@ -214,6 +214,20 @@ div.dataTables_paginate ul.pagination li.paginate_button.active a {
    padding: 5px;
 }
 
+.nav-month{
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .btn-cross{
     padding:0 4px;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+}
+
+.list-dates .row{
+    margin-bottom: 15px;
+    font-size: 16px;
 }

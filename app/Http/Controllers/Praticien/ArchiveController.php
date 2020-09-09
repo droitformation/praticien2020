@@ -24,18 +24,13 @@ class ArchiveController extends Controller
         $this->categorie = $categorie;
     }
 
-    public function index()
-    {
-        return view('backend.index');
-    }
-
     public function decisions()
     {
         $liste = $this->worker->getMissingDates();
         $exist = $this->worker->getExistDatesArrets();
         $total = $this->decision->countByYear();
 
-        return view('backend.insert')->with(['liste' => $liste, 'exist' => $exist, 'total' => $total]);
+        return view('backend.decisions.index')->with(['liste' => $liste, 'exist' => $exist, 'total' => $total]);
     }
 
     public function archives($year, $date ,$id = null)

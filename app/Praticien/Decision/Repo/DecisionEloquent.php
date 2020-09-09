@@ -100,7 +100,23 @@ class DecisionEloquent implements DecisionInterface{
 
     public function getYear($year){
 
-        return $this->decision->whereYear('publication_at', $year)->get();
+        $name = $year == date('Y') ? 'decisions' : 'archive_'.$year;
+        $conn = $year == date('Y') ? $this->main_connection : 'sqlite';
+
+        $decisions = $this->decision->setConnection($conn)->setTable($name)->whereYear('publication_at', $year)->get();
+
+        return $decisions->groupBy(function($date) {
+            return $date->publication_at->format('Y');
+        },'publication_at')->map(function ($year, $key) {
+            return $year->groupBy(function($pub) {
+                return $pub->publication_at->format('Y-m-d');
+            })->map(function ($date, $key) {
+                return ['date' => $key, 'count' => $date->count()];
+            })->groupBy(function($item, $key) {
+                $month = explode('-',$key);
+                return $month[1];
+            });
+        });
     }
 
     public function getDate($date){

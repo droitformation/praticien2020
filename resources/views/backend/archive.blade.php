@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-
     <div class="container-fluid mt-4">
         <div class="row page-title">
             <div class="col-md-10">
@@ -34,31 +33,31 @@
         @if(!$total->isEmpty())
             @foreach($total as $year => $dates)
 
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Archives {{ $year }}</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Archives {{ $year }}</h3>
 
-                            <?php $years = $dates->chunk(6); ?>
-                            @foreach($years as $dates)
-                            <div class="row">
-                                @foreach($dates as $month => $days)
-                                    <div class="col-md">
-                                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
-                                        <p><strong>{{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}</strong></p>
-                                        @foreach($days as $day)
-                                            <div class="row list-dates">
-                                                <div class="col-sm">
-                                                    <p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p>
-                                                </div>
-                                                <div class="col-sm text-right"><p><strong>{{ $day['count'] }}</strong></p></div>
+                        <?php $years = $dates->chunk(6); ?>
+                        @foreach($years as $dates)
+                        <div class="row">
+                            @foreach($dates as $month => $days)
+                                <div class="col-md">
+                                    <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
+                                    <p><strong>{{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}</strong></p>
+                                    @foreach($days as $day)
+                                        <div class="row list-dates">
+                                            <div class="col-sm">
+                                                <p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                @endforeach
-                            </div>
+                                            <div class="col-sm text-right"><p><strong>{{ $day['count'] }}</strong></p></div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             @endforeach
                         </div>
+                        @endforeach
                     </div>
+                </div>
 
             @endforeach
         @endif

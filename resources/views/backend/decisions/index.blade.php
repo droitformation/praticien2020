@@ -79,78 +79,11 @@
             </div>
         </div>
 
-
         @if(!$total->isEmpty())
             @foreach($total as $year => $dates)
-
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="mt-0">Archives {{ $year }}</h3>
-
-                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8');?>
-
-                       <div class="d-flex flex-row justify-content-between">
-                           <ul class="nav nav-tabs flex-column nav-pills" id="myTab" role="tablist">
-                               @foreach($dates->keys() as $i => $month)
-                                   <li class="nav-item" role="presentation">
-                                       <a class="nav-link {{ $i == 0 ? 'active' : '' }}" id="month_{{ $month }}" data-toggle="tab" href="#tabmonth_{{ $month }}" role="tab">
-                                           {{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}
-                                       </a>
-                                   </li>
-                               @endforeach
-                           </ul>
-
-                           <div class="tab-content w-100 px-4" id="myTabContent">
-                               @foreach($dates as $month => $days)
-                                   <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}" id="tabmonth_{{ $month }}" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="d-flex flex-row">
-                                            <?php $line = $days->chunk(5)?>
-                                            @foreach($line as $row)
-                                                <div class="row list-dates">
-                                                    @foreach($row as $day)
-                                                        <div class="col-md-8"><p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p></div>
-                                                        <div class="col-md-4 text-left"><p><strong>{{ $day['count'] }}</strong></p></div>
-                                                    @endforeach
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                   </div>
-                               @endforeach
-                           </div>
-                       </div>
-
-                      {{--  <?php $years = $dates->chunk(6); ?>
-                        @foreach($years as $dates)
-                            <div class="row">
-                                @foreach($dates as $month => $days)
-                                    <div class="col">
-                                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
-                                        <h5>
-                                            <a class="btn btn-sm btn-primary" data-toggle="collapse" href="#collapse_{{ $month }}" role="button">
-                                                {{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}
-                                            </a>
-                                        </h5>
-                                        <div id="collapse_{{ $month }}" class="collapse">
-                                            @foreach($days as $day)
-                                                <div class="row list-dates">
-                                                    <div class="col-md-10">
-                                                        <p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p>
-                                                    </div>
-                                                    <div class="col-md-2 text-right"><p><strong>{{ $day['count'] }}</strong></p></div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endforeach--}}
-
-                    </div>
-                </div>
-
+                @include('backend.decisions.partials.year',['dates' => $dates, 'year' => $year])
             @endforeach
         @endif
-
 
     </div>
 @stop

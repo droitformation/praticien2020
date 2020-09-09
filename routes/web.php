@@ -66,9 +66,11 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     /*
      * Administrator
      * */
-    Route::get('/','Praticien\ArchiveController@index');
-    Route::get('/decisions','Praticien\ArchiveController@decisions');
-    Route::get('/archive','Praticien\ArchiveController@archive');
+    Route::get('/','Backend\BackendController@index');
+    Route::get('/decision','Backend\DecisionController@index');
+
+    Route::get('/archive/{year?}','Backend\DecisionController@archive');
+
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
     Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
