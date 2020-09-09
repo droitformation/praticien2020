@@ -839,13 +839,14 @@ p {
 }
 
 .logo{
-    font-size: 25px;
-    color: #000;
+    font-size: 23px;
+    color: var(--thm-base);
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .logo span{
-
+    color: var(--thm-blue);
 }
 
 .main-nav-one{

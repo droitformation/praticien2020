@@ -1,20 +1,25 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid mt-4">
+        <div class="row page-title">
+            <div class="col-md-12">
+                <h3 class="mb-1 mt-0">Arrêts du TF</h3>
+            </div>
+        </div>
 
         <div class="row">
-            <div class="col-lg">
-                <div class="card" style="width: 18rem;">
+            <div class="col">
+                <div class="card">
                     <div class="card-body">
-                        <h3>Missing</h3>
+                        <h3 class="mt-0">Manquantes</h3>
                         @if(!$liste->isEmpty())
                             @foreach($liste as $date)
                                 <div class="row">
-                                    <div class="col-sm"><p>{{ $date }}</p></div>
+                                    <div class="col-sm"><p class="mb-2">{{ $date }}</p></div>
                                     <form action="{{ url('backend/date/update') }}" method="POST" class="col-sm text-right">{!! csrf_field() !!}
                                         <input name="date" value="{{ $date }}" type="hidden">
-                                        <button class="btn btn-info btn-sm">Update</button>
+                                        <button class="btn btn-primary btn-sm">Insérer</button>
                                     </form>
                                 </div>
                             @endforeach
@@ -22,18 +27,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg">
-                <div class="card" style="width: 18rem;">
+            <div class="col">
+                <div class="card">
                     <div class="card-body">
-                        <h3>Exist</h3>
+                        <h3 class="mt-0">Existante</h3>
                         @if(!$exist->isEmpty())
                             @foreach($exist as $date => $count)
                                 <div class="row">
-                                    <div class="col-sm"><p><span class="badge badge-info">{{ $count }}</span></p></div>
-                                    <div class="col-sm"><p>{{ $date }}</p></div>
+                                    <div class="col-sm"><p class="mb-2"><span class="badge badge-info">{{ $count }}</span></p></div>
+                                    <div class="col-sm"><p class="mb-2">{{ $date }}</p></div>
                                     <form action="{{ url('backend/date/delete') }}" method="POST" class="col-sm text-right">{!! csrf_field() !!}
                                         <input name="date" value="{{ $date }}" type="hidden">
-                                        <button class="btn btn-danger btn-sm">X</button>
+                                        <button class="btn btn-danger btn-sm btn-cross">X</button>
                                     </form>
                                 </div>
                             @endforeach
@@ -41,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg">
+            <div class="col">
                 <div class="card">
                     <div class="card-body">
                         <form action="{{ url('backend/date/update') }}" method="POST">{!! csrf_field() !!}
@@ -67,7 +72,7 @@
                             <div class="form-group">
                                 <input type="text" class="form-control datePicker" id="range2" name="range[1]" placeholder="">
                             </div>
-                            <button type="submit" class="btn btn-info">Envoyer</button>
+                            <p class="text-right"><button type="submit" class="btn btn-primary">Envoyer</button></p>
                         </form>
                     </div>
                 </div>
@@ -80,27 +85,66 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h3>Archives {{ $year }}</h3>
+                        <h3 class="mt-0">Archives {{ $year }}</h3>
 
-                        <?php $years = $dates->chunk(6); ?>
+                        <?php setlocale(LC_ALL, 'fr_FR.UTF-8');?>
+
+                       <div class="d-flex flex-row justify-content-between">
+                           <ul class="nav nav-tabs flex-column nav-pills" id="myTab" role="tablist">
+                               @foreach($dates->keys() as $i => $month)
+                                   <li class="nav-item" role="presentation">
+                                       <a class="nav-link {{ $i == 0 ? 'active' : '' }}" id="month_{{ $month }}" data-toggle="tab" href="#tabmonth_{{ $month }}" role="tab">
+                                           {{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}
+                                       </a>
+                                   </li>
+                               @endforeach
+                           </ul>
+
+                           <div class="tab-content w-100 px-4" id="myTabContent">
+                               @foreach($dates as $month => $days)
+                                   <div class="tab-pane fade show {{ $loop->first ? 'active' : '' }}" id="tabmonth_{{ $month }}" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="d-flex flex-row">
+                                            <?php $line = $days->chunk(5)?>
+                                            @foreach($line as $row)
+                                                <div class="row list-dates">
+                                                    @foreach($row as $day)
+                                                        <div class="col-md-8"><p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p></div>
+                                                        <div class="col-md-4 text-left"><p><strong>{{ $day['count'] }}</strong></p></div>
+                                                    @endforeach
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                   </div>
+                               @endforeach
+                           </div>
+                       </div>
+
+                      {{--  <?php $years = $dates->chunk(6); ?>
                         @foreach($years as $dates)
                             <div class="row">
                                 @foreach($dates as $month => $days)
-                                    <div class="col-md">
+                                    <div class="col">
                                         <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
-                                        <p><strong>{{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}</strong></p>
-                                        @foreach($days as $day)
-                                            <div class="row list-dates">
-                                                <div class="col-md-8">
-                                                    <p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p>
+                                        <h5>
+                                            <a class="btn btn-sm btn-primary" data-toggle="collapse" href="#collapse_{{ $month }}" role="button">
+                                                {{ strftime("%B",  mktime(0, 0, 0, $month, 10)) }}
+                                            </a>
+                                        </h5>
+                                        <div id="collapse_{{ $month }}" class="collapse">
+                                            @foreach($days as $day)
+                                                <div class="row list-dates">
+                                                    <div class="col-md-10">
+                                                        <p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p>
+                                                    </div>
+                                                    <div class="col-md-2 text-right"><p><strong>{{ $day['count'] }}</strong></p></div>
                                                 </div>
-                                                <div class="col-md-4 text-right"><p><strong>{{ $day['count'] }}</strong></p></div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
-                        @endforeach
+                        @endforeach--}}
+
                     </div>
                 </div>
 

@@ -237,7 +237,6 @@
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                             <tr>
-                                <td valign="top" width="20">&nbsp;</td>
                                 <td>
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                         <tbody>
@@ -256,18 +255,16 @@
                                                         <tr>
                                                             <td valign="top" width="580">
                                                                 <a style="text-decoration: none;" href="{{ url('http://droitpraticien.ch') }}">
-                                                                    <img class="banner" src="{{ secure_asset('images/bigImg.jpg') }}" alt="Logo" title="Logo" width="580" height="140" border="0">
+                                                                    <img class="banner" src="{{ secure_asset('images/bigImg.png') }}" alt="Logo" title="Logo" width="580" height="140" border="0">
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
-
                                                 </div>
                                                 <div class="movableContent" style="border: 0px; padding-top: 0px; position: relative;">
                                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                         <tbody>
-                                                        <tr><td height='20'></td></tr>
                                                         <tr>
                                                             <td style="border: 1px solid #EEEEEE;background:#f2f2f2; border-radius:6px;-moz-border-radius:6px;-webkit-border-radius:6px">
                                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -275,17 +272,17 @@
                                                                     <tr>
                                                                         <td valign="top" width="20">&nbsp;</td>
                                                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-                                                                                <tr><td height='8'></td></tr>
+                                                                                <tr><td height='12'></td></tr>
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div class='contentEditable' style='text-align: center;'>
-                                                                                            <h2 style="font-size: 18px;">Bonjour {{ $user->name }}</h2>
+                                                                                            <h2 style="font-size: 18px;color: #000;">Bonjour {{ $user->name }}</h2>
                                                                                             <p style="color:#585858; margin-bottom: 5px; margin-top: 5px;">Voici les derniers arrêts correspondant à vos abonnements</p>
                                                                                             <p><strong>Date de publication {{ formatDateOrRange($date) }}</strong></p>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr><td height='4'></td></tr>
+                                                                                <tr><td height='8'></td></tr>
                                                                             </table></td>
                                                                         <td valign="top" width="20">&nbsp;</td>
                                                                     </tr>
@@ -307,10 +304,10 @@
                                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr align="left">
-                                                                        <th height="20" width="105" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 11px; text-transform: uppercase; padding: 5px 4px 4px 4px;">Date décision</th>
-                                                                        <th height="20" width="230" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 11px; text-transform: uppercase; padding: 5px 4px 4px 4px;">Catégorie</th>
-                                                                        <th height="20" width="110" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 11px; text-transform: uppercase; padding: 5px 4px 4px 4px;">Référence <small style="display: block; font-size: 10px;">(* destiné à publ.)</small></th>
-                                                                        <th height="20" width="125" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 11px; text-transform: uppercase; padding: 5px 4px 4px 4px;">Mots clés</th>
+                                                                        <th height="20" width="105" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 12px; padding: 5px;">Date décision</th>
+                                                                        <th height="20" width="220" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 12px; padding: 5px;">Catégorie</th>
+                                                                        <th height="20" width="130" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 12px; padding: 5px;">Réf. <small style="font-size: 11px;">(* à publication)</small></th>
+                                                                        <th height="20" width="125" style="color: #fff; font-weight: normal; background: #0f4060; border: 1px solid #fff; font-size: 12px; padding: 5px;">Mots clés</th>
                                                                     </tr>
                                                                     <tr><td colspan="4" height="8"></td></tr>
 
@@ -318,9 +315,9 @@
                                                                         @foreach($decisions as $decision)
                                                                             <!--  list keys :  decisisons => collection, categorie => int,  keywords => array  -->
                                                                             <tr align="left" style="font-size: 12px;">
-                                                                                <td style="padding: 5px 2px;">{{ $decision['decision']->decision_at->formatLocalized('%d %B %Y') }}</td>
-                                                                                <td style="padding: 5px 4px 5px 2px;">{{ isset($decision['decision']->categorie) ? $decision['decision']->categorie->name : '' }}</td>
-                                                                                <td style="padding: 5px 2px;">
+                                                                                <td style="padding: 5px 2px;color:#000;">{{ $decision['decision']->decision_at->formatLocalized('%d %B %Y') }}</td>
+                                                                                <td style="padding: 5px 4px 5px 2px;color:#000;">{{ isset($decision['decision']->categorie) ? $decision['decision']->categorie->name : '' }}</td>
+                                                                                <td style="padding: 5px 2px;color:#000;">
                                                                                     <strong>
                                                                                         <a target="_blank" href="http://www.droitpourlepraticien.ch/?page_id=30526&arret={{ $decision['decision']->id }}&year={{ $decision['decision']->publication_at->year }}">
                                                                                             {{ $decision['decision']->numero }}
@@ -328,7 +325,7 @@
                                                                                         {{ $decision['decision']->publish ? '*' : '' }}
                                                                                     </strong>
                                                                                 </td>
-                                                                                <td style="padding: 5px 2px;">
+                                                                                <td style="padding: 5px 2px;color:#000;">
                                                                                     @if( isset($decision['keywords']) && !empty($decision['keywords']))
                                                                                         {{ $decision['keywords'] }}
                                                                                     @endif
@@ -366,7 +363,7 @@
                                                                                         <div class='contentEditableContainer contentTextEditable'>
                                                                                             <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
                                                                                                 <p>
-                                                                                                    <strong>Ceci est une alerte email de <a style="color: #1d74ac;" href="http:// www.droitpraticien.ch"> www.droitpraticien.ch</a></strong>
+                                                                                                    <strong>Ceci est une alerte email de <a style="color: #0f4060;" href="http:// www.droitpraticien.ch"> www.droitpraticien.ch</a></strong>
                                                                                                 </p>
                                                                                                 <p style="color:#585858;  margin-top: 5px;">
                                                                                                     Faculté de droit<br/>

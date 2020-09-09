@@ -200,3 +200,20 @@ div.dataTables_paginate ul.pagination li.paginate_button.active a {
 .border {
     border: 1px solid #efefef !important;
 }
+
+.list-dates{
+    padding: 0 5px;
+    width: 19%;
+}
+
+.list-dates p{
+    margin-bottom: 0;
+}
+
+.nav-pills{
+   padding: 5px;
+}
+
+.btn-cross{
+    padding:0 4px;
+}
