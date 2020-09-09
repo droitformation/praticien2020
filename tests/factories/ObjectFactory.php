@@ -58,8 +58,8 @@ class ObjectFactory
 
     public function makeDecisions($publication_at, $data)
     {
-        foreach($data as $new){
-            $decisisons[] = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        return collect($data)->map(function ($new) use ($publication_at) {
+            return factory(\App\Praticien\Decision\Entities\Decision::class)->create([
                 'publication_at' => $publication_at,
                 'decision_at'    => $this->faker->dateTime,
                 'categorie_id'   => $new['categorie_id'],
@@ -68,8 +68,6 @@ class ObjectFactory
                 'numero'         => $this->faker->numberBetween(11,34).'A_/2017',
                 'link'           => $this->faker->url,
             ]);
-        }
-
-        return $decisisons;
+        });
     }
 }

@@ -140,6 +140,14 @@ Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
 
+    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+
+    $decisions = $repo->search(['terms' => ['Haldy','Bohnet'], 'categorie' => 247, 'published' => null, 'publication_at' => '2020-09-07']);
+
+    echo '<pre>';
+    print_r($decisions);
+    echo '</pre>';
+    exit;
   /*  $text   = '';
     $result = strip_word_html($text);
 

@@ -177,7 +177,7 @@ class DecisionEloquent implements DecisionInterface{
         }
     }
 
-    // $params array terms, categorie, published, publications_at
+    // $params array terms, categorie, published, publications_at in decsions main table mysql
     public function search($params)
     {
         $terms          = isset($params['terms']) && !empty($params['terms']) ? $params['terms'] : null;

@@ -9,8 +9,8 @@ class Alert
         $date = $cadence == 'weekly' ? weekRange($date)->toArray() : $date;
 
         $worker->setCadence($cadence)->setDate($date);
-        $data = $worker->getUserAbos($user);
+        $decisions = $worker->getUserAbos($user);
 
-        return (new \App\Mail\AlerteDecision($user, $date, $data))->render();
+        return (new \App\Mail\AlerteDecision($user, $date, $decisions))->render();
     }
 }

@@ -53,7 +53,7 @@ class Alert implements AlertInterface
     {
         // get all user without those we already sent something => getByCadence(cadence, exclude id user)
         $already = $this->alertAlreadySent();
-        $users    = $this->user->getByCadence($this->cadence, $already->pluck('user_id')->toArray());
+        $users   = $this->user->getByCadence($this->cadence, $already->pluck('user_id')->toArray());
 
         return $users->map(function($user){
             // Search in new decisisions of the day or week
@@ -92,7 +92,7 @@ class Alert implements AlertInterface
             return [
                 'decision'  => $item->first(),
                 'categorie' => $item->first()->categorie_id,
-                'keywords'  => $item->pluck('keywords')->flatten()->implode(','),
+                'keywords'  => $item->pluck('keywords')->flatten()->implode(', '),
             ];
         });
     }

@@ -3,12 +3,11 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlertTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -43,17 +42,49 @@ class AlertTest extends TestCase
     {
         $publication_at = \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString();
 
-        $abo = $this->makeDecisionAndAbos($publication_at);
+        list($user,$decisions) = $this->makeDecisionAndAbos($publication_at);
 
         $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
         $alert->setCadence('daily')->setDate($publication_at);
 
         // Mark it sent
-        $alert->sent($abo);
+        $alert->sent($user);
 
         $users = $alert->getUsers();
 
         $this->assertEquals(0,$users->count());
+    }
+
+    public function testGetAbosForUSerAlert()
+    {
+        $publication_at = \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString();
+
+        $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
+        $alert->setCadence('daily')->setDate($publication_at);
+
+        list($user,$decisions) = $this->makeDecisionAndAbos($publication_at);
+
+        $results = $alert->getUserAbos($user);
+
+        $decision1 = $decisions->shift();
+        $decision2 = $decisions->shift();
+        $decision3 = $decisions->shift();
+
+        $row1 = $results->shift();
+        $row2 = $results->shift();
+        $row3 = $results->shift();
+
+        $this->assertEquals($decision1->id, $row1['decision']->id);
+        $this->assertEquals($decision2->id, $row2['decision']->id);
+        $this->assertEquals($decision3->id, $row3['decision']->id);
+
+        $this->assertEquals(174, $row1['categorie']);
+        $this->assertEquals(175, $row2['categorie']);
+        $this->assertEquals(176, $row3['categorie']);
+
+        $this->assertEquals('Accumasa laoreelentesque', $row1['keywords']);
+        $this->assertEquals('à nul A égét 44, BGFA', $row2['keywords']);
+        $this->assertEquals('', $row3['keywords']);
     }
 
     /* =================================
@@ -62,9 +93,9 @@ class AlertTest extends TestCase
     public function makeDecisionAndAbos($publication_at)
     {
         $data = [
-            ['categorie_id' => 174, 'texte' => '<div>Accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'],
-            ['categorie_id' => 175, 'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'],
-            ['categorie_id' => 176, 'texte' => '<div>Nul de chose égét 44 3€ quisque à nullä dui cctus malet, consequatà</div>.'],
+            ['categorie_id' => 174, 'texte' => '<div>Accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'], // categorie + keywords
+            ['categorie_id' => 175, 'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'], // categorie + keywords
+            ['categorie_id' => 176, 'texte' => '<div>Nul de chose égét 44 3€ quisque à nullä dui cctus malet, consequatà</div>.'], // categorie
             ['categorie_id' => 177, 'texte' => '<div>Judiciaire égét quisque à nullä dui cctus , consequat liçlà</div>.']
         ];
 
@@ -82,7 +113,6 @@ class AlertTest extends TestCase
         $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"Accumasa laoreelentesque"']);
         $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"à nul A égét 44",BGFA']);
 
-        return $user;
+        return [$user,$decisions];
     }
-
 }

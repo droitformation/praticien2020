@@ -13,18 +13,18 @@ class AlerteDecision extends Mailable
 
     public $user;
     public $date;
-    public $arrets;
+    public $decisions;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user,$date,$arrets)
+    public function __construct($user,$date,$decisions)
     {
         $this->user   = $user;
         $this->date   = $date;
-        $this->arrets = $arrets;
+        $this->decisions = $decisions;
     }
 
     /**

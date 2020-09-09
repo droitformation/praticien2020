@@ -314,8 +314,8 @@
                                                                     </tr>
                                                                     <tr><td colspan="4" height="8"></td></tr>
 
-                                                                    @if(!$arrets->isEmpty())
-                                                                        @foreach($arrets as $decision)
+                                                                    @if(!$decisions->isEmpty())
+                                                                        @foreach($decisions as $decision)
                                                                             <!--  list keys :  decisisons => collection, categorie => int,  keywords => array  -->
                                                                             <tr align="left" style="font-size: 12px;">
                                                                                 <td style="padding: 5px 2px;">{{ $decision['decision']->decision_at->formatLocalized('%d %B %Y') }}</td>

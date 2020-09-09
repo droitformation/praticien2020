@@ -46,17 +46,13 @@ class Decision extends Model
     public function scopeSearch($query,$terms)
     {
         if($terms && !empty($terms)) {
-            foreach($terms as $term) {
+            foreach($terms as $i => $term) {
                 $term = addslashes($term);
                 $term = str_replace(';',' ',$term);
-                //$query->whereRaw("MATCH (texte) AGAINST ('$term')");
-                $query->where(function ($q) use ($term) {
-                    $q->where('texte','LIKE','% '.$term.' %')
-                        ->orWhere('texte','LIKE','%'.$term.' %')
-                        ->orWhere('texte','LIKE','% '.$term.'%');
-                });
+                $where = $i > 0 ? 'orWhere' : 'where';
+                $query->$where('texte','LIKE','%'.$term.'%');
             }
-        };
+        }
     }
 
     public function scopeSearchxp($query,$terms)
