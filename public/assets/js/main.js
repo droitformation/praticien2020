@@ -131,4 +131,5 @@ $(document).ready( function () {
         valueNames: ['name', 'email']
     });
 
+    $('.custom-select').select2();
 });

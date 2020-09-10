@@ -37,7 +37,8 @@
                     <li>
                         <a href="javascript: void(0);"><i class="fas fa-users"></i><span> Utilisateurs </span></a>
                         <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="{{ secure_url('backend/abos') }}">Gestion</a></li>
+                            <li><a href="{{ secure_url('backend/user') }}">Gestion</a></li>
+                            <li><a href="{{ secure_url('backend/alertes') }}">Alertes</a></li>
                         </ul>
                     </li>
                 @endif

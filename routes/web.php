@@ -67,9 +67,16 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
      * Administrator
      * */
     Route::get('/','Backend\BackendController@index');
-    Route::get('/decision','Backend\DecisionController@index');
+    Route::get('decision','Backend\DecisionController@index');
 
-    Route::get('/archive/{year?}','Backend\DecisionController@archive');
+    Route::get('decision/{id}/{year}','Backend\DecisionController@show');
+    Route::get('decisions/{date}/{year}','Backend\DecisionController@decisions');
+    Route::get('archive/{year?}','Backend\DecisionController@archive');
+    Route::post('decision/search','Backend\DecisionController@search');
+
+    Route::get('user','Backend\UserController@index');
+    Route::get('user/inactive','Backend\UserController@inactive');
+    Route::match(['get', 'post'], 'alertes','Backend\UserController@alertes');
 
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
@@ -84,6 +91,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::post('transfert','Praticien\ArchiveController@transfert');
     Route::match(['get', 'post'], 'testing','Praticien\ArchiveController@testing');
+
     Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
 
     Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');

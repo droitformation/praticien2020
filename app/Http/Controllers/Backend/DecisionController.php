@@ -27,11 +27,33 @@ class DecisionController extends Controller
         return view('backend.decisions.index')->with(['liste' => $liste, 'exist' => $exist, 'total' => $total]);
     }
 
+    public function show($id,$year)
+    {
+        $decision = $this->decision->findArchive($id,$year);
+        $dates    = $this->decision->getDateArchive($decision->publication_at->format('Y-m-d'));
+
+        return view('backend.decisions.show')->with(['decision' => $decision, 'year' => $year, 'dates' => $dates]);
+    }
+
+    public function decisions($date,$year)
+    {
+        $dates = $this->decision->getDateArchive($date);
+
+        return view('backend.decisions.show')->with(['year' => $year, 'dates' => $dates]);
+    }
+
     public function archive($year = null)
     {
         $year      = $year ?? date('Y');
         $decisions = $this->decision->getYear($year);
 
         return view('backend.decisions.archive')->with(['decisions' => $decisions, 'year' => $year]);
+    }
+
+    public function search(Request $request)
+    {
+        $decision = $this->decision->findByNumero($request->input('numero'));
+
+        return view('backend.decisions.show')->with(['decision' => $decision]);
     }
 }

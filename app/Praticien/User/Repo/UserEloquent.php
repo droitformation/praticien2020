@@ -15,11 +15,19 @@ class UserEloquent implements UserInterface{
 
     public function getAll(){
 
-        return $this->user->with(['abos','abos.keywords'])->get();
+        return $this->user->with(['abos','abos.keywords'])->orderBy('last_name')->get();
     }
 
     public function getActives(){
-        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>', \Carbon\Carbon::today()->startOfDay())->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
+    }
+
+    public function getInactives(){
+        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '<', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
+    }
+
+    public function getActiveWithAbos(){
+        return $this->user->has('abos')->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
     }
 
     public function find($id){

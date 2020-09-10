@@ -23,7 +23,7 @@
                                         <div class="card card-categorie bg-light border w-100 mb-3">
                                             <div class="card-body">
                                                 <div class="d-flex flex-row justify-content-between w-100">
-                                                    <div><p><a href="{{ url('backend/archives/'.$year.'/'.$day['date']) }}">{{ $day['date'] }}</a></p></div>
+                                                    <div><p><a href="{{ url('backend/decisions/'.$day['date'].'/'.$year) }}">{{ $day['date'] }}</a></p></div>
                                                     <div><p><strong>{{ $day['count'] }}</strong></p></div>
                                                 </div>
                                             </div>

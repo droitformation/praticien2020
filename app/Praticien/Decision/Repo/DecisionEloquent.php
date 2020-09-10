@@ -161,10 +161,12 @@ class DecisionEloquent implements DecisionInterface{
         return $this->decision->setConnection($conn)->setTable($name)->find($id);
     }
 
-    public function getDateArchive($date,$year){
+    public function getDateArchive($date){
 
-        $name = $year == date('Y') ? 'decisions' : 'archive_'.$year;
-        $conn = $year == date('Y') ? $this->main_connection : 'sqlite';
+        $formated = \Carbon\Carbon::parse($date);
+
+        $name = $formated->year == date('Y') ? 'decisions' : 'archive_'.$formated->year;
+        $conn = $formated->year == date('Y') ? $this->main_connection : 'sqlite';
 
         return $this->decision->setConnection($conn)->setTable($name)->whereDate('publication_at', '=', $date)->get();
     }
@@ -177,23 +179,25 @@ class DecisionEloquent implements DecisionInterface{
     }
 
     public function findByNumero($numero){
-        $tables  = array_reverse(range(2012,date('Y')));
+        $tables  = array_reverse(range(2014,date('Y')));
 
         foreach ($tables as $table) {
             $name = $table == date('Y') ? 'decisions' : 'archive_'.$table;
             $conn = $table == date('Y') ? $this->main_connection : 'sqlite';
 
             if (Schema::connection($conn)->hasTable($name)) {
-                $result  = $this->decision->setTable($name)->setConnection($conn)->where('numero','=',$numero)->first();
+                $decision = $this->decision->setTable($name)->setConnection($conn)->where('numero','=',$numero)->first();
 
-                if($result){
-                    return $result;
+                if($decision){
+                    return $decision;
                 }
             }
         }
+
+        return null;
     }
 
-    // $params array terms, categorie, published, publications_at in decsions main table mysql
+    // $params array terms, categorie, published, publications_at in decisons main table mysql
     public function search($params)
     {
         $terms          = isset($params['terms']) && !empty($params['terms']) ? $params['terms'] : null;
@@ -214,7 +218,7 @@ class DecisionEloquent implements DecisionInterface{
 
     public function byCategory($categorie_id){
         $results = collect([]);
-        $tables  = array_reverse(range(2012,date('Y')));
+        $tables  = array_reverse(range(2014,date('Y')));
 
         foreach ($tables as $table) {
             $name = $table == date('Y') ? 'decisions' : 'archive_'.$table;
@@ -241,7 +245,7 @@ class DecisionEloquent implements DecisionInterface{
     {
         $results = collect([]);
         $period  = $params['period'];
-        $tables  = $period ? archiveTableForDates($period[0],$period[1]) : range(2012,date('Y'));
+        $tables  = $period ? archiveTableForDates($period[0],$period[1]) : range(2014,date('Y'));
 
         foreach ($tables as $year) {
             // For live

@@ -34,7 +34,7 @@
                         @if(!$exist->isEmpty())
                             @foreach($exist as $date => $count)
                                 <div class="row">
-                                    <div class="col-sm"><p class="mb-2"><span class="badge badge-info">{{ $count }}</span></p></div>
+                                    <div class="col-sm"><p class="mb-2"><span class="badge badge-primary">{{ $count }}</span></p></div>
                                     <div class="col-sm"><p class="mb-2">{{ $date }}</p></div>
                                     <form action="{{ url('backend/date/delete') }}" method="POST" class="col-sm text-right">{!! csrf_field() !!}
                                         <input name="date" value="{{ $date }}" type="hidden">
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <form action="{{ url('backend/date/update') }}" method="POST">{!! csrf_field() !!}
                             <div class="form-group">
-                                <label for="newdate">Insérer date</label>
+                                <h3>Insérer date</h3>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control datePicker" id="newdate" name="date" placeholder="">
                                     <div class="input-group-prepend">
@@ -65,7 +65,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="{{ url('backend/date/update') }}" method="POST">{!! csrf_field() !!}
-                            <label for="newdate1">Insérer période</label>
+                            <h3>Insérer période</h3>
                             <div class="form-group">
                                 <input type="text" class="form-control datePicker" id="range1" name="range[0]" placeholder="">
                             </div>

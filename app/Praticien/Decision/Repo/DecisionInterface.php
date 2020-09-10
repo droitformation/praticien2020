@@ -23,7 +23,7 @@ interface DecisionInterface {
     /* Archives */
     public function findArchive($id,$year);
     public function updateArchive(array $data, $year);
-    public function getDateArchive($date,$year);
+    public function getDateArchive($date);
     public function archiveCountByYear();
     public function searchArchives($params);
 

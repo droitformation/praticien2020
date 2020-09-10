@@ -13,6 +13,25 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <form action="{{ url('backend/decision/search') }}" method="POST">@csrf
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" name="numero" placeholder="Recherche par référence">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="supprimer" id="button-addon2">OK</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if(!$decisions->isEmpty())
         @foreach($decisions as $year => $dates)
             @include('backend.decisions.partials.year',['dates' => $dates, 'year' => $year])
