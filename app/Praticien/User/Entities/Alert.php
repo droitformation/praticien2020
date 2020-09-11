@@ -11,6 +11,6 @@ class Alert
         $worker->setCadence($cadence)->setDate($date);
         $decisions = $worker->getUserAbos($user);
 
-        return (new \App\Mail\AlerteDecision($user, $date, $decisions))->render();
+        return !$decisions->isEmpty() ? (new \App\Mail\AlerteDecision($user, $date, $decisions))->render() : null;
     }
 }

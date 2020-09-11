@@ -32,7 +32,7 @@ class UserEloquent implements UserInterface{
 
     public function find($id){
 
-        return $this->user->findOrFail($id);
+        return $this->user->with(['abos','abos.keywords','abos.categorie'])->findOrFail($id);
     }
 
     public function findByEmail($email){
@@ -42,7 +42,7 @@ class UserEloquent implements UserInterface{
 
     public function getByCadence($cadence, $exclude = [])
     {
-        return $this->user->has('abos')->with(['abos','abos.keywords'])
+        return $this->user->has('abos')->with(['abos','abos.keywords','abos.categorie'])
             ->where('cadence','=',$cadence)
             ->whereDate('active_until', '>', \Carbon\Carbon::today()->startOfDay())
             ->exclude($exclude)

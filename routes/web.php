@@ -76,7 +76,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::get('user','Backend\UserController@index');
     Route::get('user/inactive','Backend\UserController@inactive');
-    Route::match(['get', 'post'], 'alertes','Backend\UserController@alertes');
+    Route::match(['get', 'post'], 'user/alerte','Backend\UserController@alerte');
 
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
@@ -149,6 +149,13 @@ Route::get('themes','TransfertController@themes');
 Route::get('users','TransfertController@users');
 
 Route::get('test', function() {
+
+    $cadence = currentCadence();
+
+    echo '<pre>';
+    print_r($cadence);
+    echo '</pre>';
+    exit;
 
     $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
 

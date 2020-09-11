@@ -699,3 +699,11 @@ function isTf($string){
 
     return null;
 }
+
+function currentCadence(){
+   // $start = \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->startOfWeek()->startOfDay() : \Carbon\Carbon::today()->subWeek()->startOfDay();
+    $today = \Carbon\Carbon::today();
+
+    return \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->next(0) : \Carbon\Carbon::today()->next(5);
+
+}

@@ -50,7 +50,7 @@ class Decision extends Model
                 $term = addslashes($term);
                 $term = str_replace(';',' ',$term);
                 $where = $i > 0 ? 'orWhere' : 'where';
-                $query->$where('texte','LIKE','%'.$term.'%');
+                $query->$where('texte','LIKE','% '.$term.'%');
             }
         }
     }

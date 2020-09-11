@@ -39,16 +39,25 @@ class UserController extends Controller
         return view('backend.users.inactive')->with(['users' => $users, 'params' => $request->except('_token'), 'alert' => $alert ?? null]);
     }
 
-    public function alertes(Request $request)
+    public function alerte(Request $request)
     {
-        if($request->input('user_id')){
-            $user  = $this->user->find($request->input('user_id'));
-            $alert = \App\Praticien\User\Entities\Alert::view($user,$request->input('cadence'),$request->input('date'));
+        $alertes = [];
+
+        $users = $this->user->getActiveWithAbos();
+
+        $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
+        $users_id = $request->input('user_id') ? [$request->input('user_id')] : $users->pluck('id')->all();
+
+        foreach($users_id as $id){
+            $user      = $this->user->find($id);
+            $cadence   = $request->input('cadence') ? $request->input('cadence') : $user->cadence;
+
+            $alertes[] = \App\Praticien\User\Entities\Alert::view($user,$cadence,$date);
         }
 
         $users = $this->user->getActiveWithAbos();
 
-        return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alert' => $alert ?? null]);
+        return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alertes' => array_filter($alertes)]);
     }
 }
 
