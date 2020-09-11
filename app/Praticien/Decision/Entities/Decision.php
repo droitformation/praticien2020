@@ -46,11 +46,19 @@ class Decision extends Model
     public function scopeSearch($query,$terms)
     {
         if($terms && !empty($terms)) {
+            $first = array_shift($terms);
+            $first = addslashes($first);
+            $first = str_replace(';',' ',$first);
+
+            $query->where('texte','LIKE','% '.$first.'%');
+            $query->orWhere('texte','LIKE','%'.$first.'%');
+
             foreach($terms as $i => $term) {
                 $term = addslashes($term);
                 $term = str_replace(';',' ',$term);
-                $where = $i > 0 ? 'orWhere' : 'where';
-                $query->$where('texte','LIKE','% '.$term.'%');
+                //$where = $i > 0 ? 'orWhere' : 'where';
+                $query->orWhere('texte','LIKE','%'.$term.'%');
+                $query->orWhere('texte','LIKE','% '.$term.'%');
             }
         }
     }

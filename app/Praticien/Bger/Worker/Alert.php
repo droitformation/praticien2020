@@ -77,9 +77,7 @@ class Alert implements AlertInterface
                 $keyword = isset($keyword) && !$keyword->isEmpty() ? array_filter($keyword->toArray()) : null;
 
                 // don't search for général categorie if no keywords
-                if(!$keyword && $categorie_id == 247){
-                    return collect([]);
-                }
+                if(!$keyword && $categorie_id == 247){return collect([]);}
 
                 return $this->findDecision($keyword,$categorie_id,$published);
 

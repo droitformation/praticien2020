@@ -32,6 +32,13 @@ class UserController extends Controller
         return view('backend.users.index')->with(['users' => $users, 'params' => $request->except('_token'), 'alert' => $alert ?? null]);
     }
 
+    public function show($d)
+    {
+        $user = $this->user->find($d);
+
+        return view('backend.users.show')->with(['user' => $user]);
+    }
+
     public function inactive(Request $request)
     {
         $users = $this->user->getInActives();

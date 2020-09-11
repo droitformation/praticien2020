@@ -50,14 +50,12 @@ class CodeEloquent implements CodeInterface{
 		$code = $this->code->create(array(
 			'code'        => $data['code'],
             'valid_at'    => $data['valid_at'],
-			'used'        => null,
-            'user_id'     => null,
+            'user_id'     => $data['user_id'] ?? null,
             'created_at'  => date('Y-m-d G:i:s'),
-            'updated_at'  => date('Y-m-d G:i:s')
+            'updated_at'  => $data['updated_at'] ?? date('Y-m-d G:i:s')
 		));
 
-		if( ! $code )
-		{
+		if( ! $code ) {
 			return false;
 		}
 

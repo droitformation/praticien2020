@@ -75,6 +75,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::post('decision/search','Backend\DecisionController@search');
 
     Route::get('user','Backend\UserController@index');
+    Route::get('user/{id}','Backend\UserController@show');
     Route::get('user/inactive','Backend\UserController@inactive');
     Route::match(['get', 'post'], 'user/alerte','Backend\UserController@alerte');
 
@@ -147,13 +148,14 @@ Route::get('handlealert', function () {
 Route::get('posts','TransfertController@posts');
 Route::get('themes','TransfertController@themes');
 Route::get('users','TransfertController@users');
+Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
 
-    $cadence = currentCadence();
+    $codes = \App\Praticien\Wordpress\Entities\Code::get();
 
     echo '<pre>';
-    print_r($cadence);
+    print_r($codes);
     echo '</pre>';
     exit;
 

@@ -23,6 +23,24 @@ class TransfertController extends Controller
         exit;
     }
 
+    // Code => codes
+    public function codes()
+    {
+        $results = \App\Praticien\Wordpress\Entities\Code::get();
+
+        foreach ($results as $result){
+            $code = \App\Praticien\Wordpress\Convert\Code::convert($result);
+
+            $repo = \App::make('App\Praticien\Code\Repo\CodeInterface');
+            $repo->create($code);
+        }
+
+        echo '<pre>';
+        print_r('yes');
+        echo '</pre>';
+        exit;
+    }
+
     // Categories => Themes
     public function themes()
     {
