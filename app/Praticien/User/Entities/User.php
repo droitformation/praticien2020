@@ -105,7 +105,7 @@ class User extends Authenticatable
 
     public function codes()
     {
-        return $this->hasMany('\App\Praticien\Code\Entities\Code');
+        return $this->hasMany('\App\Praticien\Code\Entities\Code')->orderBy('valid_at','DESC');
     }
 
     public function roles()

@@ -3,8 +3,11 @@
 
     <div class="container-fluid mt-4">
         <div class="row page-title">
-            <div class="col-md-12">
+            <div class="col-lg-3">
                 <h3 class="mb-1 mt-0">Editer</h3>
+            </div>
+            <div class="col-lg-9">
+                <h3 class="mb-1 mt-0">Codes</h3>
             </div>
         </div>
 
@@ -46,28 +49,31 @@
             </div>
 
             <div class="col-lg-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Codes</h3>
-                        @if(!$user->codes->isEmpty())
-                            <table class="table table-borderless mb-0 text-muted">
-                                <tbody>
-                                @foreach($user->codes as $code)
-                                    <tr>
-                                        <th scope="row">Date</th>
-                                        <td>{{ $code->valid_at->format('Y-m-d') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Code</th>
-                                        <td>{{ $code->code }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
 
-                        @endif
+                @if(!$user->codes->isEmpty())
+                    <div class="row">
+                        @foreach($user->codes as $code)
+                           <div class="col-md-6">
+                               <div class="card {{ !$code->valid_at->isFuture() ? 'bg-light' : '' }}">
+                                   <div class="card-body p-0">
+                                       <div class="media p-3">
+                                           <div class="media-body">
+                                               <span class="text-muted text-uppercase font-size-12 font-weight-bold">
+                                                   {{ $code->valid_at->format('Y-m-d') }}
+                                               </span>
+                                               <h2 class="mb-0">{{ $code->code }}</h2>
+                                           </div>
+                                           <div class="align-self-center">
+                                               <i class="fas {{ $code->valid_at->isFuture() ? 'fa-check text-success' : 'fa-times text-danger' }}"></i>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        @endforeach
                     </div>
-                </div>
+                @endif
+
                 <!-- end card -->
             </div>
         </div>
