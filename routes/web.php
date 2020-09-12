@@ -76,8 +76,10 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::get('user','Backend\UserController@index');
     Route::get('user/{id}','Backend\UserController@show');
-    Route::get('user/inactive','Backend\UserController@inactive');
-    Route::match(['get', 'post'], 'user/alerte','Backend\UserController@alerte');
+    Route::match(['get', 'post'], 'users/alerte','Backend\UserController@alerte');
+    Route::get('users/inactive','Backend\UserController@inactive');
+    Route::post('users/code','Backend\UserController@code');
+    Route::put('user/{id}','Backend\UserController@update');
 
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
@@ -93,7 +95,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::post('transfert','Praticien\ArchiveController@transfert');
     Route::match(['get', 'post'], 'testing','Praticien\ArchiveController@testing');
 
-    Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
+    //Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
 
     Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');
     Route::post('decision/update','Praticien\DecisionController@update');

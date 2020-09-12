@@ -27,6 +27,7 @@
     <link href="{{ secure_asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/app.min.css') }}?{{ rand(1000,23456) }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/hunterPopup.css') }}?{{ rand(1000,23456) }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/redactor.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/js/plugins/filemanager.min.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('css/bootstrap-datepicker.min.css') }}">
@@ -88,7 +89,9 @@
     <script src="{{ secure_asset('assets/js/plugins/fontcolor.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/plugins/fontsize.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/plugins/imagemanager.min.js') }}"></script>
+
     <script src="{{ secure_asset('assets/js/jquery-popup.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/jquery.fancybox.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/list.min.js') }}"></script>
     <script src="{{ secure_asset('assets/js/main.js') }}"></script>
     <script src="{{ secure_asset('js/app.js') }}"></script>

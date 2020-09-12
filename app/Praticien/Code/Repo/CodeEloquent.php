@@ -24,10 +24,9 @@ class CodeEloquent implements CodeInterface{
 
     public function valid($code)
     {
-        $code = $this->code->where('code','=',$code)->where('valid_at', '>=', date('Y-m-d'))->whereNull('used')->get();
+        $code = $this->code->where('code','=',$code)->where('valid_at', '>=', date('Y-m-d'))->whereNull('user_id')->get();
 
-        if(!$code->isEmpty())
-        {
+        if(!$code->isEmpty()){
             return $code->first();
         }
 

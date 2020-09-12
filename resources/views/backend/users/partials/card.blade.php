@@ -13,12 +13,11 @@
                         <button class="btn btn-primary btn-sm btn-block" type="button" data-toggle="collapse" data-target="#collapse_{{ $user->id }}" aria-expanded="false" aria-controls="collapse:{{ $user->id }}"><i class="fas fa-star"></i> &nbsp;Abos</button>
                     @endif
                     <a href="{{ secure_url('backend/user/'.$user->id) }}" class="btn btn-success btn-sm btn-block"><i class="fas fa-edit"></i> &nbsp;Editer</a>
-                    <form action="{{ url('backend/user/'.$user->id) }}" method="POST" class="mt-2">
-                        <input type="hidden" name="_method" value="DELETE">@csrf
-                        <button data-what="supprimer" data-action="{{ $user->name }}" class="btn btn-outline-danger btn-sm btn-block deleteAction"><i class="fas fa-exclamation-circle"></i> &nbsp;Supprimer</button>
-                    </form>
+                    <a data-fancybox="" data-src="#deleteModal_{{ $user->id }}" data-modal="true" href="javascript:;" class="btn btn-outline-danger btn-sm btn-block"><i class="fas fa-exclamation-circle"></i> &nbsp;Supprimer</a>
                 </div>
             </div>
+
+            @include('backend.users.partials.delete', ['user' => $user])
 
         </div>
         @if(!$user->abonnements->isEmpty())

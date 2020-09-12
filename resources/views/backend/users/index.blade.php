@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-2 text-right">
             <a href="{{ secure_url('backend/user/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;Ajouter</a>
-            <a href="{{ secure_url('backend/user/inactive') }}" class="btn btn-warning"><i class="fas fa-exclamation-circle"></i> &nbsp;Inactifs</a>
+            <a href="{{ secure_url('backend/users/inactive') }}" class="btn btn-warning"><i class="fas fa-exclamation-circle"></i> &nbsp;Inactifs</a>
         </div>
     </div>
 
