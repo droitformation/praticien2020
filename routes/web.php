@@ -24,6 +24,9 @@ Route::get('decision/{id}/{year}', ['uses' => 'DecisionController@show']);
 Route::match(['get', 'post'],'categorie/{id}', ['uses' => 'DecisionController@categorie']);
 Route::get('export/{id}', ['uses' => 'DecisionController@export']);
 
+Route::get('newsletter/unsubscribe', ['uses' => 'NewsletterController@unsubscribe']);
+Route::get('newsletter/preview/{date}', ['uses' => 'NewsletterController@preview']);
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('arrets', ['uses' => 'ArretController@index']);
     Route::get('theme/{id}/{year?}', ['uses' => 'ArretController@theme']);
@@ -81,9 +84,11 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::post('users/code','Backend\UserController@code');
     Route::put('user/{id}','Backend\UserController@update');
 
+    Route::get('newsletter/{date?}','Backend\NewsletterController@index');
+
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
-    Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
+   // Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
     Route::match(['get', 'post'], 'letter','Praticien\NewsletterController@letter');
     Route::get('send','Praticien\NewsletterController@send');
 
@@ -97,8 +102,8 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     //Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
 
-    Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');
-    Route::post('decision/update','Praticien\DecisionController@update');
+    //Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');
+    //Route::post('decision/update','Praticien\DecisionController@update');
 });
 
 Route::group(['prefix' => 'api'], function () {

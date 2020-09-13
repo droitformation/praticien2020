@@ -33,10 +33,10 @@
             body[yahoo] .main-subheader,
             body .main-subheader{line-height: 28px !important;}
 
-            body[yahoo] .container,
-            body .container{width: 440px !important;}
-            body[yahoo] .container-middle,
-            body .container-middle{width: 420px !important;}
+            body[yahoo] .container-y,
+            body .container-y{width: 440px !important;}
+            body[yahoo] .container-y-middle,
+            body .container-y-middle{width: 420px !important;}
             body[yahoo] .mainContent,
             body .mainContent{width: 400px !important;}
 
@@ -84,10 +84,10 @@
             body[yahoo] .nav,
             body .nav{width: 260px !important;}
 
-            body[yahoo] .container,
-            body .container{width: 280px !important;}
-            body[yahoo] .container-middle,
-            body .container-middle{width: 260px !important;}
+            body[yahoo] .container-y,
+            body .container-y{width: 280px !important;}
+            body[yahoo] .container-y-middle,
+            body .container-y-middle{width: 260px !important;}
             body[yahoo] .mainContent,
             body .mainContent{width: 240px !important;}
 
@@ -115,7 +115,7 @@
 
     </style>
 </head>
-<body yahoo="fix" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body yahoo="fix" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="f9f9f9">
     @include('emails.partials.letter')
 </body>
 </html>

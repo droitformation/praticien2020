@@ -648,6 +648,36 @@ function frontendDates($period){
     return $start->formatLocalized($format1).' au '.$end->formatLocalized($format2);
 }
 
+function frontendDatesNewsletter($start,$end){
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+
+    $start = \Carbon\Carbon::parse($start);
+    $end   = \Carbon\Carbon::parse($end);
+
+    if($start->month == $end->month){
+        $month1 = '%d';
+        $month2 = '%d %B';
+    }
+    else{
+        $month1 = '%d %B';
+        $month2 = '%d %B';
+    }
+
+    if($start->year == $end->year){
+        $year1 = '';
+        $year2 = '%Y';
+    }
+    else{
+        $year1 = '%Y';
+        $year2 = '%Y';
+    }
+
+    $format1 = trim($month1.' '.$year1);
+    $format2 = trim($month2.' '.$year2);
+
+    return $start->formatLocalized($format1).' au '.$end->formatLocalized($format2);
+}
+
 function whatArret($string){
 
     $regex_atf = '/(ATF\s?)\d{1,3}\s\w{1,4}\s\d{1,3}/';
@@ -705,5 +735,4 @@ function currentCadence(){
     $today = \Carbon\Carbon::today();
 
     return \Carbon\Carbon::today()->isWeekend() ? \Carbon\Carbon::today()->next(0) : \Carbon\Carbon::today()->next(5);
-
 }

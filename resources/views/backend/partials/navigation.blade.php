@@ -15,6 +15,7 @@
                 <li>
                     <a {{ \Request::is('backend/arret/*') }} href="{{ secure_url('backend/arret') }}"><i class="fas fa-file-edit"></i><span> Arrêts résumés</span></a>
                     <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="{{ secure_url('backend/arret') }}">Liste des arrêts</a></li>
                         <li><a href="{{ secure_url('backend/arret/create') }}">Ajouter arrêt</a></li>
                     </ul>
                 </li>
@@ -28,17 +29,23 @@
                     <li><hr></li>
                     <li class="menu-title">Administrateur</li>
                     <li>
-                        <a href="javascript: void(0);"><i class="fas fa-gavel"></i><span> Décisions TF </span></a>
+                        <a {{ \Request::is('backend/decision/*') || \Request::is('backend/archive') ? : '' }} href="{{ secure_url('backend/decision') }}"><i class="fas fa-gavel"></i><span> Décisions TF </span></a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="{{ secure_url('backend/decision') }}">Dernières décisions</a></li>
                             <li><a href="{{ secure_url('backend/archive') }}">Archives</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript: void(0);"><i class="fas fa-users"></i><span> Utilisateurs </span></a>
+                        <a {{ \Request::is('backend/user/*') || \Request::is('backend/users') ? : '' }} href="{{ secure_url('backend/user') }}"><i class="fas fa-users"></i><span> Utilisateurs </span></a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="{{ secure_url('backend/user') }}">Gestion</a></li>
                             <li><a href="{{ secure_url('backend/users/alerte') }}">Alertes</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a {{ \Request::is('backend/newsletter/*') ? : '' }} href="{{ secure_url('backend/newsletter') }}"><i class="fas fa-paper-plane"></i><span> Newsletter</span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="{{ secure_url('backend/newsletter') }}">Gestion</a></li>
                         </ul>
                     </li>
                 @endif

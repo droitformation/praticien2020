@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArretsTable extends Migration
+class CreateAdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateArretsTable extends Migration
      */
     public function up()
     {
-        Schema::create('arrets', function (Blueprint $table) {
+        Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->text('title');
             $table->longText('content')->nullable();
-            $table->timestamp('published_at')->nullable();
-            $table->string('slug');
-            $table->string('guid')->nullable();
-            $table->string('status')->default('brouillon');
-            $table->string('lang')->nullable();
+            $table->text('link');
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +32,6 @@ class CreateArretsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arrets');
+        Schema::dropIfExists('ads');
     }
 }
