@@ -11,7 +11,7 @@ class SendNewsletter extends Command
      *
      * @var string
      */
-    protected $signature = 'send:newsletter {test?} {date?}';
+    protected $signature = 'send:newsletter {test?} {date?}'; // php artisan send:newsletter true 2020-09-08
 
     /**
      * The console command description.
@@ -51,9 +51,9 @@ class SendNewsletter extends Command
         }
         else{
             $date = $date ? $date : null;
-            $result = $worker->setUrl($url)->setDate($date)->send();
+           // $result = $worker->setUrl($url)->setDate($date)->send();
 
-            \Log::info(json_encode($result));
+            //\Log::info(json_encode($result));
         }
     }
 }

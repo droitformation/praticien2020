@@ -98,6 +98,13 @@ class User extends Authenticatable
         }
     }
 
+    public function scopeCadence($query, $cadence)
+    {
+        if(isset($cadence)){
+            $query->where('cadence','=',$cadence);
+        }
+    }
+
     public function abos()
     {
         return $this->hasMany('\App\Praticien\Abo\Entities\Abo');
@@ -111,5 +118,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany('App\Praticien\User\Entities\Role', 'user_roles', 'user_id', 'role_id');
+    }
+
+    public function alerts()
+    {
+        return $this->hasMany('App\Praticien\Bger\Entities\Alert_sent');
     }
 }

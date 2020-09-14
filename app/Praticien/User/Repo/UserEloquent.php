@@ -26,13 +26,18 @@ class UserEloquent implements UserInterface{
         return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '<', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
     }
 
-    public function getActiveWithAbos(){
-        return $this->user->has('abos')->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
+    public function getActiveWithAbos($cadence = null){
+        return $this->user->has('abos')
+            ->with(['abos','abos.keywords','abos.categorie'])
+            ->cadence($cadence)
+            ->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())
+            ->orderBy('last_name')
+            ->get();
     }
 
     public function find($id){
 
-        return $this->user->with(['abos','abos.keywords','abos.categorie'])->findOrFail($id);
+        return $this->user->with(['abos','abos.keywords','abos.categorie','alerts'])->findOrFail($id);
     }
 
     public function findByEmail($email){

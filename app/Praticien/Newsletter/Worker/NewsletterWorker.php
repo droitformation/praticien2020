@@ -80,9 +80,6 @@ class NewsletterWorker
         $this->mailjet->setList($this->main_list);
         $html = $this->html();
 
-
-        print_r($html);
-        exit;
         $ID   = $this->mailjet->createCampagne($this->getSubject());
 
         $this->mailjet->setHtml($html,$ID);

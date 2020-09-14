@@ -23,7 +23,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ secure_url('backend/user/alerte') }}" method="POST" class="row">@csrf
+                    <form action="{{ secure_url('backend/users/alerte') }}" method="POST" class="row">@csrf
                         <div class="col">
                             @if(!$users->isEmpty())
                                 <select class="custom-select select2" name="user_id">
@@ -55,21 +55,24 @@
         </div>
     </div>
 
-    <div class="row">
-           @if(!empty($alertes))
-               @foreach(array_chunk($alertes,2) as $row)
-                <div class="col">
-                    @foreach($row as $alert)
+   @if(!$alertes->isEmpty())
+       @foreach($alertes->chunk(2) as $row)
+            <div class="row">
+                @foreach($row as $alert)
+                    <div class="col-md-6 col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                               {!! $alert !!}
+                                @if($alert->status())
+                                    <h4 class="text-success">Envoyé {{ $alert->status()->publication_at->format('d/m/Y')  }}</h4>
+                                @endif
+                               {!! $alert->html() !!}
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
                 @endforeach
-           @endif
-    </div>
+            </div>
+        @endforeach
+   @endif
 
 </div>
 @stop
