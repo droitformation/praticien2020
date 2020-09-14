@@ -355,7 +355,7 @@
     $(window).on('load', function () {
 
 
-        if ($('.thm__owl-carousel').length) {
+       /* if ($('.thm__owl-carousel').length) {
             $('.thm__owl-carousel').each(function () {
 
                 var Self = $(this);
@@ -399,7 +399,8 @@
                 count += 10;
                 $(this).css('top', '+=' + count + 'px');
             });
-        }
+        }*/
+
         if ($('.preloader').length) {
             $('.preloader').fadeOut('slow');
         }

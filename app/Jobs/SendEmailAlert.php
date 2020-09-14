@@ -35,7 +35,7 @@ class SendEmailAlert implements ShouldQueue
      */
     public function handle()
     {
-        $alert = \App::make('App\Droit\Bger\Worker\AlertInterface');
+        $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
         $alert->setCadence($this->cadence)->setDate($this->publication_at);
 
         $users = $alert->getUsers();
@@ -45,8 +45,7 @@ class SendEmailAlert implements ShouldQueue
             \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Aucune alertes'));
         }
 
-        \Mail::to('cindy.leschaud@gmail.com')
-            ->send(new \App\Mail\SuccessNotification('Envoi des alertes commencé'));
+        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Envoi des alertes commencé'));
 
         $i = 1;
         // Loop all users and send the alerts

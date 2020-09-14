@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\commands;
 
 use Illuminate\Console\Command;
 
@@ -37,7 +37,7 @@ class UpdateArrets extends Command
      */
     public function handle()
     {
-        $worker = \App::make('App\Droit\Decision\Worker\DecisionWorkerInterface');
+        $worker = \App::make('App\Praticien\Decision\Worker\DecisionWorkerInterface');
         $worker->setMissingDates()->update();
 
         \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions commencé'));

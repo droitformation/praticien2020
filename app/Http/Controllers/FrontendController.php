@@ -31,7 +31,7 @@ class FrontendController extends Controller
 
         \Mail::to(config('mail.from.address'))->send(new \App\Mail\ContactMessage($request->only(['email','nom','remarque'])));
 
-        flash('Merci pour votre message! nous vous répondrons dans les plus brefs délais.')->success();
+        flash('Merci pour votre message! nous vous répondrons dans les plus brefs délais.','success');
 
         return redirect()->back();
     }

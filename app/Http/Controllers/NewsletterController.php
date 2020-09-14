@@ -2,19 +2,22 @@
 
 use App\Praticien\Decision\Repo\DecisionInterface;
 use App\Praticien\Decision\Worker\DecisionWorkerInterface;
+use App\Praticien\Newsletter\Service\MailjetServiceInterface;
 use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
     protected $decision;
     protected $worker;
+    protected $mailjet;
 
-    public function __construct(DecisionInterface $decision, DecisionWorkerInterface $worker)
+    public function __construct(DecisionInterface $decision, DecisionWorkerInterface $worker, MailjetServiceInterface $mailjet)
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->decision = $decision;
-        $this->worker = $worker;
+        $this->worker   = $worker;
+        $this->mailjet  = $mailjet;
     }
 
     public function preview($date = null)
@@ -38,8 +41,23 @@ class NewsletterController extends Controller
         ]);
     }
 
-    public function unsubscribe($email)
+    public function subscribe(Request $request)
     {
+        $this->mailjet->setList(config('services.mailjet.listid'));
+        $this->mailjet->subscribeEmailToList($request->input('email'));
 
+        flash('Vous êtes bien inscrit à la newsletter "TF - Arrêts à publications"','success');
+
+        return redirect()->back();
+    }
+
+    public function unsubscribe(Request $request)
+    {
+        $this->mailjet->setList(config('services.mailjet.listid'));
+        $this->mailjet->removeContact($request->input('email'));
+
+        flash('Vous êtes bien désinscrit de la newsletter "TF - Arrêts à publications"','success');
+
+        return redirect()->back();
     }
 }

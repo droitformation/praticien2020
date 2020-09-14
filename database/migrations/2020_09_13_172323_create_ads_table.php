@@ -17,7 +17,8 @@ class CreateAdsTable extends Migration
             $table->id();
             $table->text('title');
             $table->longText('content')->nullable();
-            $table->text('link');
+            $table->text('link')->nullable();
+            $table->text('image')->nullable();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
             $table->timestamps();

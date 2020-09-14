@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/hover-min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/muzex-icons.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('assets/css/jquery.fancybox.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}?{{ rand(1,3000) }}">
 
     <!-- Custom CSS -->
@@ -59,6 +60,7 @@
     <div class="main_nav_bar">
         @include('partials.header')
         @include('flash::message')
+        @include('partials.messages')
     </div>
 
     <div class="flex-grow-2 align-content-stretch">
@@ -104,6 +106,7 @@
 <script src="{{ secure_asset('js/wow.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.lettering.min.js') }}"></script>
 <script src="{{ secure_asset('js/jquery.circleType.js') }}"></script>
+<script src="{{ secure_asset('assets/js/jquery.fancybox.min.js') }}"></script>
 <script src="//printjs-4de6.kxcdn.com/print.min.js"></script>
 <!-- Custom Scripts -->
 <script src="{{ secure_asset('js/theme.js') }}"></script>

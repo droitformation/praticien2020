@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\commands;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class SendNewsletter extends Command
      *
      * @var string
      */
-    protected $signature = 'send:newsletter {test?} {date?}';
+    protected $signature = 'send:newsletter {test?} {date?}'; // php artisan send:newsletter true 2020-09-08
 
     /**
      * The console command description.
@@ -37,8 +37,8 @@ class SendNewsletter extends Command
      */
     public function handle()
     {
-        $worker = \App::make('App\Droit\Newsletter\NewsletterWorker');
-        $url    = 'praticien/newsletter';
+        $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
+        $url    = 'newsletter/preview';
 
         $date = $this->argument('date');
 
@@ -51,9 +51,9 @@ class SendNewsletter extends Command
         }
         else{
             $date = $date ? $date : null;
-            $result = $worker->setUrl($url)->setDate($date)->send();
+           // $result = $worker->setUrl($url)->setDate($date)->send();
 
-            \Log::info(json_encode($result));
+            //\Log::info(json_encode($result));
         }
     }
 }

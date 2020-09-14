@@ -25,7 +25,7 @@ Route::match(['get', 'post'],'categorie/{id}', ['uses' => 'DecisionController@ca
 Route::get('export/{id}', ['uses' => 'DecisionController@export']);
 
 Route::get('newsletter/unsubscribe', ['uses' => 'NewsletterController@unsubscribe']);
-Route::get('newsletter/preview/{date}', ['uses' => 'NewsletterController@preview']);
+Route::get('newsletter/preview/{date?}', ['uses' => 'NewsletterController@preview']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('arrets', ['uses' => 'ArretController@index']);
@@ -48,8 +48,11 @@ Route::get('/abos', 'HomeController@abos')->name('abos');
 Route::post('/cadence', 'HomeController@cadence')->name('cadence');
 Route::post('/update', 'HomeController@update')->name('update');
 
-Route::post('/subscribe', 'SubscribeController@subscribe')->name('subscribe');
-Route::post('/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');
+Route::post('abo/subscribe', 'SubscribeController@subscribe')->name('subscribe');
+Route::post('abo/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');
+
+Route::post('newsletter/subscribe', 'NewsletterController@subscribe');
+Route::post('newsletter/unsubscribe', 'NewsletterController@unsubscribe');
 
 Route::get('/expired', 'CodeController@expired')->name('expired');
 Route::post('/activate', 'CodeController@activate')->name('activate');
@@ -126,15 +129,15 @@ Route::get('alert', function () {
 
     $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
     $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
-    $user  = $repo->find(2744);
+    $user  = $repo->find(15);
 
-    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+    $repo      = App::make('App\Praticien\Decision\Repo\DecisionInterface');
     $decisions = $repo->search(['terms' => null, 'categorie' => 226, 'published' => 1, 'publication_at' => '2019-05-10']);
 
-    $alert->setCadence('daily')->setDate(weekRange('2019-05-16')->toArray());
+    $alert->setCadence('daily')->setDate(weekRange('2020-09-08')->toArray());
     $abos = $alert->getUserAbos($user);
 
-    return new \App\Mail\AlerteDecision($user, weekRange('2019-05-16')->toArray(), $abos);
+    return new \App\Mail\AlerteDecision($user, weekRange('2020-09-08')->toArray(), $abos);
 });
 
 Route::get('handlealert', function () {
@@ -159,6 +162,26 @@ Route::get('users','TransfertController@users');
 Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
+
+    $user = \App\Praticien\User\Entities\User::find(4);
+
+
+    $alert = new \App\Praticien\User\Entities\Alert($user,'daily','2020-09-14');
+
+    echo '<pre>';
+    print_r($alert->status());
+    echo '</pre>';
+    exit;
+
+    $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
+    $url    = 'newsletter/preview';
+    $date   = '2020-09-04';
+
+    $url = $date ? $url.'/'.$date : $url;
+
+    $worker->setUrl($url)->send_test();
+
+    exit;
 
     $codes = \App\Praticien\Wordpress\Entities\Code::get();
 

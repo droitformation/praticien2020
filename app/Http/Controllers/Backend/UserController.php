@@ -81,21 +81,23 @@ class UserController extends Controller
     {
         $alertes = [];
 
-        $users = $this->user->getActiveWithAbos();
+        $users = $this->user->getActiveWithAbos($request->input('cadence','daily'));
 
         $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
         $users_id = $request->input('user_id') ? [$request->input('user_id')] : $users->pluck('id')->all();
+        $cadence  = $request->input('cadence');
 
-        foreach($users_id as $id){
+        $alertes = collect($users_id)->map(function ($id, $key) use ($date,$cadence){
             $user      = $this->user->find($id);
-            $cadence   = $request->input('cadence') ? $request->input('cadence') : $user->cadence;
-
-            $alertes[] = \App\Praticien\User\Entities\Alert::view($user,$cadence,$date);
-        }
+            $cadence   = $cadence ?? $user->cadence;
+            return new \App\Praticien\User\Entities\Alert($user,$cadence,$date);
+        })->reject(function ($alert, $key) {
+            return !$alert->html();
+        });
 
         $users = $this->user->getActiveWithAbos();
 
-        return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alertes' => array_filter($alertes)]);
+        return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alertes' => $alertes]);
     }
 }
 

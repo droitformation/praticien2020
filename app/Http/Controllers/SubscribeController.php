@@ -23,7 +23,7 @@ class SubscribeController extends Controller
     {
         $data = [
             'categorie_id' => $request->input('categorie_id'),
-            'keywords'     => array_flatten(array_values($request->input('keywords'))),
+            'keywords'     => array_flatten(array_values($request->input('keywords',[]))),
             'toPublish'    => $request->input('toPublish'),
         ];
 
