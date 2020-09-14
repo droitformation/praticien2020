@@ -1986,7 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     destroy: function destroy() {
       var self = this;
-      axios.post("unsubscribe", {
+      axios.post("abo/unsubscribe", {
         user_id: this.user_id,
         categorie_id: this.categorie_id
       }).then(function (response) {
@@ -2003,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       var self = this;
-      axios.post("subscribe", {
+      axios.post("abo/subscribe", {
         user_id: this.user_id,
         categorie_id: this.categorie_id,
         keywords: this.words,

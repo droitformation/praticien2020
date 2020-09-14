@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerArretService();
         $this->registerThemeService();
         $this->registerMetaService();
-       // $this->registerCodeWorkerService();
+        $this->registerMailjetService();
     }
 
     /**
@@ -82,14 +82,25 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * CodeWorker
+     * Newsletter Content service
+     */
+    protected function registerMailjetService(){
 
-    protected function registerCodeWorkerService(){
+        $this->app->bind('App\Praticien\Newsletter\Service\MailjetServiceInterface', function()
+        {
+            if (\App::environment('testing')) {
 
-        $this->app->singleton('App\Praticien\Code\Worker\CodeWorkerInterface', function() {
-            return new \App\Praticien\Code\Worker\CodeWorker(
-                \App::make('App\Praticien\Code\Repo\CodeInterface')
-            );
+                $client   = \Mockery::mock('Mailjet\Client');
+                $resource = \Mockery::mock('Mailjet\Resources');
+
+                return new \App\Praticien\Newsletter\Service\MailjetService($client,$resource);
+            }
+            else{
+                return new \App\Praticien\Newsletter\Service\MailjetService(
+                    new \Mailjet\Client(config('services.mailjet.api'),config('services.mailjet.secret')),
+                    new \Mailjet\Resources()
+                );
+            }
         });
-    } */
+    }
 }

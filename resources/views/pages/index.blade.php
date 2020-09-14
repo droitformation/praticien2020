@@ -24,7 +24,7 @@
                                 <div class="cta-two__icon m-2"><i class="fas fa-quote-right"></i></div><!-- /.cta-two__icon -->
                                 <div class="text-left m-2 ml-4">
                                     <a href="{{ secure_url('decisions') }}">
-                                        <h3 class="mb-0">TF - Jurisprudence (depuis 2015)</h3>
+                                        <h3 class="mb-0">TF - Jurisprudence (depuis 2014)</h3>
                                         <span class="text-white-50">Consulter</span>
                                     </a>
                                 </div>
@@ -77,7 +77,7 @@
                                 </div><!-- /.cta-two__icon -->
                                 <h3>TF - Jurisprudence</h3>
                                 <p>Liste des dernières décisions<br> du 10 Août 2020</p>
-                                <a href="{{ secure_url('arret/latest') }}" class="thm-btn">Voir</a><!-- /.thm-btn -->
+                                <a href="{{ secure_url('decisions') }}" class="thm-btn bg-subscribe">Voir</a><!-- /.thm-btn -->
                             </div><!-- /.cta-two__box -->
                         </div><!-- /.col-lg-4 -->
                         <div class="col-lg-4">
@@ -87,7 +87,7 @@
                                 </div><!-- /.cta-two__icon -->
                                 <h3>TF - Jurisprudence</h3>
                                 <p class="light">Arrêts destinés à la<br> publication</p>
-                                <a href="{{ secure_url('arret/publication') }}" class="thm-btn">Voir</a><!-- /.thm-btn -->
+                                <a href="{{ secure_url('decisions?published=1') }}" class="thm-btn">Voir</a><!-- /.thm-btn -->
                             </div><!-- /.cta-two__box -->
                         </div><!-- /.col-lg-4 -->
                         <div class="col-lg-4">
@@ -96,14 +96,45 @@
                                     <i class="fas fa-paper-plane"></i>
                                 </div><!-- /.cta-two__icon -->
                                 <h3>Newsletter</h3>
-                                <p>Chaque semaine <br> Arrêts destinés à la publication</p>
-                                <a href="{{ secure_url('subscribe') }}" class="thm-btn">Inscription</a><!-- /.thm-btn -->
+                                <p>Recevez tous les lundi les<br> arrêts destinés à publication</p>
+                                <a data-fancybox="" data-src="#subscribeModal" data-modal="true" href="javascript:;" class="thm-btn bg-subscribe">Inscription</a>
+                                <a data-fancybox="" data-src="#unsubscribeModal" data-modal="true" href="javascript:;" class="thm-btn">Désinscription</a
                             </div><!-- /.cta-two__box -->
                         </div><!-- /.col-lg-4 -->
                     </div><!-- /.row -->
                 </div><!-- /.inner-container -->
             </div><!-- /.container -->
         </section><!-- /.cta-two -->
+
+        <div id="subscribeModal" class="p-4" style="display: none; width: 420px;">
+            <h3>Newsletter</h3>
+            <p>Chaque semaine les arrêts du TF destinés à la publication</p>
+            <form action="{{ secure_url('newsletter/subscribe') }}" method="POST">@csrf
+                <div class="form-group">
+                    <label for="code" class="font-weight-bold">E-mail</label>
+                    <input id="code" name="email" class="form-control" type="text" placeholder="">
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <div><button data-fancybox-close="" class="btn btn-light">Annuler</button></div>
+                    <div><button type="submit" class="btn btn-secondary">Envoyer</button></div>
+                </div>
+            </form>
+        </div>
+        <div id="unsubscribeModal" class="p-4" style="display: none; width: 420px;">
+            <h3>Newsletter</h3>
+            <p class="text-warning">Désinsciption</p>
+            <form action="{{ secure_url('newsletter/unsubscribe') }}" method="POST">@csrf
+                <div class="form-group">
+                    <label for="code" class="font-weight-bold">E-mail</label>
+                    <input id="code" name="email" class="form-control" type="text" placeholder="">
+                </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <div><button data-fancybox-close="" class="btn btn-light">Annuler</button></div>
+                    <div><button type="submit" class="btn btn-secondary">Me désinscrire</button></div>
+                </div>
+            </form>
+        </div>
+
 
     </div><!-- /.about-cta__wrapper -->
 

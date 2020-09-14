@@ -59,21 +59,31 @@
             <!-- --------    end top header    ---------- -->
             <!-- --------    Start AD   ---------- -->
             @if(isset($ad))
-                <table width="600" cellpadding="0" cellspacing="0" align="center" class="container-y" style="border: 5px solid #3b4249; border-collapse: collapse;">
-                    <tr bgcolor="#ffffff"><td height="5"></td></tr>
+                <table width="600" cellpadding="0" cellspacing="0" align="center" class="container-y" style="border: 3px solid #9c8b6f; border-top: 0px; border-collapse: collapse; margin-bottom: 15px;">
+                    <tr bgcolor="#9c8b6f">
+                        <td align="center" valign="middle" height="35" style="color: #fff;"><p>Annonce</p></td>
+                    </tr>
+                    <tr bgcolor="#ffffff"><td height="10"></td></tr>
                     <tr bgcolor="#ffffff">
                         <td align="center">
                             <table border="0" width="560" align="center" cellpadding="0" cellspacing="0" class="container-y-middle">
+                                <tr bgcolor="#ffffff"><td height="10"></td></tr>
                                 <tr>
-                                    <td><h4 style="font-family:Arial, sans-serif;color: #4b4b5a; font-weight: 600;font-size: 1.30rem; line-height: 1.2; margin: 5px 0 5px 0;">{{ $ad->title }}</h4></td>
+                                    <td align="top" valign="top" width="120px">
+                                        <a target="_blank" href="{{ $ad->link }}"><img class="img-thumbnail" width="120px" src="{{ $ad->image }}"></a>
+                                    </td>
+                                    <td align="top" valign="top" width="40"></td>
+                                    <td align="top" valign="top" >
+                                        <h4 style="font-family:Arial, sans-serif;color: #000; font-weight: 600;font-size: 1.30rem; line-height: 1.2; margin: 5px 0 5px 0;">{{ $ad->title }}</h4>
+                                        <div>{!! $ad->content !!}</div>
+                                        <p><a target="_blank" href="{{ $ad->link }}" class="btn-newsletter">Inscription</a></p>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td style="font-family:Arial, sans-serif;color: #0f4060; font-weight: 500;font-size: 0.9rem; line-height: 1.1;">{!! $ad->content !!}</td>
-                                </tr>
+                                <tr bgcolor="#ffffff"><td height="10"></td></tr>
                             </table>
                         </td>
                     </tr>
-                    <tr bgcolor="#ffffff"><td height="5"></td></tr>
+                    <tr bgcolor="#ffffff"><td height="10"></td></tr>
                 </table>
             @endif
             <!-- --------    End AD   ---------- -->

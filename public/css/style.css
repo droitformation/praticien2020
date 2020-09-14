@@ -1152,6 +1152,7 @@ p {
 
 .banner-section {
 	position: relative;
+    height: 390px;
 }
 
 .banner-carousel {
@@ -1535,6 +1536,12 @@ p {
 .banner-section__home-three .owl-theme .owl-nav .owl-next {
 	right: 20px;
 	outline: none;
+}
+
+.owl-carousel {
+    display: block;
+    width: 100%;
+    z-index: 1;
 }
 
 /*--------------------------------------------------------------
@@ -3857,6 +3864,18 @@ p {
 	background-color: var(--thm-black);
 	border-color: var(--thm-black);
 	color: #fff;
+}
+
+.cta-two__box .thm-btn.bg-subscribe{
+    background-color: var(--thm-blue);
+    color: #fff;
+    border: 2px solid var(--thm-blue);
+}
+
+.cta-two__box .thm-btn.bg-subscribe:hover{
+    background-color: var(--thm-base);
+    border-color: var(--thm-base);
+    color: #fff;
 }
 
 [class*="col-"]:nth-child(2) .cta-two__box {

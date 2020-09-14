@@ -20,6 +20,12 @@ return [
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
+    'mailjet' => [
+        'api'    => env('MAILJET_API'),
+        'secret' => env('MAILJET_SECRET'),
+        'listid' => env('MAILJET_LISTID'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

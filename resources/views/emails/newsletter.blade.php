@@ -24,6 +24,11 @@
             border: 0;
         }
 
+        ul li{
+            padding-left: 5px;
+            margin-left: 5px;
+        }
+
         @media only screen and (max-width: 640px){
 
             body[yahoo] .header-bg,
@@ -114,6 +119,7 @@
         }
 
     </style>
+    <link href="{{ secure_asset('css/newsletter.css') }}" rel="stylesheet">
 </head>
 <body yahoo="fix" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="f9f9f9">
     @include('emails.partials.letter')

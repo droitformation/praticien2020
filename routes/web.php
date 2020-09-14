@@ -48,8 +48,11 @@ Route::get('/abos', 'HomeController@abos')->name('abos');
 Route::post('/cadence', 'HomeController@cadence')->name('cadence');
 Route::post('/update', 'HomeController@update')->name('update');
 
-Route::post('/subscribe', 'SubscribeController@subscribe')->name('subscribe');
-Route::post('/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');
+Route::post('abo/subscribe', 'SubscribeController@subscribe')->name('subscribe');
+Route::post('abo/unsubscribe', 'SubscribeController@unsubscribe')->name('unsubscribe');
+
+Route::post('newsletter/subscribe', 'NewsletterController@subscribe');
+Route::post('newsletter/unsubscribe', 'NewsletterController@unsubscribe');
 
 Route::get('/expired', 'CodeController@expired')->name('expired');
 Route::post('/activate', 'CodeController@activate')->name('activate');
@@ -158,6 +161,16 @@ Route::get('users','TransfertController@users');
 Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
+
+    $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
+    $url    = 'newsletter/preview';
+    $date   = '2020-09-04';
+
+    $url = $date ? $url.'/'.$date : $url;
+
+    $worker->setUrl($url)->send_test();
+
+    exit;
 
     $codes = \App\Praticien\Wordpress\Entities\Code::get();
 

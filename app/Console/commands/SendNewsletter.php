@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\commands;
 
 use Illuminate\Console\Command;
 
@@ -37,8 +37,8 @@ class SendNewsletter extends Command
      */
     public function handle()
     {
-        $worker = \App::make('App\Droit\Newsletter\NewsletterWorker');
-        $url    = 'praticien/newsletter';
+        $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
+        $url    = 'newsletter/preview';
 
         $date = $this->argument('date');
 

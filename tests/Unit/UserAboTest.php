@@ -2,13 +2,12 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserAboTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -155,7 +154,7 @@ class UserAboTest extends TestCase
 
         $expect = collect([
             $categorie1->id => ['title' => $categorie1->name, 'keywords' => collect([collect(['Assurance de Protection Juridique SA'])]), 'published' => null],
-            $categorie2->id => ['title' => $categorie1->name, 'keywords' => collect([collect(['recours en matière civile','canton de Genève'])]), 'published' => 1],
+            $categorie2->id => ['title' => $categorie2->name, 'keywords' => collect([collect(['recours en matière civile','canton de Genève'])]), 'published' => 1],
         ]);
 
         $this->assertEquals($expect->toArray(),$user->abonnements->toArray());

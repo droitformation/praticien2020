@@ -28,7 +28,6 @@ class SendMessage extends FormRequest
         return [
             'nom'        => 'required',
             'email'      => 'required|email',
-            'phone'      => 'required',
             'remarque'   => 'required'
         ] + $honeypot;
     }

@@ -14,6 +14,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "inlinestyle/inlinestyle": "^1.2",
         "intervention/image": "^2.5",
         "jgrossi/corcel": "^4.0",
         "laracasts/flash": "^3.1",
