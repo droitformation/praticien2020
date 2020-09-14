@@ -56,4 +56,19 @@ class DecisionController extends Controller
 
         return view('backend.decisions.show')->with(['decision' => $decision]);
     }
+
+    public function transfert(Request $request)
+    {
+        $table = new \App\Praticien\Bger\Utility\Table();
+
+        // Make archives
+        $table->mainTable = 'decisions';
+
+        $table->setYear( $request->input('year'))->canTransfert()->create()->transfertArchives();
+        $table->deleteLastYear();
+
+        flash('Année Archivé: '. $request->input('year'),'success');
+
+        return redirect()->back();
+    }
 }

@@ -9,6 +9,7 @@ class Table
     public $yearStart = '2012';
     public $year;
     public $mainTable = 'decisions';
+    public $connection = 'sqlite';
     protected $delete = [];
 
     public function setYear($year)
@@ -25,9 +26,9 @@ class Table
 
     public function create(){
 
-        if (!Schema::connection('sqlite')->hasTable($this->prefix.$this->year)) {
+        if (!Schema::connection($this->connection)->hasTable($this->prefix.$this->year)) {
 
-            Schema::connection('sqlite')->create($this->prefix.$this->year, function (Blueprint $table) {
+            Schema::connection($this->connection)->create($this->prefix.$this->year, function (Blueprint $table) {
                 $table->integer('id');
                 $table->string('numero');
                 $table->dateTime('publication_at');
@@ -55,11 +56,11 @@ class Table
         \DB::connection('mysql')->table($this->mainTable)->whereYear('publication_at', $this->year)->orderBy('id')->chunk(10, function ($decisions) use ($name) {
             foreach ($decisions as $decision) {
 
-                $exist = \DB::connection('sqlite')->table($name)->where("id", $decision->id)->get();
+                $exist = \DB::connection($this->connection)->table($name)->where("id", $decision->id)->get();
 
                 if($exist->isEmpty()){
                     // Archive decision
-                    \DB::connection('sqlite')->table($name)->insert((array) $decision);
+                    \DB::connection($this->connection)->table($name)->insert((array) $decision);
                     \Log::info('insert');
                 }
 
@@ -75,7 +76,7 @@ class Table
     {
         $name = $this->getTableName();
 
-        if($this->countDecisions($this->mainTable,'mysql') == $this->countDecisions($name,'sqlite')){
+        if($this->countDecisions($this->mainTable,'mysql') == $this->countDecisions($name,$this->connection)){
             \DB::connection('mysql')->table($this->mainTable)->whereYear('publication_at', $this->year)->delete();
             \Log::info('delete ',$this->year);
         }

@@ -74,8 +74,10 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::get('decision/{id}/{year}','Backend\DecisionController@show');
     Route::get('decisions/{date}/{year}','Backend\DecisionController@decisions');
-    Route::get('archive/{year?}','Backend\DecisionController@archive');
     Route::post('decision/search','Backend\DecisionController@search');
+
+    Route::get('archive/{year?}','Backend\DecisionController@archive');
+    Route::post('archive/transfert','Backend\DecisionController@transfert');
 
     Route::get('user','Backend\UserController@index');
     Route::get('user/{id}','Backend\UserController@show');
@@ -85,7 +87,6 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::put('user/{id}','Backend\UserController@update');
 
     Route::get('newsletter/{date?}','Backend\NewsletterController@index');
-
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
    // Route::get('newsletter/{date?}','Praticien\NewsletterController@index');

@@ -100,11 +100,12 @@ class DecisionRepoTest extends TestCase
     {
         $date = \Carbon\Carbon::today()->toDateTimeString();
 
-        $decision = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = factory(\App\Praticien\Decision\Entities\Decimodelfsion::class)->create([
             'publication_at' => $date,
+            'numero' => '3A_223/2017',
             'texte' =>
                 '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien 
-                placérat liçlà à, nullä ultrices Assurance de Protection Juridique SA égét 44 395€ dapidûs quisque à nullä dui congue ïpsum séd léo séd hac.
+                placérat liçlà à, nullä ultrices égét 44 395€ dapidûs quisque à nullä dui congue ïpsum séd léo séd hac.
                 Conges quém mattis sènèctus malet, consequat liçlà</div>.
 
                 <div>Morbi phasellus c\'est torquenté malésdum aptenté l\'2 068€ duis sem fancibüs classé d\'adipiscing duis, rutrum malésdum elementum mi est 
@@ -114,19 +115,21 @@ class DecisionRepoTest extends TestCase
 
         $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
             'publication_at' => $date,
+            'numero' => '4A_253/2019',
             'texte' => '<div>Dapibus à nul Assurance de Protection Juridique SA égét 44 3€ dapidûs quisque à nullä dui cctus malet, consequat liçlà</div>.'
         ]);
 
         $repo = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
 
         // Pass only array of terms
-        $params['terms'] = ['Assurance de Protection Juridique SA','élémentum interûllam çurcus molestié','vestibulum'];
+        $params['terms'] = ['Assurance de Protection Juridique SA', 'élémentum interûllam çurcus molestié', 'vestibulum'];
 
         $results = $repo->search($params);
 
         // We found only the first one, it contains all keywords
-        $this->assertTrue($results->contains('id',$decision->id));
-        $this->assertEquals(1,$results->count());
+        $this->assertTrue($results->contains('id',$decision1->id));
+        $this->assertTrue($results->contains('id',$decision2->id));
+        $this->assertEquals(2,$results->count());
     }
 
     public function testSearchKeywordInNewDecisisons()

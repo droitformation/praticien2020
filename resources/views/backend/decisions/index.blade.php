@@ -49,6 +49,25 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
+                        <h3 class="mt-0">Transfert to archive</h3>
+                        <form action="{{ url('backend/transfert') }}" method="POST" class="col-sm text-right transfert">{!! csrf_field() !!}
+                            <div class="input-group">
+                                <select class="form-control" name="year">
+                                    @foreach(range(2014, date('Y')) as $year)
+                                        <option value="{{ $year }}">{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-info btn-sm" type="submit">Transfert</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
                         <form action="{{ url('backend/date/update') }}" method="POST">{!! csrf_field() !!}
                             <div class="form-group">
                                 <h3>Insérer date</h3>

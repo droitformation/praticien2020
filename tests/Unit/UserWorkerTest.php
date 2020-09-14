@@ -8,6 +8,19 @@ class UserWorkerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh');
+        $this->artisan('db:seed');
+    }
+
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     public function testDeleteAbo()
     {
         $worker = \App::make('App\Praticien\User\Worker\SubscriptionWorker');
