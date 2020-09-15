@@ -22,11 +22,6 @@ class RegisterTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testRegisterWithCodeAndSuccess()
     {
         $response = $this->get('/access');

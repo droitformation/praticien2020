@@ -10,6 +10,7 @@ class Table
     public $year;
     public $mainTable = 'decisions';
     public $connection = 'sqlite';
+    public $main_connection = 'mysql';
     protected $delete = [];
 
     public function setYear($year)
@@ -42,7 +43,6 @@ class Table
                 $table->tinyInteger('updated')->nullable();
                 $table->timestamps();
             });
-
             //\DB::connection('sqlite')->statement('ALTER TABLE '.$this->prefix.$this->year.' ADD FULLTEXT full(texte)');
         }
 
@@ -53,7 +53,7 @@ class Table
     {
         $name = $this->getTableName();
 
-        \DB::connection('mysql')->table($this->mainTable)->whereYear('publication_at', $this->year)->orderBy('id')->chunk(10, function ($decisions) use ($name) {
+        \DB::connection($this->main_connection)->table($this->mainTable)->whereYear('publication_at', $this->year)->orderBy('id')->chunk(10, function ($decisions) use ($name) {
             foreach ($decisions as $decision) {
 
                 $exist = \DB::connection($this->connection)->table($name)->where("id", $decision->id)->get();
@@ -69,15 +69,15 @@ class Table
         });
 
         // Delete after from main table because elese chunl doesn't get all recordss
-        \DB::connection('mysql')->table($this->mainTable)->whereIn("id", $this->delete)->delete();
+        \DB::connection($this->main_connection)->table($this->mainTable)->whereIn("id", $this->delete)->delete();
     }
 
     public function deleteLastYear()
     {
         $name = $this->getTableName();
 
-        if($this->countDecisions($this->mainTable,'mysql') == $this->countDecisions($name,$this->connection)){
-            \DB::connection('mysql')->table($this->mainTable)->whereYear('publication_at', $this->year)->delete();
+        if($this->countDecisions($this->mainTable,$this->main_connection) == $this->countDecisions($name,$this->connection)){
+            \DB::connection($this->main_connection)->table($this->mainTable)->whereYear('publication_at', $this->year)->delete();
             \Log::info('delete ',$this->year);
         }
     }
@@ -89,7 +89,7 @@ class Table
 
     public function canTransfert()
     {
-        $count = \DB::connection('mysql')->table($this->mainTable)->whereYear('publication_at', $this->year)->count();
+        $count = \DB::connection($this->main_connection)->table($this->mainTable)->whereYear('publication_at', $this->year)->count();
 
         if($count == 0){
             throw new \App\Exceptions\TransfertException('Aucun arrêt pour cette année: '.$this->year);

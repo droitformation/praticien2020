@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Praticien\Code\Repo\AnnonceInterface;
+use App\Praticien\Code\Repo\CodeInterface;
 
 class RegisterController extends Controller
 {
@@ -39,7 +39,7 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct(AnnonceInterface $code)
+    public function __construct(CodeInterface $code)
     {
         $this->code = $code;
 

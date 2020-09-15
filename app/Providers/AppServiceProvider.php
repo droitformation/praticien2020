@@ -47,8 +47,8 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerCodeService(){
 
-        $this->app->singleton('App\Praticien\Code\Repo\AnnonceInterface', function() {
-            return new \App\Praticien\Code\Repo\AnnonceEloquent( new \App\Praticien\Code\Entities\Code );
+        $this->app->singleton('App\Praticien\Code\Repo\CodeInterface', function() {
+            return new \App\Praticien\Code\Repo\CodeEloquent( new \App\Praticien\Code\Entities\Code );
         });
     }
 

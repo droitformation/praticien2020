@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!\Auth::user()->roles->contains('id',1)){
+        if(!\Auth::user()->backend_access){
             return redirect('/');
         }
 

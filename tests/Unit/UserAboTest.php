@@ -52,6 +52,7 @@ class UserAboTest extends TestCase
         $response->assertRedirect('expired');
 
         $response = $this->post('activate', ['email' => $user->email, 'password' => 'password','code' => $code->code]);
+
         $response->assertRedirect('home');
     }
 
@@ -143,8 +144,8 @@ class UserAboTest extends TestCase
             'cadence'      => 'daily',
         ]);
 
-        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create(['name' => 'test 1']);
+        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create(['name' => 'test 1']);
 
         $abo1    = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id]);
         $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"Assurance de Protection Juridique SA"']);

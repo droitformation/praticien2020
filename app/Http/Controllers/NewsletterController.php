@@ -25,7 +25,7 @@ class NewsletterController extends Controller
 
     public function preview($date = null)
     {
-        $date  = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now();
+        $date = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now();
 
         $annonce = $this->annonce->active($date);
 
@@ -37,10 +37,9 @@ class NewsletterController extends Controller
 
         return view('emails.newsletter')->with([
             'decisions' => $decisions,
-            'date'   => $date,
-            'week'   => frontendDatesNewsletter($start,$end),
-            'annonce' => $annonce
-            // 'email'  => $email ?? '' for sending unsubscribe
+            'date'      => $date,
+            'week'      => frontendDatesNewsletter($start,$end),
+            'annonce'   => $annonce
         ]);
     }
 

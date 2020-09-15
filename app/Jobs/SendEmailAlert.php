@@ -12,8 +12,8 @@ class SendEmailAlert implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $publication_at;
-    protected $cadence;
+    public $publication_at;
+    public $cadence;
 
     /**
      * Create a new job instance.

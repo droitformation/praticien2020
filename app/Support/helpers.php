@@ -723,11 +723,25 @@ function isTf($string){
     preg_match($regex_tf, $string, $matches);
 
     if(!empty($matches)){
-        $tf = str_replace('TF ','',$matches[0]);
-        return $tf;
+        return str_replace('TF ','',$matches[0]);
     }
 
     return null;
+}
+
+/*
+ * String = TAF <a href="http://www.bvger.ch/publiws/download?decisionId=38332b67-0354-4c51-a8e9-00c340b740fb">B-998/2014</a>
+ * */
+function extractUrl($string,$title){
+    $regex = '/<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1/';
+
+    preg_match($regex, $string, $matches);
+
+    if(!empty($matches)){
+        return '<a target="_blank" href="'.$matches[2].'">'.$title.'</a>';
+    }
+
+    return '<a href="#">'.$title.'</a>';
 }
 
 function currentCadence(){

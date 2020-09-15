@@ -234,4 +234,32 @@ class HelperTest extends TestCase
 
         $this->assertEquals(null,$result);
     }
+
+    public function testExtractUrl()
+    {
+        $title    = 'TAF B-998/2014';
+        $string   = 'TAF <a href="http://www.bvger.ch/publiws/download?decisionId=38332b67-0354-4c51-a8e9-00c340b740fb">B-998/2014</a>';
+        $expected = '<a target="_blank" href="http://www.bvger.ch/publiws/download?decisionId=38332b67-0354-4c51-a8e9-00c340b740fb">TAF B-998/2014</a>';
+
+        $result = extractUrl($string,$title);
+
+        $this->assertEquals($expected,$result);
+
+        $title    = 'TAF B-998/2014';
+        $string   = '<a href="http://www.bvger.ch/publiws/download?decisionId=38332b67-0354-4c51-a8e9-00c340b740fb">TAF B-998/2014</a>';
+        $expected = '<a target="_blank" href="http://www.bvger.ch/publiws/download?decisionId=38332b67-0354-4c51-a8e9-00c340b740fb">TAF B-998/2014</a>';
+
+        $result = extractUrl($string,$title);
+
+        $this->assertEquals($expected,$result);
+
+        $title    = 'TAF B-998/2014';
+        $string   = '';
+        $expected = '<a href="#">TAF B-998/2014</a>';
+
+        $result = extractUrl($string,$title);
+
+        $this->assertEquals($expected,$result);
+    }
+
 }

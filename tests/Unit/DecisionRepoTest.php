@@ -56,12 +56,12 @@ class DecisionRepoTest extends TestCase
         $decision = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
             'publication_at' => $date,
             'texte' =>
-                '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien 
+                '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien
                 placérat liçlà à, nullä ultrices Assurance de Protection Juridique SA égét 44 395€ dapidûs quisque à nullä dui congue ïpsum séd léo séd hac.
                 Conges quém mattis sènèctus malet, consequat liçlà</div>.
 
-                <div>Morbi phasellus c\'est torquenté malésdum aptenté l\'2 068€ duis sem fancibüs classé d\'adipiscing duis, rutrum malésdum elementum mi est 
-                velit faucibus élémentum interûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit 
+                <div>Morbi phasellus c\'est torquenté malésdum aptenté l\'2 068€ duis sem fancibüs classé d\'adipiscing duis, rutrum malésdum elementum mi est
+                velit faucibus élémentum interûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit
                 çunc, primiés?</div>',
         ]);
 
@@ -100,16 +100,16 @@ class DecisionRepoTest extends TestCase
     {
         $date = \Carbon\Carbon::today()->toDateTimeString();
 
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decimodelfsion::class)->create([
+        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
             'publication_at' => $date,
             'numero' => '3A_223/2017',
             'texte' =>
-                '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien 
+                '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien
                 placérat liçlà à, nullä ultrices égét 44 395€ dapidûs quisque à nullä dui congue ïpsum séd léo séd hac.
                 Conges quém mattis sènèctus malet, consequat liçlà</div>.
 
-                <div>Morbi phasellus c\'est torquenté malésdum aptenté l\'2 068€ duis sem fancibüs classé d\'adipiscing duis, rutrum malésdum elementum mi est 
-                velit faucibus élémentum interûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit 
+                <div>Morbi phasellus c\'est torquenté malésdum aptenté l\'2 068€ duis sem fancibüs classé d\'adipiscing duis, rutrum malésdum elementum mi est
+                velit faucibus élémentum interûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit
                 çunc, primiés?</div>',
         ]);
 

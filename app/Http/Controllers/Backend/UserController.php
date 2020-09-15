@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Praticien\User\Worker\UserWorkerInterface;
 use App\Praticien\User\Repo\UserInterface;
 use App\Praticien\Bger\Worker\AlertInterface;
-use App\Praticien\Code\Repo\AnnonceInterface;
+use App\Praticien\Code\Repo\CodeInterface;
 
 class UserController extends Controller
 {
@@ -14,7 +14,7 @@ class UserController extends Controller
     protected $user;
     protected $code;
 
-    public function __construct(UserWorkerInterface $worker, UserInterface $user, AnnonceInterface $code)
+    public function __construct(UserWorkerInterface $worker, UserInterface $user, CodeInterface $code)
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 

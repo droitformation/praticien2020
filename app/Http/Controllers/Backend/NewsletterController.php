@@ -39,12 +39,4 @@ class NewsletterController extends Controller
 
         return view('backend.newsletter.index')->with(['newsletter' => $newsletter, 'week' => frontendDatesNewsletter($start,$end), 'annonce' => $annonce]);
     }
-
-    public function annonce(Request $request)
-    {
-        echo '<pre>';
-        print_r($request->all());
-        echo '</pre>';
-        exit;
-    }
 }

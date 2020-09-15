@@ -1,5 +1,5 @@
 <div class="blog-one__content">
-    <ul class="blog-one__meta list-unstyled">
+    <ul class="blog-one__meta list-unstyled mb-4">
         @if(!$arret->subthemes->isEmpty())
             @foreach($arret->subthemes as $subtheme)
                 <li><a href="{{ secure_url('theme/'.$subtheme->id) }}">{{ $subtheme->name }}</a></li>
@@ -7,7 +7,7 @@
         @endif
     </ul>
     <div class="d-flex flex-row justify-content-between align-items-center">
-        <h3>{!! $arret->title_link ? '<a target="_blank" href="'.$arret->title_link.'">'.$arret->title.'</a>' : '<a href="#">'.$arret->title.'</a>' !!}</h3>
+        <h3>{!! $arret->title_link !!}</h3>
         <span class="d-block badge badge-default">{{ $arret->getMeta('year') }}</span>
     </div>
     <p>{!! wpautop($arret->content) !!}</p>

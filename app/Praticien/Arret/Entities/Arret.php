@@ -13,7 +13,7 @@ class Arret extends Model {
 
     public function getTitleLinkAttribute()
     {
-        return $this->getMeta('atf') ? strip_tags($this->getMeta('atf')) : null;
+        return extractUrl($this->getMeta('atf'),$this->title);
     }
 
     public function getMainThemeAttribute()

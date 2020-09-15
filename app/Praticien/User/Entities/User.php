@@ -58,6 +58,10 @@ class User extends Authenticatable
         }
     }
 
+    public function getBackendAccessAttribute(){
+        return in_array($this->roles->first()->id,[1,2]);
+    }
+
     public function getValidAttribute()
     {
         return $this->active_until > \Carbon\Carbon::today()->startOfDay();

@@ -2681,6 +2681,7 @@ p {
 
 .blog-one__meta li a {
 	color: inherit;
+    line-height: 18px;
 }
 
 .blog-one__meta li+li:before {
@@ -3371,9 +3372,12 @@ p {
 	        transform: rotate(0);
 }
 
+ .block-title {
+    margin-bottom: 40px;
+}
 
 .event-two__content .block-title {
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .event-two__content .block-title p {
