@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerArretService();
         $this->registerThemeService();
         $this->registerMetaService();
+        $this->registerAnnonceService();
         $this->registerMailjetService();
     }
 
@@ -46,8 +47,8 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerCodeService(){
 
-        $this->app->singleton('App\Praticien\Code\Repo\CodeInterface', function() {
-            return new \App\Praticien\Code\Repo\CodeEloquent( new \App\Praticien\Code\Entities\Code );
+        $this->app->singleton('App\Praticien\Code\Repo\AnnonceInterface', function() {
+            return new \App\Praticien\Code\Repo\AnnonceEloquent( new \App\Praticien\Code\Entities\Code );
         });
     }
 
@@ -78,6 +79,16 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Praticien\Arret\Repo\MetaInterface', function() {
             return new \App\Praticien\Arret\Repo\MetaEloquent( new \Zoha\Meta\Models\Meta );
+        });
+    }
+
+    /**
+     * registerAnnonceService
+     */
+    protected function registerAnnonceService(){
+
+        $this->app->singleton('App\Praticien\Newsletter\Repo\AnnonceInterface', function() {
+            return new \App\Praticien\Newsletter\Repo\AnnonceEloquent( new \App\Praticien\Newsletter\Entities\Annonce );
         });
     }
 

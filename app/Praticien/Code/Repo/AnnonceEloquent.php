@@ -1,9 +1,9 @@
 <?php namespace App\Praticien\Code\Repo;
 
-use App\Praticien\Code\Repo\CodeInterface;
+use App\Praticien\Code\Repo\AnnonceInterface;
 use App\Praticien\Code\Entities\Code as M;
 
-class CodeEloquent implements CodeInterface{
+class AnnonceEloquent implements AnnonceInterface{
 
 	protected $code;
 

@@ -90,6 +90,11 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::put('user/{id}','Backend\UserController@update');
 
     Route::get('newsletter/{date?}','Backend\NewsletterController@index');
+
+    Route::post('annonce','Backend\AnnonceController@store');
+    Route::put('annonce/{id}','Backend\AnnonceController@update');
+    Route::delete('annonce/{id}','Backend\AnnonceController@destroy');
+
     Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
 
    // Route::get('newsletter/{date?}','Praticien\NewsletterController@index');

@@ -31,7 +31,7 @@ class TransfertController extends Controller
         foreach ($results as $result){
             $code = \App\Praticien\Wordpress\Convert\Code::convert($result);
 
-            $repo = \App::make('App\Praticien\Code\Repo\CodeInterface');
+            $repo = \App::make('App\Praticien\Code\Repo\AnnonceInterface');
             $repo->create($code);
         }
 

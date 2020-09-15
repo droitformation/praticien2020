@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Praticien\User\Repo\UserInterface;
-use App\Praticien\Code\Repo\CodeInterface;
+use App\Praticien\Code\Repo\AnnonceInterface;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -13,7 +13,7 @@ class CodeController extends Controller
     protected $user;
     protected $code;
 
-    public function __construct(UserInterface $user, CodeInterface $code)
+    public function __construct(UserInterface $user, AnnonceInterface $code)
     {
         $this->user = $user;
         $this->code = $code;

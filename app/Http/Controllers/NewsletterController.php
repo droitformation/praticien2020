@@ -3,6 +3,7 @@
 use App\Praticien\Decision\Repo\DecisionInterface;
 use App\Praticien\Decision\Worker\DecisionWorkerInterface;
 use App\Praticien\Newsletter\Service\MailjetServiceInterface;
+use App\Praticien\Newsletter\Repo\AnnonceInterface;
 use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
@@ -10,21 +11,23 @@ class NewsletterController extends Controller
     protected $decision;
     protected $worker;
     protected $mailjet;
+    protected $annonce;
 
-    public function __construct(DecisionInterface $decision, DecisionWorkerInterface $worker, MailjetServiceInterface $mailjet)
+    public function __construct(DecisionInterface $decision, DecisionWorkerInterface $worker, MailjetServiceInterface $mailjet, AnnonceInterface $annonce)
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->decision = $decision;
         $this->worker   = $worker;
         $this->mailjet  = $mailjet;
+        $this->annonce  = $annonce;
     }
 
     public function preview($date = null)
     {
         $date  = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now();
 
-        $ad = \App\Praticien\Bger\Entities\Ad::where('start_at','<=',$date->toDateString())->where('end_at','>=',$date->toDateString())->first();
+        $annonce = $this->annonce->active($date);
 
         $dates = weekRange($date->toDateString());
         $start = $dates->first();
@@ -36,7 +39,7 @@ class NewsletterController extends Controller
             'decisions' => $decisions,
             'date'   => $date,
             'week'   => frontendDatesNewsletter($start,$end),
-            'ad'     => $ad
+            'annonce' => $annonce
             // 'email'  => $email ?? '' for sending unsubscribe
         ]);
     }

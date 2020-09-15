@@ -58,7 +58,7 @@
 --}}
             <!-- --------    end top header    ---------- -->
             <!-- --------    Start AD   ---------- -->
-            @if(isset($ad))
+            @if(isset($annonce))
                 <table width="600" cellpadding="0" cellspacing="0" align="center" class="container-y" style="border: 3px solid #9c8b6f; border-top: 0px; border-collapse: collapse; margin-bottom: 15px;">
                     <tr bgcolor="#9c8b6f">
                         <td align="center" valign="middle" height="35" style="color: #fff;"><p>Annonce</p></td>
@@ -70,13 +70,13 @@
                                 <tr bgcolor="#ffffff"><td height="10"></td></tr>
                                 <tr>
                                     <td align="top" valign="top" width="120px">
-                                        <a target="_blank" href="{{ $ad->link }}"><img class="img-thumbnail" width="120px" src="{{ $ad->image }}"></a>
+                                        <a target="_blank" href="{{ $annonce->link }}"><img class="img-thumbnail" width="120px" src="{{ $annonce->image }}"></a>
                                     </td>
                                     <td align="top" valign="top" width="40"></td>
                                     <td align="top" valign="top" >
-                                        <h4 style="font-family:Arial, sans-serif;color: #000; font-weight: 600;font-size: 1.30rem; line-height: 1.2; margin: 5px 0 5px 0;">{{ $ad->title }}</h4>
-                                        <div>{!! $ad->content !!}</div>
-                                        <p><a target="_blank" href="{{ $ad->link }}" class="btn-newsletter">Inscription</a></p>
+                                        <h4 style="font-family:Arial, sans-serif;color: #000; font-weight: 600;font-size: 1.30rem; line-height: 1.2; margin: 5px 0 5px 0;">{{ $annonce->title }}</h4>
+                                        <div>{!! $annonce->content !!}</div>
+                                        <p><a target="_blank" href="{{ $annonce->link }}" class="btn-newsletter">Inscription</a></p>
                                     </td>
                                 </tr>
                                 <tr bgcolor="#ffffff"><td height="10"></td></tr>
@@ -86,9 +86,8 @@
                     <tr bgcolor="#ffffff"><td height="10"></td></tr>
                 </table>
             @endif
-            <!-- --------    End AD   ---------- -->
-            DecisionRepoTest.php
-            <!-- --------   main content--------- -->
+            <!-- --------  End AD   ---------- -->
+            <!-- --------  main content--------- -->
             <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="container-y" bgcolor="ffffff">
 
                 <!-- ------- main section ------- -->

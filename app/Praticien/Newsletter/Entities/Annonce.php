@@ -1,10 +1,10 @@
-<?php namespace App\Praticien\Bger\Entities;
+<?php namespace App\Praticien\Newsletter\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ad extends Model
+class Annonce extends Model
 {
-    protected $table = 'ads';
+    protected $table = 'annonces';
     protected $dates = ['start_at','end_at'];
     protected $fillable = ['title','content','link','start_at','end_at'];
 }

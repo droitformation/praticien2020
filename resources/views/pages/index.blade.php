@@ -98,7 +98,7 @@
                                 <h3>Newsletter</h3>
                                 <p>Recevez tous les lundi les<br> arrêts destinés à publication</p>
                                 <a data-fancybox="" data-src="#subscribeModal" data-modal="true" href="javascript:;" class="thm-btn bg-subscribe">Inscription</a>
-                                <a data-fancybox="" data-src="#unsubscribeModal" data-modal="true" href="javascript:;" class="thm-btn">Désinscription</a
+                                <a data-fancybox="" data-src="#unsubscribeModal" data-modal="true" href="javascript:;" class="thm-btn">Désinscription</a>
                             </div><!-- /.cta-two__box -->
                         </div><!-- /.col-lg-4 -->
                     </div><!-- /.row -->
