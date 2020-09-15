@@ -6,49 +6,33 @@
         <div class="row">
             <div class="col-lg-4">
                 <h3 class="mb-3 mt-0">Utilisateur</h3>
+
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center mt-3">
                             <h5 class="mt-2 mb-0">{{ $user->name }}</h5>
+
                             <h6 class="text-muted font-weight-normal mt-2 mb-0">Abonnement actif au</h6>
                             <h6 class="text-{{ $user->valid ? 'success' : 'warning' }} font-weight-normal mt-1 mb-4">{{ isset($user->active_until) ? $user->active_until->format('Y-m-d') : '' }}</h6>
                         </div>
 
                         <div class="mt-3 pt-2 border-top">
-                            <h4 class="mb-3 font-size-15">Données</h4>
-                            <div class="table-responsive">
-                                <table class="table table-borderless mb-0 text-muted">
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">Email</th>
-                                        <td>{{ $user->email }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Adresse</th>
-                                        <td>{!! $user->adresse !!}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">NPA/Ville</th>
-                                        <td>{{ $user->npa }} {{ $user->ville }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h3 class="mb-3 font-size-17">Données</h3>
                         </div>
-                    </div>
-                </div>
-                <!-- end card -->
-
-            </div>
-            <div class="col-lg-4">
-                <h3 class="mb-3 mt-0">Editer</h3>
-
-                <div class="card">
-                    <div class="card-body">
 
                         <form method="POST" action="{{ secure_url('backend/user/'.$user->id) }}" class="py-2">@csrf
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="id" value="{{ $user->id }}">
+
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <select class="form-control">
+                                        <option {{ $user->roles->contains('id',3) ? 'selected' : '' }} value="3">Abonné | Accès aux contenus du site</option>
+                                        <option {{ $user->roles->contains('id',2) ? 'selected' : '' }} value="2">Contributeur | Introduction des fiches </option>
+                                        <option {{ $user->roles->contains('id',1) ? 'selected' : '' }} value="1">Administrateur</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="row mb-4">
                                 <div class="col-lg-12"><input type="email" name="email" class="form-control" value="{{ $user->email }}" required placeholder="Email"></div>
@@ -78,7 +62,15 @@
                                 </div>
                             </div>
 
-                            <div class="row align-items-end">
+                            <a data-toggle="collapse" data-target="#password_{{ $user->id }}"><i class="fas fa-lock"></i> &nbsp;Modifier le mot de passe</a>
+
+                            <div class="row mb-4 collapse" id="password_{{ $user->id }}">
+                                <div class="col-lg-12">
+                                    <input type="text" name="password" class="form-control" placeholder="Mot de passe">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-end border-top mt-4 pt-4">
                                 <div class="col-lg-6">
                                     <a data-fancybox="" data-src="#deleteModal_{{ $user->id }}" data-modal="true" href="javascript:;" class="text-danger"><i class="fas fa-exclamation-circle"></i> &nbsp;Supprimer</a>
                                 </div>
@@ -91,7 +83,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-5">
+
+                <h3 class="mb-2 mt-0">Abonnements</h3>
+
+                @if(!$user->abonnements->isEmpty())
+                    <div class="d-flex flex-col justify-content-between flex-wrap" >
+                        @foreach($user->abonnements as $abo)
+                            <div class="card card-categorie bg-white border">
+                                <div class="card-body">
+                                    <p class="m-0">
+                                        <strong>Catégorie:</strong> <span class="{{ $abo['published'] ? 'text-danger' : '' }}">{{ $abo['title'] }}{{ $abo['published'] ? '*' : '' }}</span>
+                                    </p>
+                                    {!! !$abo['keywords']->flatten()->isEmpty() ? '<p class="m-0 font-italic">'.$abo['keywords']->flatten()->implode(', ').'</p>' : '' !!}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+            </div>
+            <div class="col-lg-3">
                 <h3 class="mb-3 mt-0">Codes</h3>
                 @if(!$user->codes->isEmpty())
                     @foreach($user->codes as $code)

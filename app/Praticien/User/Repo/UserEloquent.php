@@ -157,7 +157,8 @@ class UserEloquent implements UserInterface{
         }
 
         if(isset($data['role'])){
-            $user->roles()->sync($data['role']);
+            $user->roles()->detach();
+            $user->roles()->attach($data['role']);
         }
 
         return $user;
