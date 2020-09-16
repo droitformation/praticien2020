@@ -15,7 +15,7 @@ class UserEloquent implements UserInterface{
 
     public function getAll(){
 
-        return $this->user->with(['abos','abos.keywords'])->orderBy('last_name')->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie'])->orderBy('last_name')->get();
     }
 
     public function getActives(){
@@ -133,7 +133,7 @@ class UserEloquent implements UserInterface{
 
         $user->fill($data);
 
-        if(!empty($data['password'])) {
+        if(isset($data['password']) && !empty($data['password'])) {
             $user->password = bcrypt($data['password']);
         }
 

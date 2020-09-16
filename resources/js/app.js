@@ -26,6 +26,7 @@ Vue.component('abo-component', require('./components/AboComponent.vue').default)
 Vue.component('publication-component', require('./components/PublicationComponent.vue').default);
 Vue.component('atf-component', require('./components/AtfComponent.vue').default);
 Vue.component('theme-component', require('./components/ThemeComponent.vue').default);
+Vue.component('code-component', require('./components/CodeComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -17,6 +17,7 @@
         "inlinestyle/inlinestyle": "^1.2",
         "intervention/image": "^2.5",
         "jgrossi/corcel": "^4.0",
+        "laminas/laminas-math": "^3.2",
         "laracasts/flash": "^3.1",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.2",

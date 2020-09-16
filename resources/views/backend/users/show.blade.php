@@ -7,26 +7,26 @@
             <div class="col-lg-4">
                 <h3 class="mb-3 mt-0">Utilisateur</h3>
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center mt-3">
-                            <h5 class="mt-2 mb-0">{{ $user->name }}</h5>
+                <form method="POST" action="{{ secure_url('backend/user/'.$user->id) }}" class="py-2">@csrf
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="id" value="{{ $user->id }}">
 
-                            <h6 class="text-muted font-weight-normal mt-2 mb-0">Abonnement actif au</h6>
-                            <h6 class="text-{{ $user->valid ? 'success' : 'warning' }} font-weight-normal mt-1 mb-4">{{ isset($user->active_until) ? $user->active_until->format('Y-m-d') : '' }}</h6>
-                        </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center mt-3">
+                                <h5 class="mt-2 mb-0">{{ $user->name }}</h5>
 
-                        <div class="mt-3 pt-2 border-top">
-                            <h3 class="mb-3 font-size-17">Données</h3>
-                        </div>
+                                <h6 class="text-muted font-weight-normal mt-2 mb-0">Abonnement actif au</h6>
+                                <h6 class="text-{{ $user->valid ? 'success' : 'warning' }} font-weight-normal mt-1 mb-4">{{ isset($user->active_until) ? $user->active_until->format('Y-m-d') : '' }}</h6>
+                            </div>
 
-                        <form method="POST" action="{{ secure_url('backend/user/'.$user->id) }}" class="py-2">@csrf
-                            <input type="hidden" name="_method" value="PUT">
-                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <div class="mt-3 pt-2 border-top">
+                                <h3 class="mb-3 font-size-17">Données</h3>
+                            </div>
 
                             <div class="row mb-4">
                                 <div class="col-lg-12">
-                                    <select class="form-control">
+                                    <select class="form-control" name="role">
                                         <option {{ $user->roles->contains('id',3) ? 'selected' : '' }} value="3">Abonné | Accès aux contenus du site</option>
                                         <option {{ $user->roles->contains('id',2) ? 'selected' : '' }} value="2">Contributeur | Introduction des fiches </option>
                                         <option {{ $user->roles->contains('id',1) ? 'selected' : '' }} value="1">Administrateur</option>
@@ -49,7 +49,7 @@
 
                             <div class="row mb-4">
                                 <div class="col-lg-12">
-                                    <input type="text" name="adresse" class="form-control" value="{{ $user->adresse }}" required placeholder="Adresse">
+                                    <input type="text" name="adresse" class="form-control" value="{!! $user->adresse !!}" placeholder="Adresse">
                                 </div>
                             </div>
 
@@ -58,19 +58,24 @@
                                     <input type="text" name="npa" class="form-control" value="{{ $user->npa }}" placeholder="NPA">
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" name="ville" class="form-control" value="{{ $user->ville }}" required placeholder="Ville">
+                                    <input type="text" name="ville" class="form-control" value="{{ $user->ville }}" placeholder="Ville">
                                 </div>
                             </div>
 
-                            <a data-toggle="collapse" data-target="#password_{{ $user->id }}"><i class="fas fa-lock"></i> &nbsp;Modifier le mot de passe</a>
+                            <div class="row mb-4">
+                                <div class="col-lg-12"><input type="text" name="active_until" class="form-control datePicker" value="{{ $user->active_until }}"></div>
+                            </div>
 
-                            <div class="row mb-4 collapse" id="password_{{ $user->id }}">
+                            <a href="#" class="d-block text-muted" data-toggle="collapse" data-target="#password_{{ $user->id }}"><i class="fas fa-lock"></i> &nbsp;Modifier le mot de passe</a>
+
+                            <div class="row mb-4 collapse mt-4" id="password_{{ $user->id }}">
                                 <div class="col-lg-12">
                                     <input type="text" name="password" class="form-control" placeholder="Mot de passe">
                                 </div>
                             </div>
-
-                            <div class="row align-items-end border-top mt-4 pt-4">
+                        </div>
+                        <div class="card-footer">
+                            <div class="row align-items-end">
                                 <div class="col-lg-6">
                                     <a data-fancybox="" data-src="#deleteModal_{{ $user->id }}" data-modal="true" href="javascript:;" class="text-danger"><i class="fas fa-exclamation-circle"></i> &nbsp;Supprimer</a>
                                 </div>
@@ -78,10 +83,11 @@
                                     <button class="btn btn-primary" type="submit">Enregistrer</button>
                                 </div>
                             </div>
+                        </div>
 
-                        </form>
                     </div>
-                </div>
+
+                </form>
             </div>
             <div class="col-lg-5">
 

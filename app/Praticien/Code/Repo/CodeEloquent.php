@@ -12,9 +12,9 @@ class CodeEloquent implements CodeInterface{
 		$this->code = $code;
 	}
 
-    public function getAll(){
+    public function getAll($year = null){
 
-        return $this->code->with(['user'])->get();
+        return $this->code->year($year)->with(['user'])->get();
     }
 
 	public function find($id)
@@ -47,7 +47,7 @@ class CodeEloquent implements CodeInterface{
 	public function create(array $data){
 
 		$code = $this->code->create(array(
-			'code'        => $data['code'],
+			'code'        => $data['code'] ?? $this->newCode(),
             'valid_at'    => $data['valid_at'],
             'user_id'     => $data['user_id'] ?? null,
             'created_at'  => date('Y-m-d G:i:s'),
@@ -95,4 +95,18 @@ class CodeEloquent implements CodeInterface{
 		return $code->delete($id);
 	}
 
+    public function newCode(){
+
+        $random = getRandomPasswords(5);
+
+        foreach ($random as $rand){
+            $code = $this->code->where('code','=',$rand)->first();
+
+            if(!$code){
+                return $rand;
+            }
+        }
+
+        return newCode();
+    }
 }

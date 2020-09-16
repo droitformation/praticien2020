@@ -1,9 +1,6 @@
 $(document).ready( function () {
-    $('#arret_list').DataTable({
-        "pageLength": 10,
-        "order": [[ 1, "desc" ]],
-        language: {
-            processing:     "Traitement en cours...",
+    let lang = {
+        processing:     "Traitement en cours...",
             search:         "Rechercher&nbsp;:",
             lengthMenu:     "Afficher _MENU_ &eacute;l&eacute;ments",
             info:           "Affichage de _START_ &agrave; _END_ sur _TOTAL_ lignes",
@@ -14,16 +11,65 @@ $(document).ready( function () {
             zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
             emptyTable:     "Aucune donnée disponible",
             paginate: {
-                first:      "Premier",
+            first:      "Premier",
                 previous:   "<i class='fas fa-caret-left'></i>",
                 next:       "<i class='fas fa-caret-right'></i>",
                 last:       "Dernier"
-            },
-            aria: {
-                sortAscending:  ": activer pour trier la colonne par ordre croissant",
+        },
+        aria: {
+            sortAscending:  ": activer pour trier la colonne par ordre croissant",
                 sortDescending: ": activer pour trier la colonne par ordre décroissant"
-            }
         }
+    };
+
+    $('#arret_list').DataTable({
+        "pageLength": 10,
+        "order": [[ 1, "desc" ]],
+        language: lang
+    });
+
+
+    let init = function()
+    {
+        var api    = this.api();
+        var column = api.column(3);
+
+        var select = $('<select class="form-control select-custom"><option value="">Filtrer par status</option></select>').appendTo( $(column.header()).empty()).on( 'change', function () {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                column.search( val ? '^'+val+'$' : '', true, false ).draw();
+            });
+        column.data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        });
+    };
+
+    let initcode = function()
+    {
+        var api    = this.api();
+        var column = api.column(3);
+
+        var select = $('<select class="form-control select-custom"><option value="">Filtrer par statut</option></select>')
+            .appendTo( $(column.header()).empty()).on( 'change', function () {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column.search( val ? '^'+val+'$' : '', true, false ).draw();
+        });
+        column.data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        });
+    };
+
+    $('#users').DataTable({
+        "pageLength": 10,
+        "order": [[ 1, "desc" ]],
+        language: lang,
+        initComplete: init
+    });
+
+    $('#codes').DataTable({
+        "pageLength": 10,
+        "order": [[ 1, "desc" ]],
+        language: lang,
+        initComplete: initcode
     });
 
     $R('.redactor',{

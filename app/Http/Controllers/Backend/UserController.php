@@ -23,16 +23,11 @@ class UserController extends Controller
         $this->code   = $code;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if($request->input('user_id')){
-            $user  = $this->user->find($request->input('user_id'));
-            $alert = \App\Praticien\User\Entities\Alert::view($user,$request->input('cadence'),$request->input('date'));
-        }
-
         $users = $this->user->getActives();
 
-        return view('backend.users.index')->with(['users' => $users, 'params' => $request->except('_token'), 'alert' => $alert ?? null]);
+        return view('backend.users.index')->with(['users' => $users]);
     }
 
     public function show($id)
@@ -70,7 +65,7 @@ class UserController extends Controller
 
     public function update($id, Request $request)
     {
-        $user = $this->user->update($request->except('_token'));
+        $user = $this->user->update(array_filter($request->except('_token')));
 
         flash('Utilisateur mis à jour','success');
 
@@ -99,6 +94,16 @@ class UserController extends Controller
 
         return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alertes' => $alertes]);
     }
+
+    public function destroy($id)
+    {
+        $this->user->delete($id);
+
+        flash('L\'utilisateur été supprimé','success');
+
+        return redirect('backend/user');
+    }
+
 }
 
 

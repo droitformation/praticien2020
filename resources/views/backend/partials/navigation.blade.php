@@ -29,6 +29,12 @@
                     <li><hr></li>
                     <li class="menu-title">Administrateur</li>
                     <li>
+                        <a {{ \Request::is('backend/codes') || \Request::is('backend/code/*') ? : '' }} href="{{ secure_url('backend/codes') }}"><i class="fas fa-lock"></i><span> Code d'accès</span></a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="{{ secure_url('backend/codes') }}">Gestion</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a {{ \Request::is('backend/decision/*') || \Request::is('backend/archive') ? : '' }} href="{{ secure_url('backend/decision') }}"><i class="fas fa-gavel"></i><span> Décisions TF </span></a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="{{ secure_url('backend/decision') }}">Dernières décisions</a></li>

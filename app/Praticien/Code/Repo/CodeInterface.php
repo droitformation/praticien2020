@@ -2,7 +2,7 @@
 
 interface CodeInterface {
 
-    public function getAll();
+    public function getAll($year=null);
 	public function find($data);
 	public function valid($code);
     public function active($user_id);

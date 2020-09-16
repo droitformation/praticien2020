@@ -11,4 +11,17 @@ class Code extends Model {
     {
         return $this->belongsTo('App\Praticien\User\Entities\User');
     }
+
+    public function getCanBeDeletedAttribute()
+    {
+        return !isset($this->user);
+    }
+
+    public function scopeYear($query, $year)
+    {
+        if(isset($year)){
+            $query->whereYear('valid_at', $year);
+        }
+    }
+
 }

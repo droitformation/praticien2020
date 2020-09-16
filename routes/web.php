@@ -88,6 +88,11 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::get('users/inactive','Backend\UserController@inactive');
     Route::post('users/code','Backend\UserController@code');
     Route::put('user/{id}','Backend\UserController@update');
+    Route::delete('user/{id}','Backend\UserController@destroy');
+
+    Route::post('newcode','Backend\CodeController@newcode');
+    Route::get('codes/{year?}','Backend\CodeController@index');
+    Route::resource('code', 'Backend\CodeController');
 
     Route::get('newsletter/{date?}','Backend\NewsletterController@index');
 
@@ -168,9 +173,14 @@ Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
 
+
+    $rand = generatePassword();
+    echo '<pre>';
+    print_r($rand);
+    echo '</pre>';
+    exit;
+
     $user = \App\Praticien\User\Entities\User::find(4);
-
-
     $alert = new \App\Praticien\User\Entities\Alert($user,'daily','2020-09-14');
 
     echo '<pre>';
