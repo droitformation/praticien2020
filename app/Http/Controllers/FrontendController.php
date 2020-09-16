@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->input('p')){
+            return redirect('arret/'.$request->input('p'));
+        }
+
         return view('pages.index');
     }
 

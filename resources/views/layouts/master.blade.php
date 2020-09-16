@@ -63,7 +63,7 @@
         @include('partials.messages')
     </div>
 
-    <div class="flex-grow-2 align-content-stretch">
+    <div class="flex-grow-1 align-content-stretch">
         <!-- Contenu -->
         @yield('content')
         <!-- Fin contenu -->
@@ -108,6 +108,7 @@
 <script src="{{ secure_asset('js/jquery.circleType.js') }}"></script>
 <script src="{{ secure_asset('assets/js/jquery.fancybox.min.js') }}"></script>
 <script src="//printjs-4de6.kxcdn.com/print.min.js"></script>
+<script src="{{ secure_asset('js/clipboard.min.js') }}"></script>
 <!-- Custom Scripts -->
 <script src="{{ secure_asset('js/theme.js') }}"></script>
 <script src="{{ secure_asset('js/app.js') }}"></script>

@@ -24,6 +24,13 @@ class ArretController extends Controller
         return view('arrets.index')->with(['parents' => $parents]);
     }
 
+    public function show($id)
+    {
+        $arret = $this->arret->find($id);
+
+        return view('arrets.show')->with(['arret' => $arret]);
+    }
+
     public function theme($slug,$edition = null)
     {
         $theme  = $this->theme->bySlug($slug);

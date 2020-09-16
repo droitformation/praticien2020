@@ -11,10 +11,10 @@
 
                         @if(!$arrets->isEmpty())
                             @foreach($arrets as $arret)
-                                @include('arrets.partials.arret', ['arrets' => $arret])
+                                @include('arrets.partials.arret', ['arret' => $arret])
                             @endforeach
                         @else
-                            <p class="mt-4">Rien dans <strong>{{ $subtheme->name ?? $theme->name  }}</strong> {{ $edition ?? '' }}</p>
+                            <p class="mt-4">Rien dans <stalerrong>{{ $subtheme->name ?? $theme->name  }}</stalerrong> {{ $edition ?? '' }}</p>
                         @endif
 
                         @if($arrets instanceof \Illuminate\Pagination\LengthAwarePaginator )

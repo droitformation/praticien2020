@@ -29,6 +29,7 @@ Route::get('newsletter/preview/{date?}', ['uses' => 'NewsletterController@previe
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('arrets', ['uses' => 'ArretController@index']);
+    Route::get('arret/{id}', ['uses' => 'ArretController@show']);
     Route::get('theme/{id}/{year?}', ['uses' => 'ArretController@theme']);
     Route::get('subtheme/{id}/{year?}', ['uses' => 'ArretController@subtheme']);
 });

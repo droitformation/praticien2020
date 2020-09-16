@@ -112,6 +112,8 @@
         });
     }
 
+    var clipboard = new ClipboardJS('.copy');
+
     let base_url = location.protocol + "//" + location.host+"/";
 
     $('#decisions').DataTable({
