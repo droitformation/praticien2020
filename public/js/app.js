@@ -2168,11 +2168,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       url: location.protocol + "//" + location.host + "/",
-      code: null
+      code: null,
+      nbr: 1
     };
   },
   mounted: function mounted() {
@@ -45870,31 +45881,75 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.code,
-          expression: "code"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        name: "code",
-        placeholder: "Unique code alpha-numérique 12 charactères"
-      },
-      domProps: { value: _vm.code },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "nbr" } }, [_vm._v("Nombre de codes")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.nbr,
+            expression: "nbr"
           }
-          _vm.code = $event.target.value
+        ],
+        staticClass: "form-control",
+        attrs: { id: "nbr", name: "nbr", type: "number" },
+        domProps: { value: _vm.nbr },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.nbr = $event.target.value
+          }
         }
-      }
-    })
+      })
+    ]),
+    _vm._v(" "),
+    _vm.nbr > 1
+      ? _c("div", { staticClass: "form-group" }, [
+          _c("label", [
+            _vm._v(
+              "Des codes uniques seront crées automatiquement par le système"
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.nbr == 1
+      ? _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "code" } }, [_vm._v("Code")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.code,
+                expression: "code"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "code",
+              type: "text",
+              name: "code",
+              placeholder:
+                "Unique code numérique, prefixe année en cours + 8 chiffres => ex: 2012345678"
+            },
+            domProps: { value: _vm.code },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.code = $event.target.value
+              }
+            }
+          })
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

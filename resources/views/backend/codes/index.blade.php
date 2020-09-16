@@ -3,11 +3,25 @@
 
     <div class="container-fluid">
         <div class="row page-title">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h3 class="mb-0 mt-0"><a href="{{ secure_url('backend/code') }}" class="font-size-15 text-primary"><i class="fas fa-arrow-left"></i> &nbsp; Retour</a></h3>
             </div>
-            <div class="col-md-3 text-right">
-                <a href="{{ secure_url('backend/code/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;Ajouter</a>
+            <div class="col-md-4 text-right">
+                <form action="{{ url('backend/code/export') }}" method="POST" class="row">@csrf
+                    <div class="col-5 text-right">
+                        <a href="{{ secure_url('backend/code/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;Ajouter</a>
+                    </div>
+                    <div class="col-7">
+                       <div class="input-group">
+                           <select class="form-control custom-control" name="year">
+                               @foreach($years as $y)
+                                   <option value="{{ $y->year }}">{{ $y->year }}</option>
+                               @endforeach
+                           </select>
+                           <button class="btn btn-secondary ml-2">Exporter</button>
+                       </div>
+                    </div>
+               </form>
             </div>
         </div>
 
@@ -19,8 +33,8 @@
                         <div class="d-flex flex-row justify-content-between">
                             <h3 class="header-title mt-0 mb-4 d-block">Codes d'accès</h3>
                             <div>
-                                @foreach(range(2013,date('Y')) as $y)
-                                    <a href="{{ secure_url('backend/codes/'.$y) }}" class="btn btn-sm btn-light"><i class="fas fa-calendar"></i> &nbsp;{{ $y }}</a>
+                                @foreach($years as $y)
+                                    <a href="{{ secure_url('backend/codes/'.$y->year) }}" class="btn btn-sm btn-light"><i class="fas fa-calendar"></i> &nbsp;{{ $y->year }}</a>
                                 @endforeach
                             </div>
                         </div>

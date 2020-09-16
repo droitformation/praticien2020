@@ -15,15 +15,15 @@ class UserEloquent implements UserInterface{
 
     public function getAll(){
 
-        return $this->user->with(['abos','abos.keywords','abos.categorie'])->orderBy('last_name')->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie','roles'])->orderBy('last_name')->get();
     }
 
     public function getActives(){
-        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie','roles'])->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
     }
 
     public function getInactives(){
-        return $this->user->with(['abos','abos.keywords','abos.categorie'])->whereDate('active_until', '<', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
+        return $this->user->with(['abos','abos.keywords','abos.categorie','roles'])->whereDate('active_until', '<', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
     }
 
     public function getActiveWithAbos($cadence = null){

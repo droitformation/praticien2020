@@ -17,6 +17,10 @@ class CodeEloquent implements CodeInterface{
         return $this->code->year($year)->with(['user'])->get();
     }
 
+    public function years(){
+        return $this->code->selectRaw('Year(valid_at) as year')->groupBy('year')->get();
+    }
+
 	public function find($id)
     {
 		return $this->code->find($id);
@@ -42,6 +46,31 @@ class CodeEloquent implements CodeInterface{
         }
 
         return null;
+    }
+
+    public function make($nbr,$data){
+
+	    $codes = [];
+	    $make  = $nbr + ($nbr * 0.1);
+
+        $numbers = getRandomPasswords($make);
+
+        foreach ($numbers as $number){
+            $code = $this->code->where('code','=',$number)->first();
+
+            if(!$code){
+                $codes[] = $this->create($data);
+            }
+
+            if(count($codes) == $nbr){
+                return $codes;
+            }
+        }
+
+        if(count($codes) < $nbr){
+            $rest = $nbr - count($codes);
+            $this->make($rest,$data);
+        }
     }
 
 	public function create(array $data){
@@ -97,7 +126,7 @@ class CodeEloquent implements CodeInterface{
 
     public function newCode(){
 
-        $random = getRandomPasswords(5);
+        $random = getRandomPasswords(3);
 
         foreach ($random as $rand){
             $code = $this->code->where('code','=',$rand)->first();

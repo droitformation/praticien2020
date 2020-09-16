@@ -16,10 +16,7 @@
                     <div class="card-body">
                         <h3 class="header-title mt-0 mb-4">Nouveau Code</h3>
 
-                        <div class="form-group">
-                            <label for="date">Code</label>
-                            <code-component></code-component>
-                        </div>
+                        <code-component></code-component>
 
                         <div class="form-group">
                             <label for="date">Date de validité</label>

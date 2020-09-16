@@ -17,7 +17,7 @@
                             @foreach($liste as $date)
                                 <div class="row">
                                     <div class="col-sm"><p class="mb-2">{{ $date }}</p></div>
-                                    <form action="{{ url('backend/date/update') }}" method="POST" class="col-sm text-right">{!! csrf_field() !!}
+                                    <form action="{{ url('backend/date/update') }}" method="POST" class="col-sm text-right">@csrf
                                         <input name="date" value="{{ $date }}" type="hidden">
                                         <button class="btn btn-primary btn-sm">Insérer</button>
                                     </form>

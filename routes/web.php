@@ -92,6 +92,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::post('newcode','Backend\CodeController@newcode');
     Route::get('codes/{year?}','Backend\CodeController@index');
+    Route::post('code/export','Backend\CodeController@export');
     Route::resource('code', 'Backend\CodeController');
 
     Route::get('newsletter/{date?}','Backend\NewsletterController@index');

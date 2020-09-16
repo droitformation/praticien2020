@@ -15,9 +15,11 @@ class CodeController extends Controller
 
     public function index($year = null)
     {
+        $year = $year ? $year : date('Y');
         $codes = $this->code->getAll($year);
+        $years = $this->code->years();
 
-        return view('backend.codes.index')->with(['codes' => $codes]);
+        return view('backend.codes.index')->with(['codes' => $codes, 'years' => $years]);
     }
 
     public function newcode()
@@ -32,11 +34,11 @@ class CodeController extends Controller
 
     public function store(Request $request)
     {
-        $code = $this->code->create($request->except('_token'));
+        $this->code->make($request->input('nbr'),$request->except(['_token','nbr']));
 
         flash('Code crée','success');
 
-        return redirect('backend/code/'.$code->id);
+        return redirect('backend/code');
     }
 
     public function show($id)
@@ -62,5 +64,10 @@ class CodeController extends Controller
         flash('Le code a été supprimé','success');
 
         return redirect('backend/codes');
+    }
+
+    public function export(Request $request)
+    {
+        return \Excel::download(new \App\Exports\CodesExport($request->input('year')), 'codes_'.$request->input('year').'.xlsx');
     }
 }

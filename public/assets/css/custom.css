@@ -3,6 +3,11 @@ label {
     font-size: 16px;
 }
 
+#arret_list_paginate,
+arret_list_info{
+    margin-top: 20px;
+}
+
 .content-page .alert{
     margin: 0 -15px 0 -15px;
     padding-left: 30px;

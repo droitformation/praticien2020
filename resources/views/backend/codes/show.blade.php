@@ -21,11 +21,11 @@
         <input name="id" value="{{ $code->id }}" type="hidden">
 
         <div class="row" id="app">
-            <div class="col-8">
+            <div class="col-6">
 
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="header-title mt-0 mb-4">Nouveau Code</h3>
+                        <h3 class="header-title mt-0 mb-4">Editer</h3>
 
                         <div class="form-group">
                             <label for="date">Code</label>
@@ -37,7 +37,14 @@
                             <input name="valid_at" class="form-control datePicker" value="{{ $code->valid_at }}" type="text" placeholder="">
                         </div>
 
-                        <button class="btn btn-primary ml-1 mt-0" type="submit">Enregistrer</button>
+                        @if($code->user)
+                            <div class="form-group bg-light px-4 py-2">
+                                <label class="mb-0" for="date">Lié à</label>
+                                <a href="{{ secure_url('user/'. $code->user->id) }}">{{ $code->user->name }}</a>
+                            </div>
+                        @endif
+
+                        <p class="text-right mb-0"><button class="btn btn-primary ml-1 mt-0" type="submit">Enregistrer</button></p>
                     </div>
                 </div>
 
