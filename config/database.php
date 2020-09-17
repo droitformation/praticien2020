@@ -76,7 +76,7 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_WORDPRESS_DATABASE', 'droitdut_hubprat'),
+            'database' => env('DB_WORDPRESS_DATABASE', 'droitpraticien'),
             'username' => env('DB_WORDPRESS_USERNAME', 'root'),
             'password' => env('DB_WORDPRESS_PASSWORD', 'root'),
             'unix_socket' => env('DB_SOCKET', ''),
