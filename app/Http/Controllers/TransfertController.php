@@ -7,14 +7,17 @@ class TransfertController extends Controller
     // Posts => arrets
     public function posts()
     {
+        $repo      = \App::make('App\Praticien\Arret\Repo\ArretInterface');
         $wordpress = \App::make('App\Praticien\Wordpress\Repo\PostRepo');
-        $results = $wordpress->getAll();
+        $results   = $wordpress->getAll();
 
-        foreach ($results as $result){
-            $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
+        foreach ($results->chunk(50) as $row){
+            foreach ($row as $result) {
+                $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
+                $repo->insert($arret);
+            }
 
-            $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
-            $repo->insert($arret);
+            sleep(1);
         }
 
         echo '<pre>';
