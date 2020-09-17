@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="container h-100">
+    <div class="row h-100 align-content-center justify-content-center">
         <div class="col-md-6">
             <div class="block-title-login text-center">
                 <h3>Login</h3>

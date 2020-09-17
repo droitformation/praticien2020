@@ -94,7 +94,7 @@ class DecisionWorker implements DecisionWorkerInterface
 
                 // Attach eventuals categorie for special keywords
                 // Live
-                //$this->categorie->process($date);
+                $this->categorie->process($date);
 
                 \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions terminées '.$date));
 
