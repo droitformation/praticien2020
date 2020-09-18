@@ -109,3 +109,10 @@ $factory->define(App\Praticien\Theme\Entities\Theme::class, function (Faker $fak
         'parent_id' => 0,
     ];
 });
+
+$factory->define(App\Praticien\Categorie\Entities\Categorie_keyword::class, function (Faker $faker) {
+    return [
+        'keywords'     => 'Ma categorie',
+        'categorie_id' => 1,
+    ];
+});

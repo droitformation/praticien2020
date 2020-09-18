@@ -19,6 +19,7 @@ class DecisionWorker implements DecisionWorkerInterface
     protected $categorie;
     protected $liste;
     protected $failed;
+    protected $keywords;
 
     // Collection
     public $missing_dates;
@@ -89,12 +90,12 @@ class DecisionWorker implements DecisionWorkerInterface
             if(!$decisions->isEmpty()){
 
                 $decisions->map(function ($decision) {
-                    $this->insert($decision);
+                    //$this->insert($decision);
+                    dispatch(new \App\Jobs\CreateDecision($decision));
                 });
 
-                // Attach eventuals categorie for special keywords
-                // Live
-                $this->categorie->process($date);
+                // Attach eventuals categorie for special keywords already with job!
+                //$this->categorie->process($date);
 
                 \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions terminées '.$date));
 

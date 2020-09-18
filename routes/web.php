@@ -167,10 +167,10 @@ Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
 
+    $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorker');
 
-    $rand = generatePassword();
     echo '<pre>';
-    print_r($rand);
+    print_r(collect(config('keywords'))->groupBy('categorie_id'));
     echo '</pre>';
     exit;
 

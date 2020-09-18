@@ -71,4 +71,56 @@ class CategorieTest extends TestCase
         $found = $repo->searchByName($name, 'testing');
 
     }
+
+    public function testCategorieDispatch()
+    {
+        $keyword_repo = \Mockery::mock('App\Praticien\Categorie\Repo\CategorieKeywordInterface');
+
+        $worker = new \App\Praticien\Categorie\Worker\CategorieWorker($keyword_repo, \App::make('App\Praticien\Decision\Repo\DecisionInterface'));
+
+        $publication_at = \Carbon\Carbon::today()->toDateString();
+
+        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie3 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie4 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+
+        $keyword1 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
+            'keywords' => 'BGFA', 'categorie_id' => $categorie1->id]);
+        $keyword2 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
+            'keywords' => 'LLCA', 'categorie_id' => $categorie2->id]);
+        $keyword3 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
+            'keywords' => '"Assistance judiciaire", CPC', 'categorie_id' => $categorie3->id]);
+        $keyword4 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
+            'keywords' => 'Procédure, CPC', 'categorie_id' => $categorie3->id]);
+
+        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+            'publication_at' => $publication_at,
+            'categorie_id'   => $categorie4->id,
+            'texte'          => '<div>Dapibus ante accumasa laoreelentesque lorém arcû in BGFA éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien</div>.'
+        ]);
+
+        $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+            'publication_at' => $publication_at,
+            'categorie_id'   => $categorie4->id,
+            'texte'          => '<div>Dapibus anuismod Procédure enim imperdiet egéstat ligula àc voluptà torquent sapien placérat liçlà à, nullä ultrices consequat liçlà</div>.'
+        ]);
+
+        $decision3 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+            'publication_at' => $publication_at,
+            'categorie_id'   => $categorie4->id,
+            'texte'          => '<div> Ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus  egéstat ligula àc voluptà torquent sapien placérat, nullä ultrices</div>.'
+        ]);
+
+        $keyword_repo->shouldReceive('getAll')->andReturn(collect([$keyword1,$keyword2,$keyword3,$keyword4]));
+
+        $results = $worker->find($publication_at);
+
+        echo '<pre>';
+        print_r($results);
+        echo '</pre>';
+        exit;
+
+        $this->assertEquals(2,$results->count());
+    }
 }

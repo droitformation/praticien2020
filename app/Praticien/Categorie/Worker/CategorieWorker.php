@@ -1,17 +1,14 @@
 <?php namespace  App\Praticien\Categorie\Worker;
 
-use App\Praticien\Categorie\Worker\CategorieWorkerInterface;
 use App\Praticien\Categorie\Repo\CategorieKeywordInterface;
 use App\Praticien\Decision\Repo\DecisionInterface;
 
 class CategorieWorker implements CategorieWorkerInterface
 {
-    protected $keyword;
     protected $decision;
 
-    public function __construct(CategorieKeywordInterface $keyword, DecisionInterface $decision)
+    public function __construct( DecisionInterface $decision)
     {
-        $this->keyword  = $keyword;
         $this->decision = $decision;
     }
 
@@ -30,16 +27,23 @@ class CategorieWorker implements CategorieWorkerInterface
     // Find decision with special keywords
     public function find($publications_at)
     {
-        $keywords = $this->keyword->getAll();
+        return collect(config('keywords'))->map(function ($keywords, $categorie_id) use ($publications_at) {
+            return collect($keywords)->map(function ($keyword) use ($publications_at){
+                return $this->decision->search(['terms' => $keyword, 'publications_at' => $publications_at]);
+            })->flatten(1);
+        })->reject(function ($result, $key) {
+            return $result->isEmpty();
+        })->flatten(1);
 
-        return $keywords->groupBy('categorie_id')->map(function($keyword){
+/*        return $keywords->groupBy('categorie_id')->map(function($keyword){
             return $keyword->pluck('keywords_list')->toArray();
         })->map(function ($keywords, $categorie_id) use ($publications_at) {
             return collect($keywords)->map(function ($keyword) use ($publications_at){
-                return $this->decision->search(['terms' => $keyword, 'publications_at' => $publications_at, 'xp' => true]);
+                return $this->decision->search(['terms' => $keyword, 'publications_at' => $publications_at]);
             })->flatten(1);
-        });
-
+        })->reject(function ($result, $key) {
+            return $result->isEmpty();
+        });*/
     }
 
     public function makeQuery($name)

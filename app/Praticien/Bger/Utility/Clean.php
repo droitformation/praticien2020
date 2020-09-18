@@ -9,6 +9,7 @@ class Clean
 {
     public function removeWhitespace($string) {
 
+        $string = Encoding::toUTF8($string);
         $string = preg_replace('/\s+/', ' ', $string);
         $string = trim($string);
         return $string;
