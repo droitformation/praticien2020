@@ -61,12 +61,7 @@ class NewsletterController extends Controller
         return view('backend.letter')->with(['html' => $html]);
     }
 
-    public function send()
-    {
-        $mailjet = new \App\Praticien\Newsletter\NewsletterWorker();
 
-        return $mailjet->send();
-    }
 }
 
 

@@ -32,7 +32,7 @@ class ManualUpdateDateDecisions implements ShouldQueue
      */
     public function handle()
     {
-        $worker = \App::make('App\Droit\Decision\Worker\DecisionWorkerInterface');
+        $worker = \App::make('App\Praticien\Decision\Worker\DecisionWorkerInterface');
         $worker->setMissingDates($this->dates)->update();
 
         \Mail::to('cindy.leschaud@gmail.com')->queue(new \App\Mail\SuccessNotification('Mise à jour des décisions commencé'));

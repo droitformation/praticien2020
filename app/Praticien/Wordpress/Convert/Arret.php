@@ -25,10 +25,10 @@ class Arret
 
     static function getMetas($metas){
         return $metas->filter(function ($meta, $key) {
-            return in_array($meta->meta_key,['termes_rechercher','auteur','atf']);
+            return in_array($meta->meta_key,['termes_rechercher','auteur','atf','commentaire_pour_arrêt']);
         })->map(function ($meta, $key) {
             return [
-                'meta_key'   => $meta->meta_key,
+                'meta_key'   => $meta->meta_key == 'commentaire_pour_arrêt' ? 'comment' : $meta->meta_key,
                 'meta_value' => $meta->meta_value,
             ];
         });

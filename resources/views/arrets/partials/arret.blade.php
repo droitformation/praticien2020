@@ -12,8 +12,17 @@
     </div>
     <p>{!! wpautop($arret->content) !!}</p>
 
+    @if($arret->getMeta('comment'))
+        <div class="bg-light p-4 my-4">
+            <h5>Commentaire</h5>
+            {!! $arret->getMeta('comment') !!}
+        </div>
+    @endif
+
     <div class="d-flex flex-row justify-content-between">
-        <div>{!! $arret->getMeta('auteur') ? '<p class="blog-one__link">'.$arret->getMeta('auteur').'</p>' : '' !!}</div>
+        <div>
+            {!! $arret->getMeta('auteur') ? '<p class="blog-one__link">'.$arret->getMeta('auteur').'</p>' : '' !!}
+        </div>
 
         <div class="text-right">
             <button class="copy btn btn-sm btn-secondary mt-4" data-clipboard-text="{{ secure_url('arret/'.$arret->id) }}">

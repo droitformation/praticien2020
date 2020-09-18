@@ -79,6 +79,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::get('decision/{id}/{year}','Backend\DecisionController@show');
     Route::get('decisions/{date}/{year}','Backend\DecisionController@decisions');
     Route::post('decision/search','Backend\DecisionController@search');
+    Route::post('decision/update','Backend\DecisionController@update');
 
     Route::get('archive/{year?}','Backend\DecisionController@archive');
     Route::post('archive/transfert','Backend\DecisionController@transfert');
@@ -102,24 +103,15 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::put('annonce/{id}','Backend\AnnonceController@update');
     Route::delete('annonce/{id}','Backend\AnnonceController@destroy');
 
-    Route::get('archives/{year}/{date}/{id?}','Praticien\ArchiveController@archives');
+    Route::post('date/update','Backend\DateController@update');
+    Route::post('date/delete','Backend\DateController@delete');
 
-   // Route::get('newsletter/{date?}','Praticien\NewsletterController@index');
-    Route::match(['get', 'post'], 'letter','Praticien\NewsletterController@letter');
-    Route::get('send','Praticien\NewsletterController@send');
+    Route::post('transfert','Backend\ArchiveController@transfert');
+    Route::match(['get', 'post'], 'testing','Backend\ArchiveController@testing');
 
-    Route::post('date/update','Praticien\DateController@update');
-    Route::post('date/delete','Praticien\DateController@delete');
+    Route::get('archives/{year}/{date}/{id?}','Backend\ArchiveController@archives');
+    Route::get('send','Backend\NewsletterController@send');
 
-    Route::post('search','Praticien\SearchController@search');
-
-    Route::post('transfert','Praticien\ArchiveController@transfert');
-    Route::match(['get', 'post'], 'testing','Praticien\ArchiveController@testing');
-
-    //Route::match(['get', 'post'], 'abos','Praticien\UserController@index');
-
-    //Route::get('decisions/{date}/{id?}','Praticien\DecisionController@index');
-    //Route::post('decision/update','Praticien\DecisionController@update');
 });
 
 Route::group(['prefix' => 'api'], function () {

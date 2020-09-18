@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Praticien;
+<?php namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,9 +30,9 @@ class DateController extends Controller
             $dates = generateDateRange(\Carbon\Carbon::parse($request->input('range')[0]), \Carbon\Carbon::parse($request->input('range')[1]));
         }
 
-        //$this->dispatch(new ManualUpdateDateDecisions(collect($dates)));
+        $this->dispatch(new ManualUpdateDateDecisions(collect($dates)));
 
-        $this->worker->setMissingDates(collect($dates))->update();
+        //$this->worker->setMissingDates(collect($dates))->update();
 
         return redirect()->back()->with(['message' => 'update']);
     }

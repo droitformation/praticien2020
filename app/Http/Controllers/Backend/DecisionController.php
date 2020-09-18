@@ -35,6 +35,16 @@ class DecisionController extends Controller
         return view('backend.decisions.show')->with(['decision' => $decision, 'year' => $year, 'dates' => $dates]);
     }
 
+    public function update(Request $request)
+    {
+        $grab     = new \App\Praticien\Bger\Utility\Decision();
+        $decision = $grab->setDecision($request->except('year','_token'))->getArret();
+
+        $this->decision->update(['id' => $request->input('id')] + $decision);
+
+        return redirect()->back()->with(['message' => 'Arrêt mis à jour: '.$decision['numero']]);
+    }
+
     public function decisions($date,$year)
     {
         $dates = $this->decision->getDateArchive($date);
