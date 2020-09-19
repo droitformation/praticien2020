@@ -31,21 +31,17 @@ class CreateDecision implements ShouldQueue
      */
     public function handle()
     {
-        $repo      = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
-        $categorie = \App::make('App\Praticien\Categorie\Worker\CategorieWorkerInterface');
-        $failed    = \App::make('App\Praticien\Decision\Repo\FailedInterface');
+        $repo   = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
+        $failed = \App::make('App\Praticien\Decision\Repo\FailedInterface');
 
         $worker = new \App\Praticien\Bger\Utility\Decision();
 
         $data = $worker->setDecision($this->decision)->getArret();
 
-        if($data){
-            $new = $repo->create($data);
-            // test if decision with keywords for droit des avocats
-            $categorie->process($new);
-        }
-        else{
+        if(!$data){
             $failed->create(['publication_at' => $data['publication_at'], 'numero' => $data['numero']]);
         }
+
+        $repo->create($data);
     }
 }

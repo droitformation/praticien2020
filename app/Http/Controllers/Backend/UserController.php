@@ -74,8 +74,9 @@ class UserController extends Controller
 
     public function alerte(Request $request)
     {
-        $alertes = [];
+        $alertes = collect([]);
 
+       /*
         $users = $this->user->getActiveWithAbos($request->input('cadence','daily'));
 
         $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
@@ -88,7 +89,7 @@ class UserController extends Controller
             return new \App\Praticien\User\Entities\Alert($user,$cadence,$date);
         })->reject(function ($alert, $key) {
             return !$alert->html();
-        });
+        });*/
 
         $users = $this->user->getActiveWithAbos();
 

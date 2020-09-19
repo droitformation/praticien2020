@@ -96,6 +96,7 @@ class DecisionWorker implements DecisionWorkerInterface
 
                 // Attach eventuals categorie for special keywords already with job!
                 //$this->categorie->process($date);
+               // dispatch(new \App\Jobs\ProcessKeywords($date));
 
                 \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions terminées '.$date));
 

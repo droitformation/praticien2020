@@ -1,6 +1,5 @@
 <?php namespace  App\Praticien\Categorie\Worker;
 
-use App\Praticien\Categorie\Repo\CategorieKeywordInterface;
 use App\Praticien\Decision\Repo\DecisionInterface;
 
 class CategorieWorker implements CategorieWorkerInterface
@@ -33,7 +32,7 @@ class CategorieWorker implements CategorieWorkerInterface
             })->flatten(1);
         })->reject(function ($result, $key) {
             return $result->isEmpty();
-        })->flatten(1);
+        });
 
 /*        return $keywords->groupBy('categorie_id')->map(function($keyword){
             return $keyword->pluck('keywords_list')->toArray();

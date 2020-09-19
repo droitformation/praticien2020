@@ -74,9 +74,7 @@ class CategorieTest extends TestCase
 
     public function testCategorieDispatch()
     {
-        $keyword_repo = \Mockery::mock('App\Praticien\Categorie\Repo\CategorieKeywordInterface');
-
-        $worker = new \App\Praticien\Categorie\Worker\CategorieWorker($keyword_repo, \App::make('App\Praticien\Decision\Repo\DecisionInterface'));
+        $worker = new \App\Praticien\Categorie\Worker\CategorieWorker(\App::make('App\Praticien\Decision\Repo\DecisionInterface'));
 
         $publication_at = \Carbon\Carbon::today()->toDateString();
 
@@ -84,15 +82,6 @@ class CategorieTest extends TestCase
         $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
         $categorie3 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
         $categorie4 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-
-        $keyword1 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
-            'keywords' => 'BGFA', 'categorie_id' => $categorie1->id]);
-        $keyword2 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
-            'keywords' => 'LLCA', 'categorie_id' => $categorie2->id]);
-        $keyword3 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
-            'keywords' => '"Assistance judiciaire", CPC', 'categorie_id' => $categorie3->id]);
-        $keyword4 = factory(\App\Praticien\Categorie\Entities\Categorie_keyword::class)->create([
-            'keywords' => 'Procédure, CPC', 'categorie_id' => $categorie3->id]);
 
         $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
             'publication_at' => $publication_at,
@@ -112,15 +101,16 @@ class CategorieTest extends TestCase
             'texte'          => '<div> Ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus  egéstat ligula àc voluptà torquent sapien placérat, nullä ultrices</div>.'
         ]);
 
-        $keyword_repo->shouldReceive('getAll')->andReturn(collect([$keyword1,$keyword2,$keyword3,$keyword4]));
-
         $results = $worker->find($publication_at);
 
-        echo '<pre>';
-        print_r($results);
-        echo '</pre>';
-        exit;
+        $this->assertEquals(2,$results->flatten(1)->count());
 
-        $this->assertEquals(2,$results->count());
+        $decisions = $worker->process($publication_at);
+
+        $d_1 = $decision1->fresh();
+        $d_2 = $decision2->fresh();
+
+        $this->assertTrue($d_1->other_categories->contains(244));
+        $this->assertTrue($d_2->other_categories->contains(207));
     }
 }

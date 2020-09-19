@@ -136,12 +136,10 @@ class DecisionServiceProvider extends ServiceProvider
         $this->app->singleton('App\Praticien\Categorie\Worker\CategorieWorkerInterface', function()
         {
             return new \App\Praticien\Categorie\Worker\CategorieWorker(
-                \App::make('App\Praticien\Categorie\Repo\CategorieKeywordInterface'),
                 \App::make('App\Praticien\Decision\Repo\DecisionInterface')
             );
         });
     }
-
 
 
     /**
