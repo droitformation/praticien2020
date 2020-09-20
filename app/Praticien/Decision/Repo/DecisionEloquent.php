@@ -197,9 +197,27 @@ class DecisionEloquent implements DecisionInterface{
         return null;
     }
 
-    // $params array terms, categorie, published, publications_at in decisons main table mysql
+    // $params array terms, categorie, published, publications_at in decision main table mysql
+    public function searchDecision($params){
+        $terms          = isset($params['terms']) && !empty($params['terms']) ? $params['terms'] : null;
+        $categorie      = isset($params['categorie']) && $params['categorie'] != 247 ? $params['categorie'] : null;
+        $published      = isset($params['published']) ? $params['published'] : null;
+        $publication_at = isset($params['publication_at']) ? $params['publication_at'] : null;
+
+        return $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
+            ->with(['categorie'])
+            ->search($terms)
+            ->categorie($categorie)
+            ->published($published)
+            ->publicationAt($publication_at)
+            ->groupBy('id')
+            ->get();
+    }
+
+    // $params array terms, categorie, published, publications_at in decision main table mysql
     public function search($params)
     {
+        $ids            = isset($params['ids']) && !empty($params['ids']) ? $params['ids'] : null;
         $terms          = isset($params['terms']) && !empty($params['terms']) ? $params['terms'] : null;
         $categorie      = isset($params['categorie']) && $params['categorie'] != 247 ? $params['categorie'] : null;
         $published      = isset($params['published']) ? $params['published'] : null;
@@ -223,6 +241,7 @@ class DecisionEloquent implements DecisionInterface{
             ->categorie($categorie)
             ->published($published)
             ->publicationAt($publication_at)
+            ->ids($ids)
             ->groupBy('id')
             ->get();
     }
@@ -370,8 +389,7 @@ class DecisionEloquent implements DecisionInterface{
 
         $decision = $this->decision->setConnection($this->main_connection)->findOrFail($data['id']);
 
-        if( ! $decision )
-        {
+        if( ! $decision ) {
             return false;
         }
 

@@ -4,6 +4,7 @@ interface UserInterface {
 
     public function getAll();
     public function getActiveWithAbos($cadence = null);
+    public function getAlerts($params);
     public function getActives();
     public function getInactives();
     public function find($data);

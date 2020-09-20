@@ -334,7 +334,7 @@
                                                                             </strong>
                                                                         </td>
                                                                         <td style="padding: 5px 2px;color:#000;">
-                                                                            @if( isset($decision['keywords']) && !empty($decision['keywords']))
+                                                                            @if(isset($decision['keywords']) && !empty($decision['keywords']))
                                                                                 {{ $decision['keywords'] }}
                                                                             @endif
                                                                         </td>

@@ -165,7 +165,8 @@ class DecisionServiceProvider extends ServiceProvider
         {
             return new \App\Praticien\Bger\Worker\Alert(
                 \App::make('App\Praticien\Decision\Repo\DecisionInterface'),
-                \App::make('App\Praticien\User\Repo\UserInterface')
+                \App::make('App\Praticien\User\Repo\UserInterface'),
+                \App::make('App\Praticien\Abo\Worker\AboWorkerInterface')
             );
         });
     }

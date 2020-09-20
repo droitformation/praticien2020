@@ -35,6 +35,19 @@ class UserEloquent implements UserInterface{
             ->get();
     }
 
+    public function getAlerts($params){
+
+        $cadence        = $params['cadence'] ?? null;
+        $publication_at = $params['publication_at'] ?? \Carbon\Carbon::today()->toDateString();
+
+        return $this->user->has('abos')
+            ->with(['abos','abos.keywords','abos.categorie'])
+            ->cadence($cadence)
+            ->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())
+            ->orderBy('last_name')
+            ->get();
+    }
+
     public function find($id){
 
         return $this->user->with(['abos','abos.keywords','abos.categorie','alerts'])->findOrFail($id);

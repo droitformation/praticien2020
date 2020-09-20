@@ -169,8 +169,16 @@ Route::get('test', function() {
 
     $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorker');
 
+    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+
+    $decisions = $repo->searchDecision(['terms' => ['Tappy'], 'categorie' => 218, 'published' => null, 'publication_at' => '2020-09-18']);
+
     echo '<pre>';
-    print_r(collect(config('keywords'))->groupBy('categorie_id'));
+    print_r($decisions);
+    echo '</pre>';
+    exit;
+
+   // print_r($decisions->pluck('decisions')->flatten(1));
     echo '</pre>';
     exit;
 

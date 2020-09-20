@@ -8,6 +8,9 @@ use App\Praticien\User\Repo\UserInterface;
 use App\Praticien\Bger\Worker\AlertInterface;
 use App\Praticien\Code\Repo\CodeInterface;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class UserController extends Controller
 {
     protected $worker;
@@ -76,12 +79,16 @@ class UserController extends Controller
     {
         $alertes = collect([]);
 
-       /*
-        $users = $this->user->getActiveWithAbos($request->input('cadence','daily'));
+        $users = $this->user->getAlerts($request->input('cadence','daily'));
 
+        $date     = '2020-09-18';
+        $users_id = [4];
+        $cadence  = 'daily';
+
+/*
         $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
         $users_id = $request->input('user_id') ? [$request->input('user_id')] : $users->pluck('id')->all();
-        $cadence  = $request->input('cadence');
+        $cadence  = $request->input('cadence','daily');*/
 
         $alertes = collect($users_id)->map(function ($id, $key) use ($date,$cadence){
             $user      = $this->user->find($id);
@@ -89,7 +96,7 @@ class UserController extends Controller
             return new \App\Praticien\User\Entities\Alert($user,$cadence,$date);
         })->reject(function ($alert, $key) {
             return !$alert->html();
-        });*/
+        });
 
         $users = $this->user->getActiveWithAbos();
 
@@ -105,6 +112,11 @@ class UserController extends Controller
         return redirect('backend/user');
     }
 
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
 }
 
 

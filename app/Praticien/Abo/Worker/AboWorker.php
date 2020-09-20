@@ -12,6 +12,17 @@ class AboWorker implements AboWorkerInterface
         $this->abo = $abo;
     }
 
+    public function getByAbosCategory($user_id,$publication_at)
+    {
+        $decisions = $this->abo->getUserAbosForDate($user_id,$publication_at);
+
+        return $decisions->groupBy('categorie_id')->mapWithKeys(function ($decision) {
+            return [
+                $decision->first()->categorie_id => $decision->pluck('decisions')->flatten(1)
+            ];
+        });
+    }
+
     public function make($data)
     {
         // Delete everything

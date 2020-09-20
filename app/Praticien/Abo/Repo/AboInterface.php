@@ -9,4 +9,6 @@ interface AboInterface {
     public function publish($catgorie_id,$user_id);
     public function unpublish($catgorie_id,$user_id);
     public function delete($id);
+
+    public function getUserAbosForDate($user_id,$publication_at);
 }

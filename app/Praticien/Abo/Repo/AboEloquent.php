@@ -33,6 +33,22 @@ class AboEloquent implements AboInterface{
         ));
     }
 
+    public function getUserAbosForDate($user_id,$publication_at)
+    {
+        return $this->abo->where('user_id','=',$user_id)->whereHas('decisions', function ($query) use ($publication_at){
+            $publication_at = is_array($publication_at) ? $publication_at : [$publication_at];
+
+            $query->where(function ($q) use ($publication_at) {
+                foreach ($publication_at as $date){
+                    $q->orWhereDate('publication_at',$date);
+                }
+            });
+
+        })->with(['keywords','decisions' => function ($query) use ($publication_at){
+            $query->whereDate('publication_at', $publication_at);
+        }])->toSql();
+    }
+
     public function unpublish($catgorie_id,$user_id){
 
         $publish = $this->publish->where('categorie_id','=',$catgorie_id)->where('user_id','=',$user_id)->first();

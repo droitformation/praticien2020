@@ -11,6 +11,7 @@ interface DecisionInterface {
     public function getDate($date);
     public function getMissingDates(array $dates);
     public function getExistDates(array $dates);
+    public function searchDecision($params);
     public function getYear($year);
     public function search($params);
     public function searchTable($table,$conn,$params,$year);

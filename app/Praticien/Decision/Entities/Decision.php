@@ -88,6 +88,13 @@ class Decision extends Model
         }
     }
 
+    public function scopeIds($query, $ids)
+    {
+        if(isset($ids) && !empty($ids)){
+            $query->whereIn('id',$ids);
+        }
+    }
+
     public function scopePublicationAt($query, $publication_at)
     {
         if($publication_at) {

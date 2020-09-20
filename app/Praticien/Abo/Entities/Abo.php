@@ -17,4 +17,11 @@ class Abo extends Model
     {
         return $this->belongsTo('\App\Praticien\Categorie\Entities\Categorie');
     }
+
+    public function decisions()
+    {
+       // return $this->hasManyThrough('App\Praticien\Categorie\Entities\Categorie','App\Praticien\Decision\Entities\Decision','categorie_id','id','categorie_id','categorie_id');
+        return $this->hasManyThrough('App\Praticien\Decision\Entities\Decision','App\Praticien\Categorie\Entities\Categorie','id','categorie_id','categorie_id','id');
+
+    }
 }
