@@ -4,6 +4,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use mysql_xdevapi\Collection;
 
 class User extends Authenticatable
 {
@@ -73,12 +74,12 @@ class User extends Authenticatable
             // Make sure we have en empty collection if no keywords, so the repo has the categorie for searching in new decisions
             $keywords = $abo->keywords->map(function ($keyword) {
                 return $keyword->keywords_list;
-            })->flatten();
+            });
 
             return [
                 $abo->categorie_id => [
                     'title'     => $abo->categorie->name,
-                    'keywords'  => collect([$keywords]),
+                    'keywords'  => !$keywords->isEmpty() ? $keywords : collect([collect([])]),
                     'published' => $abo->toPublish
                 ]
             ];

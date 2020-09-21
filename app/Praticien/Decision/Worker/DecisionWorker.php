@@ -33,31 +33,31 @@ class DecisionWorker implements DecisionWorkerInterface
         $this->liste     = $liste;
     }
 
-    public function setMissingDates(Collection $dates = null)
+    public function setMissingDates(Collection $dates = null,$connection = 'mysql')
     {
         if(!$dates){
             $dates = $this->liste->getList(true);
         }
 
-        $this->missing_dates = $this->repo->setConnection('mysql')->getMissingDates($dates->toArray());
+        $this->missing_dates = $this->repo->setConnection($connection)->getMissingDates($dates->toArray());
 
         return $this;
     }
 
-    public function getMissingDates(){
+    public function getMissingDates($connection = 'mysql'){
 
         $dates = $this->liste->getList(true);
-        $exist = $this->repo->setConnection('mysql')->getExistDates($dates->toArray());
+        $exist = $this->repo->setConnection($connection)->getExistDates($dates->toArray());
 
         return collect($dates)->diff($exist->pluck('publication_at'))->unique()->map(function ($item, $key) {
             return \Carbon\Carbon::parse($item)->toDateString();
         });
     }
 
-    public function getExistingDates(){
+    public function getExistingDates($connection = 'mysql'){
 
         $dates = $this->liste->getList(true);
-        $exist = $this->repo->setConnection('mysql')->getExistDates($dates->toArray());
+        $exist = $this->repo->setConnection($connection)->getExistDates($dates->toArray());
 
         return $exist;
     }
@@ -90,17 +90,16 @@ class DecisionWorker implements DecisionWorkerInterface
             if(!$decisions->isEmpty()){
 
                 $decisions->map(function ($decision) {
-                    //$this->insert($decision);
-                    dispatch(new \App\Jobs\CreateDecision($decision));
+                    dispatch((new \App\Jobs\CreateDecision($decision))->onQueue('high'));
                 });
 
-                // Attach eventuals categorie for special keywords already with job!
-                //$this->categorie->process($date);
-               // dispatch(new \App\Jobs\ProcessKeywords($date));
-
                 \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions terminées '.$date));
-
             }
+        }
+        foreach($this->missing_dates as $date) {
+            // Attach eventuals categorie for special keywords already with job!
+            dispatch((new \App\Jobs\ProcessKeywords($date))->onQueue('low'));
+            \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Process des décisions terminées '.$date));
         }
     }
 

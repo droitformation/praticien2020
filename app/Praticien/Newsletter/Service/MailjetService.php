@@ -185,20 +185,20 @@ class MailjetService implements MailjetServiceInterface{
             return false;
     }
 
-    public function createCampagne($campagne){
+    public function createCampagne($Subject = 'Newsletter Droit pour le Praticien'){
 
         $this->hasList();
 
         # Parameters
         $params = [
-            'Title'          => $campagne->newsletter->titre,
-            'Subject'        => $campagne->sujet,
+            'Title'          => 'Newsletter Droit pour le Praticien',
+            'Subject'        => $Subject,
             'ContactsListID' => $this->list,
             'Locale'         => 'fr',
             'Callback'       => url('/'),
             'HeaderLink'     => url('/'),
-            'SenderEmail'    => $campagne->newsletter->from_email,
-            'Sender'         => $campagne->newsletter->from_name
+            'SenderEmail'    => config('mail.from.address'),
+            'Sender'         => config('mail.from.name'),
         ];
 
         # Call
@@ -210,7 +210,7 @@ class MailjetService implements MailjetServiceInterface{
             return $newsletter[0]['ID']; // returns ID directly
         }
 
-        return null;
+        return false;
     }
 
     public function setHtml($html,$id)

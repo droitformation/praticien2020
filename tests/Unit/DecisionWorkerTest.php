@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -74,20 +75,24 @@ class DecisionWorkerTest extends TestCase
         $this->repo->shouldReceive('setConnection->getMissingDates')->once()->andReturn(dates_range(3));
         // Special keywords process for each dates
         // live
-        $this->worker->shouldReceive('process')->times(3);
+       // $this->worker->shouldReceive('process')->times(3);
 
         // list set url with date, getListDecisions.
         $this->list->shouldReceive('setUrl')->times(3)->andReturn($this->list);
         $this->list->shouldReceive('getListDecisions')->andReturn(collect($decisions));
 
+        $first = $decisions[0];
         // 2 decisions x 3 dates = 6
-        $this->decision->shouldReceive('setDecision')->times(6)->andReturn($this->decision);
-        $this->decision->shouldReceive('getArret')->times(6)->andReturn($data);
-
-        $this->repo->shouldReceive('create')->times(6);
+       // $this->decision->shouldReceive('setDecision')->times(6)->andReturn($this->decision);
+       // $this->decision->shouldReceive('getArret')->times(6)->andReturn($data);
+       // $this->repo->shouldReceive('create')->times(6);
 
         $worker = new \App\Praticien\Decision\Worker\DecisionWorker($this->repo,$this->failed,$this->worker,$this->decision,$this->list);
-        $worker->setMissingDates()->update();
+        $worker->setMissingDates(null,'testing')->update();
+
+        Queue::assertPushed(function (\App\Jobs\CreateDecision $job) use ($first) {
+            return $job->decision['numero'] === $first['numero'];
+        });
 
         $this->assertEquals(3, $worker->missing_dates->count());
     }
@@ -103,7 +108,7 @@ class DecisionWorkerTest extends TestCase
         $this->repo->shouldReceive('setConnection->getMissingDates')->once()->andReturn(collect([]));
 
         $worker = new \App\Praticien\Decision\Worker\DecisionWorker($this->repo,$this->failed,$this->worker,$this->decision,$this->list);
-        $worker->setMissingDates()->update();
+        $worker->setMissingDates(null,'testing')->update();
 
         // missing dates empty send mail
         \Mail::assertSent(\App\Mail\SuccessNotification::class, function ($mail){

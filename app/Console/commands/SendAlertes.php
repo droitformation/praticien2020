@@ -51,6 +51,6 @@ class SendAlertes extends Command
             $date = weekRange($date)->toArray();
         }
 
-        $this->dispatch((new SendEmailAlert($date, $cadence)));
+        $this->dispatch((new SendEmailAlert($date, $cadence))->onQueue('high'));
     }
 }

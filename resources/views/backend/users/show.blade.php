@@ -63,14 +63,17 @@
                             </div>
 
                             <div class="row mb-4">
-                                <div class="col-lg-12"><input type="text" name="active_until" class="form-control datePicker" value="{{ $user->active_until }}"></div>
+                                <div class="col-lg-12">
+                                    <label>Date de validité du compte</label>
+                                    <input type="text" name="active_until" placeholder="Date de validité du compte" class="form-control datePicker" value="{{ $user->active_until }}">
+                                </div>
                             </div>
 
                             <a href="#" class="d-block text-muted" data-toggle="collapse" data-target="#password_{{ $user->id }}"><i class="fas fa-lock"></i> &nbsp;Modifier le mot de passe</a>
 
                             <div class="row mb-4 collapse mt-4" id="password_{{ $user->id }}">
                                 <div class="col-lg-12">
-                                    <input type="text" name="password" class="form-control" placeholder="Mot de passe">
+                                    <input type="password" name="password" class="form-control" placeholder="Mot de passe">
                                 </div>
                             </div>
                         </div>

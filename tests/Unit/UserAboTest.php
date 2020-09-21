@@ -24,18 +24,14 @@ class UserAboTest extends TestCase
 
     public function testGetUserIsValid()
     {
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
-            'active_until' => \Carbon\Carbon::today()->addMonth()->toDateTimeString(), 'cadence' => 'daily',
-        ]);
+        $user = factory(\App\Praticien\User\Entities\User::class)->create(['active_until' => \Carbon\Carbon::today()->addMonth()->toDateTimeString(),'cadence' => 'daily']);
 
         $this->assertTrue($user->valid);
     }
 
     public function testGetUserIsNotValid()
     {
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
-            'active_until' => \Carbon\Carbon::today()->subMonth()->toDateTimeString(), 'cadence' => 'daily',
-        ]);
+        $user = factory(\App\Praticien\User\Entities\User::class)->create(['active_until' => \Carbon\Carbon::today()->subMonth()->toDateTimeString(),'cadence' => 'daily']);
 
         $this->assertFalse($user->valid);
     }
@@ -43,9 +39,9 @@ class UserAboTest extends TestCase
     public function testGetUserReValidate()
     {
         $code = factory(\App\Praticien\Code\Entities\Code::class)->create();
-
         $user = factory(\App\Praticien\User\Entities\User::class)->create([
-            'active_until' => \Carbon\Carbon::today()->startOfDay()->subMonth()->toDateTimeString(), 'cadence' => 'daily',
+            'active_until' => \Carbon\Carbon::today()->startOfDay()->subMonth()->toDateTimeString(),
+            'cadence' => 'daily'
         ]);
 
         $response = $this->post('login', ['email' => $user->email, 'password' => 'password']);
@@ -151,11 +147,16 @@ class UserAboTest extends TestCase
         $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"Assurance de Protection Juridique SA"']);
 
         $abo2    = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id, 'toPublish' => 1]);
-        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"recours en matière civile","canton de Genève"']);
+        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"recours en matière civile"']);
+        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"canton de Genève"']);
 
         $expect = collect([
-            $categorie1->id => ['title' => $categorie1->name, 'keywords' => collect([collect(['Assurance de Protection Juridique SA'])]), 'published' => null],
-            $categorie2->id => ['title' => $categorie2->name, 'keywords' => collect([collect(['recours en matière civile','canton de Genève'])]), 'published' => 1],
+            $categorie1->id => ['title' => $categorie1->name, 'keywords' => collect([
+                collect(['Assurance de Protection Juridique SA'])
+            ]), 'published' => null],
+            $categorie2->id => ['title' => $categorie2->name, 'keywords' => collect([
+                collect(['recours en matière civile']),collect(['canton de Genève'])
+            ]), 'published' => 1],
         ]);
 
         $this->assertEquals($expect->toArray(),$user->abonnements->toArray());
@@ -171,9 +172,9 @@ class UserAboTest extends TestCase
         $categorie4 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
 
         $data = [
-           ['categorie_id' => $categorie1->id, 'texte' => '<div>Accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'],
-           ['categorie_id' => $categorie2->id, 'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'],
-           ['categorie_id' => $categorie3->id, 'texte' => '<div>Nul de chose égét 44 3€ quisque à nullä dui cctus malet, consequatà</div>.'],
+           ['categorie_id' => $categorie1->id, 'texte' => '<div>Accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'],// categorie + keywords
+           ['categorie_id' => $categorie2->id, 'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'],// categorie + keywords
+           ['categorie_id' => $categorie3->id, 'texte' => '<div>Nul de chose égét 44 3€ quisque à nullä dui cctus malet, consequatà</div>.'],// categorie
            ['categorie_id' => $categorie4->id, 'texte' => '<div>Judiciaire égét quisque à nullä dui cctus , consequat liçlà</div>.']
         ];
 
@@ -184,10 +185,11 @@ class UserAboTest extends TestCase
            'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(), 'cadence' => 'daily',
         ]);
 
+        $abo3 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id'  => $user->id, 'categorie_id' => $categorie3->id]);
         $abo1 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id'  => $user->id, 'categorie_id' => $categorie1->id]);
         $abo2 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id'  => $user->id, 'categorie_id' => $categorie2->id]);
-        $abo3 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id'  => $user->id, 'categorie_id' => $categorie3->id]);
 
+        $keyword3 = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"other things']);
         $keyword1 = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"Accumasa laoreelentesque"']);
         $keyword2 = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"à nul A égét 44",BGFA']);
 

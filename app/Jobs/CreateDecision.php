@@ -12,7 +12,7 @@ class CreateDecision implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $decision;
+    public $decision;
 
     /**
      * Create a new job instance.

@@ -50,10 +50,10 @@ class SendNewsletter extends Command
              $worker->setUrl($url)->send_test();
         }
         else{
-            $date = $date ? $date : null;
-           // $result = $worker->setUrl($url)->setDate($date)->send();
+            $date   = $date ? $date : null;
+            $result = $worker->setUrl($url)->setDate($date)->send();
 
-            //\Log::info(json_encode($result));
+            \Log::info(json_encode($result));
         }
     }
 }

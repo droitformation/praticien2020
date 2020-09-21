@@ -50,17 +50,20 @@
                                     <input type="text" name="npa" class="form-control" value="" placeholder="NPA">
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" name="ville" class="form-control" value="{{ $user->ville }}" placeholder="Ville">
+                                    <input type="text" name="ville" class="form-control" value="" placeholder="Ville">
                                 </div>
                             </div>
 
                             <div class="row mb-4">
-                                <div class="col-lg-12"><input type="text" name="active_until" class="form-control datePicker" value=""></div>
+                                <div class="col-lg-12">
+                                    <label>Date de validité du compte</label>
+                                    <input type="text" name="active_until" class="form-control datePicker" value="Date de validité du compte">
+                                </div>
                             </div>
 
                             <div class="row mb-4">
                                 <div class="col-lg-12">
-                                    <input type="text" name="password" class="form-control" placeholder="Mot de passe">
+                                    <input type="password" name="password" class="form-control" placeholder="Mot de passe">
                                 </div>
                             </div>
                         </div>
@@ -77,24 +80,6 @@
                 </form>
             </div>
 
-            <div class="col-lg-3">
-                <h3 class="mb-3 mt-0">Codes</h3>
-
-                <a data-fancybox="" data-src="#trueModal" data-modal="true" href="javascript:;" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;Appliquer un code</a>
-                <div id="trueModal" class="p-4" style="display: none; max-width: 600px;">
-                    <form action="{{ secure_url('backend/users/code') }}" method="POST">@csrf
-                        <div class="form-group">
-                            <label for="code">Code</label>
-                            <input id="code" name="code" class="form-control" type="text" placeholder="">
-                        </div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <input name="id" type="hidden" value="{{ $user->id }}">
-                            <div><button data-fancybox-close="" class="btn btn-light">Annuler</button></div>
-                            <div><button type="submit" class="btn btn-primary">Appliquer</button></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
 
     </div>

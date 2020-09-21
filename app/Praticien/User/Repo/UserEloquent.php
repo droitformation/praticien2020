@@ -26,6 +26,14 @@ class UserEloquent implements UserInterface{
         return $this->user->with(['abos','abos.keywords','abos.categorie','roles'])->whereDate('active_until', '<', \Carbon\Carbon::today()->startOfDay())->orderBy('last_name')->get();
     }
 
+    public function getActive($cadence = null){
+        return $this->user->has('abos')
+            ->cadence($cadence)
+            ->whereDate('active_until', '>=', \Carbon\Carbon::today()->startOfDay())
+            ->orderBy('last_name')
+            ->get();
+    }
+
     public function getActiveWithAbos($cadence = null){
         return $this->user->has('abos')
             ->with(['abos','abos.keywords','abos.categorie'])
@@ -70,15 +78,16 @@ class UserEloquent implements UserInterface{
     public function create(array $data){
 
         $user = $this->user->create(array(
-            'first_name' => $data['first_name'],
-            'last_name'  => $data['last_name'],
-            'adresse'    => $data['adresse'],
-            'npa'        => $data['npa'],
-            'ville'      => $data['ville'],
-            'email'      => $data['email'],
-            'password'   => Hash::make($data['password']),
-            'created_at' => date('Y-m-d G:i:s'),
-            'updated_at' => date('Y-m-d G:i:s')
+            'first_name'    => $data['first_name'],
+            'last_name'     => $data['last_name'],
+            'adresse'       => $data['adresse'],
+            'npa'           => $data['npa'],
+            'ville'         => $data['ville'],
+            'email'         => $data['email'],
+            'active_until'  => $data['active_until'],
+            'password'      => Hash::make($data['password']),
+            'created_at'    => date('Y-m-d G:i:s'),
+            'updated_at'    => date('Y-m-d G:i:s')
         ));
 
         if(! $user) {
@@ -90,7 +99,6 @@ class UserEloquent implements UserInterface{
         }
 
         return $user;
-
     }
 
     public function convert(array $data){

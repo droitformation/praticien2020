@@ -3,6 +3,7 @@
 interface UserInterface {
 
     public function getAll();
+    public function getActive($cadence = null);
     public function getActiveWithAbos($cadence = null);
     public function getAlerts($params);
     public function getActives();

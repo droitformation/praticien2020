@@ -33,11 +33,25 @@ class UserController extends Controller
         return view('backend.users.index')->with(['users' => $users]);
     }
 
+    public function create()
+    {
+        return view('backend.users.create');
+    }
+
     public function show($id)
     {
         $user = $this->user->find($id);
 
         return view('backend.users.show')->with(['user' => $user]);
+    }
+
+    public function store(Request $request)
+    {
+        $user = $this->user->create(array_filter($request->except('_token')));
+
+        flash('Utilisateur crée','success');
+
+        return redirect('backend/user/'.$user->id);
     }
 
     public function inactive()
@@ -79,16 +93,9 @@ class UserController extends Controller
     {
         $alertes = collect([]);
 
-        $users = $this->user->getAlerts($request->input('cadence','daily'));
-
-        $date     = '2020-09-18';
-        $users_id = [4];
-        $cadence  = 'daily';
-
-/*
         $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
-        $users_id = $request->input('user_id') ? [$request->input('user_id')] : $users->pluck('id')->all();
-        $cadence  = $request->input('cadence','daily');*/
+        $users_id = $request->input('user_id') ? [$request->input('user_id')] : [];
+        $cadence  = $request->input('cadence','daily');
 
         $alertes = collect($users_id)->map(function ($id, $key) use ($date,$cadence){
             $user      = $this->user->find($id);
@@ -98,7 +105,7 @@ class UserController extends Controller
             return !$alert->html();
         });
 
-        $users = $this->user->getActiveWithAbos();
+        $users = $this->user->getActive();
 
         return view('backend.users.alertes')->with(['users' => $users, 'params' => $request->except('_token'), 'alertes' => $alertes]);
     }

@@ -85,7 +85,9 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
     Route::post('archive/transfert','Backend\DecisionController@transfert');
 
     Route::get('user','Backend\UserController@index');
+    Route::get('user/create','Backend\UserController@create');
     Route::get('user/{id}','Backend\UserController@show');
+    Route::post('user','Backend\UserController@store');
     Route::match(['get', 'post'], 'users/alerte','Backend\UserController@alerte');
     Route::get('users/inactive','Backend\UserController@inactive');
     Route::post('users/code','Backend\UserController@code');

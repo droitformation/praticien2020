@@ -28,8 +28,8 @@ class CategorieWorker implements CategorieWorkerInterface
     {
         return collect(config('keywords'))->map(function ($keywords, $categorie_id) use ($publications_at) {
             return collect($keywords)->map(function ($keyword) use ($publications_at){
-                return $this->decision->search(['terms' => $keyword, 'publications_at' => $publications_at]);
-            })->flatten(1);
+                return $this->decision->searchDecision(['terms' => $keyword, 'publications_at' => $publications_at]);
+            })->flatten(1)->unique();
         })->reject(function ($result, $key) {
             return $result->isEmpty();
         });

@@ -46,7 +46,7 @@ class AboEloquent implements AboInterface{
 
         })->with(['keywords','decisions' => function ($query) use ($publication_at){
             $query->whereDate('publication_at', $publication_at);
-        }])->toSql();
+        }])->get();
     }
 
     public function unpublish($catgorie_id,$user_id){

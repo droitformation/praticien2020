@@ -135,6 +135,7 @@ class DecisionRepoTest extends TestCase
     public function testSearchKeywordInNewDecisisons()
     {
         $date = \Carbon\Carbon::today()->startOfDay()->toDateTimeString();
+        $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorkerInterface');
 
         // Control
         $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
@@ -159,8 +160,6 @@ class DecisionRepoTest extends TestCase
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul de Assistance judiciaire égét 44 3€ quisque à nullä dui cctus CPC, consequat liçlà</div>.'
         ]);
-
-        $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorkerInterface');
 
         $results = $worker->find($date); // $date => publication_at
 
