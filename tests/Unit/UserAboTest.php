@@ -159,6 +159,12 @@ class UserAboTest extends TestCase
             ]), 'published' => 1],
         ]);
 
+        echo '<pre>';
+        print_r($expect);
+        print_r($user->abonnements->toArray());
+        echo '</pre>';
+        exit;
+
         $this->assertEquals($expect->toArray(),$user->abonnements->toArray());
     }
 

@@ -92,7 +92,7 @@ class CategorieTest extends TestCase
         $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
             'publication_at' => $publication_at,
             'categorie_id'   => $categorie4->id,
-            'texte'          => '<div>Dapibus anuismod Procédure enim imperdiet egéstat ligula àc voluptà torquent sapien placérat liçlà à, nullä ultrices consequat liçlà</div>.'
+            'texte'          => '<div>Dapibus anuismod Procédure enim imperdiet CPC ligula àc voluptà torquent sapien placérat liçlà à, nullä ultrices consequat liçlà</div>.'
         ]);
 
         $decision3 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([

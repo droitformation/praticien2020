@@ -29,7 +29,7 @@
                                 <div class="media-body">
                                     <h5 class="font-size-18 mt-0"><i class="fas fa-gavel"></i> &nbsp;Décision du TF</h5>
                                     <p class="text-muted mb-0">Jurisprudence du TF récupéré automatiquement</p>
-                                    <a href="{{ secure_url('backend/decisions') }}" class="btn btn-info px-sm-4 mt-4 btn-block">Voir</a>
+                                    <a href="{{ secure_url('backend/decision') }}" class="btn btn-info px-sm-4 mt-4 btn-block">Voir</a>
                                 </div>
                             </div>
                         </div>

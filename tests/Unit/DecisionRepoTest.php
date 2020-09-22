@@ -122,14 +122,20 @@ class DecisionRepoTest extends TestCase
         $repo = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
 
         // Pass only array of terms
-        $params['terms'] = ['Assurance de Protection Juridique SA', 'élémentum interûllam çurcus molestié', 'vestibulum'];
+        $params['terms'] = ['"Assurance de Protection Juridique SA"'];
 
         $results = $repo->search($params);
 
         // We found only the first one, it contains all keywords
-        $this->assertTrue($results->contains('id',$decision1->id));
         $this->assertTrue($results->contains('id',$decision2->id));
-        $this->assertEquals(2,$results->count());
+
+        // Pass only array of terms
+        $params['terms'] = ['"éuismod metus enim imperdiet"','laoreelentesque'];
+
+        $results2 = $repo->search($params);
+
+        $this->assertTrue($results2->contains('id',$decision1->id));
+        //$this->assertEquals(2,$results->count());
     }
 
     public function testSearchKeywordInNewDecisisons()

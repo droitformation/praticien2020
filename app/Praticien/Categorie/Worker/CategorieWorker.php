@@ -26,10 +26,10 @@ class CategorieWorker implements CategorieWorkerInterface
     // Find decision with special keywords
     public function find($publications_at)
     {
-        return collect(config('keywords'))->map(function ($keywords, $categorie_id) use ($publications_at) {
-            return collect($keywords)->map(function ($keyword) use ($publications_at){
+        return collect(config('keywords'))->mapWithKeys(function ($keywords, $categorie_id) use ($publications_at) {
+            return [$categorie_id => collect($keywords)->map(function ($keyword) use ($publications_at,$categorie_id){
                 return $this->decision->searchDecision(['terms' => $keyword, 'publications_at' => $publications_at]);
-            })->flatten(1)->unique();
+            })->flatten(1)->unique()];
         })->reject(function ($result, $key) {
             return $result->isEmpty();
         });

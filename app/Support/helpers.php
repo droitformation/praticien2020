@@ -764,3 +764,13 @@ function getRandomPasswords($nbr){
 
     return $random;
 }
+
+function prepareSearchTerms($terms){
+    return collect($terms)->map(function ($term) {
+        $term = str_replace(',',' ',$term);
+        $term = str_replace(';',' ',$term);
+        $term = trim(str_replace('"', '', $term));
+
+        return '+"'.$term.'"';
+    })->implode(' ');
+}

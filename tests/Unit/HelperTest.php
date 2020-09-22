@@ -262,4 +262,21 @@ class HelperTest extends TestCase
         $this->assertEquals($expected,$result);
     }
 
+    public function testPrepareTermsForSearch()
+    {
+        $terms   = ['"Requête de preuve à futur"', 'CPC'];
+        $expected  = '+"Requête de preuve à futur" +"CPC"';
+
+        $result = prepareSearchTerms($terms);
+
+        $this->assertEquals($expected,$result);
+
+        $terms   = ['qualité pour recourir'];
+        $expected  = '+"qualité pour recourir"';
+
+        $result = prepareSearchTerms($terms);
+
+        $this->assertEquals($expected,$result);
+    }
+
 }

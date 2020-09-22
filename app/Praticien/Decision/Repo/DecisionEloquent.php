@@ -204,6 +204,20 @@ class DecisionEloquent implements DecisionInterface{
         $published      = isset($params['published']) ? $params['published'] : null;
         $publication_at = isset($params['publication_at']) ? $params['publication_at'] : null;
 
+        $terms = implode(' ',$terms);
+        $terms = str_replace(';',' ',$terms);
+
+        $sql = $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
+            ->with(['categorie'])
+            ->search($terms)
+            ->categorie($categorie)
+            ->published($published)
+            ->publicationAt($publication_at)
+            ->groupBy('id')
+            ->toSql();
+
+       // \Log::info(json_encode($params));
+
         return $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
             ->with(['categorie'])
             ->search($terms)
@@ -223,17 +237,6 @@ class DecisionEloquent implements DecisionInterface{
         $published      = isset($params['published']) ? $params['published'] : null;
         $publication_at = isset($params['publication_at']) ? $params['publication_at'] : null;
         $search         = isset($params['xp']) ? 'searchxp' : 'search';
-
-   /*     $sql = $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
-            ->with(['categorie'])
-            ->$search($terms)
-            ->categorie($categorie)
-            ->published($published)
-            ->publicationAt($publication_at)
-            ->groupBy('id')
-            ->toSql();
-
-        \Log::info($sql);*/
 
         return $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
             ->with(['categorie'])
