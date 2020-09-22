@@ -27,6 +27,8 @@ class CreateDecisionsTable extends Migration
             $table->tinyInteger('updated')->nullable();
             $table->timestamps();
         });
+
+        \DB::statement('ALTER TABLE decisions ADD FULLTEXT fulltext_index (texte)');
     }
 
     /**

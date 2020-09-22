@@ -6,6 +6,9 @@ class Alert
     protected $cadence;
     protected $date;
 
+    public $decisions;
+    public $publication_at;
+
     public function __construct($user,$cadence,$date)
     {
         $this->user    = $user;
@@ -13,17 +16,21 @@ class Alert
         $this->date    = $date;
     }
 
-    public function html(){
-
+    public function decisions()
+    {
         $worker = \App::make('App\Praticien\Bger\Worker\AlertInterface');
 
-        $date = $this->cadence == 'weekly' ? weekRange($this->date)->toArray() : $this->date;
+        $this->publication_at = $this->cadence == 'weekly' ? weekRange($this->date)->toArray() : $this->date;
 
-        $worker->setCadence($this->cadence)->setDate($date);
+        $worker->setCadence($this->cadence)->setDate($this->publication_at);
 
-        $decisions = $worker->getUserAbos($this->user);
+        $this->decisions = $worker->getUserAbos($this->user);
 
-        return !$decisions->isEmpty() ? (new \App\Mail\AlerteDecision($this->user, $date, $decisions))->render() : null;
+        return $this;
+    }
+
+    public function html(){
+        return (new \App\Mail\AlerteDecision($this->user, $this->publication_at, $this->decisions))->render();
     }
 
     public function status(){

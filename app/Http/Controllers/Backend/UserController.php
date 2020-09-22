@@ -93,16 +93,17 @@ class UserController extends Controller
     {
         $alertes = collect([]);
 
+        $actives = $this->user->getActiveWithAbos($cadence = null);
+
         $date     = $request->input('date') ? $request->input('date') : \Carbon\Carbon::today()->toDateString();
-        $users_id = $request->input('user_id') ? [$request->input('user_id')] : [];
+        $users_id = $request->input('user_id') ? [$request->input('user_id')] : $actives->pluck('id')->all();
         $cadence  = $request->input('cadence','daily');
 
         $alertes = collect($users_id)->map(function ($id, $key) use ($date,$cadence){
             $user      = $this->user->find($id);
             $cadence   = $cadence ?? $user->cadence;
-            return new \App\Praticien\User\Entities\Alert($user,$cadence,$date);
-        })->reject(function ($alert, $key) {
-            return !$alert->html();
+            $alert     = new \App\Praticien\User\Entities\Alert($user,$cadence,$date);
+            return $alert->decisions();
         });
 
         $users = $this->user->getActive();

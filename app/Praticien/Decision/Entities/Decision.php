@@ -46,20 +46,24 @@ class Decision extends Model
     public function scopeSearch($query,$terms)
     {
         if($terms && !empty($terms)) {
-            $first = array_shift($terms);
-            $first = addslashes($first);
-            $first = str_replace(';',' ',$first);
+            //$first = array_shift($terms);
+            //$first = addslashes($first);
+            $terms = implode(' ',$terms);
+            $terms = str_replace(';',' ',$terms);
 
-            $query->where('texte','LIKE','% '.$first.'%');
-            $query->orWhere('texte','LIKE','%'.$first.'%');
+            //$query->where('texte','LIKE','% '.$first.'%');
+           // $query->orWhere('texte','LIKE','%'.$first.'%');
 
-            foreach($terms as $i => $term) {
+            $query->whereRaw('MATCH (texte) AGAINST (?)' , array($terms));
+
+           /* foreach($terms as $i => $term) {
                 $term = addslashes($term);
                 $term = str_replace(';',' ',$term);
                 //$where = $i > 0 ? 'orWhere' : 'where';
-                $query->orWhere('texte','LIKE','%'.$term.'%');
-                $query->orWhere('texte','LIKE','% '.$term.'%');
-            }
+                //$query->orWhere('texte','LIKE','%'.$term.'%');
+                //$query->orWhere('texte','LIKE','% '.$term.'%');
+                $query->orWhereRaw('MATCH (texte) AGAINST (?)' , array($first));
+            }*/
         }
     }
 

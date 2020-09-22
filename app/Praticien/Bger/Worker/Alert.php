@@ -144,13 +144,12 @@ class Alert implements AlertInterface
         });
     }
 
-    public function findDecision($keyword,$categorie_id,$published,$ids = null)
+    public function findDecision($keyword,$categorie_id,$published)
     {
         $decisions = $this->decision->search([
             'terms'          => $keyword,
             'categorie'      => $categorie_id,
             'published'      => $published,
-            'ids'            => $ids,
             'publication_at' => $this->publication_at
         ]);
 

@@ -96,11 +96,13 @@ class DecisionWorker implements DecisionWorkerInterface
                 \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Mise à jour des décisions terminées '.$date));
             }
         }
+
         foreach($this->missing_dates as $date) {
             // Attach eventuals categorie for special keywords already with job!
             dispatch((new \App\Jobs\ProcessKeywords($date))->onQueue('low'));
             \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Process des décisions terminées '.$date));
         }
+
     }
 
     public function insert($data)

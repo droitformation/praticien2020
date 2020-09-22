@@ -24,7 +24,7 @@
                 </ul><!-- /.main-nav__navigation-box -->
             </div><!-- /.main-nav__main-navigation -->
             <div class="main-nav__main-navigation main-nav__right">
-                <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>
+              {{--  <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>--}}
                 @auth()
                 <ul class="main-nav__navigation-box pl-5">
                    <li class="dropdown">
