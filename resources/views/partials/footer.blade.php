@@ -4,7 +4,7 @@
             <div class="inner-container">
                 <p>&copy; Copyright {{ date('Y') }} Droit praticien. All Rights Reserved</p>
                 <a href="index.html" class="site-footer__bottom-logo">
-                    <img width="135" height="100" src="{{ secure_asset('images/unine.svg') }}" alt="">
+                    <img class="footer-unine" src="{{ secure_asset('images/unine.svg') }}" alt="">
                 </a>
                 <div class="site-footer__bottom-links">
                     <a href="#"></a>

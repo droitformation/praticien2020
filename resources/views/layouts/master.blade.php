@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/home.css') }}?{{ rand(1,3000) }}">
     <link rel="stylesheet" href="{{ secure_asset('css/decisions.css') }}?{{ rand(1,3000) }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}?{{ rand(1,3000) }}">
 
 </head>
 
@@ -71,20 +71,16 @@
 
     @include('partials.footer')
 
-</div><!-- /.page-wrapper -->
+    <div class="side-menu__block">
+        <a href="#" class="side-menu__toggler side-menu__close-btn"><i class="fa fa-times"></i></a>
+        <div class="side-menu__block-inner">
+            <nav class="mobile-nav__container">
+                <!-- content is loading via js -->
+            </nav>
+        </div>
+    </div><!-- /.side-menu__block-inner -->
 
-<div class="search-popup">
-    <div class="search-popup__overlay custom-cursor__overlay">
-        <div class="cursor"></div>
-        <div class="cursor-follower"></div>
-    </div><!-- /.search-popup__overlay -->
-    <div class="search-popup__inner">
-        <form action="#" class="search-popup__form">
-            <input type="text" name="search" placeholder="Type here to Search....">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-    </div><!-- /.search-popup__inner -->
-</div><!-- /.search-popup -->
+</div><!-- /.page-wrapper -->
 
 <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
 

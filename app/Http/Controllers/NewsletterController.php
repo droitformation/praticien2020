@@ -47,7 +47,7 @@ class NewsletterController extends Controller
     public function subscribe(Request $request)
     {
         $this->mailjet->setList(config('services.mailjet.listid'));
-        $this->mailjet->subscribeEmailToList($request->input('email'));
+        $result = $this->mailjet->subscribeEmailToList($request->input('email'));
 
         flash('Vous êtes bien inscrit à la newsletter "TF - Arrêts à publications"','success');
 

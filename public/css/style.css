@@ -4121,6 +4121,11 @@ p {
 	padding-top: 130px;
 }
 
+.footer-unine{
+    width:135px;
+    height:100px;
+}
+
 .footer-widget {
 	margin-bottom: 30px;
 }
@@ -6788,4 +6793,5 @@ label.error{
 	background-color: var(--thm-base);
 	border-color: var(--thm-base);
 }
+
 

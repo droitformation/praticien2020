@@ -3,6 +3,7 @@
         <div class="inner-container">
             <div class="logo-box">
                 <a class="logo" href="{{ secure_url('/') }}"><strong>Droit</strong> <span>pour le praticien</span></a>
+                <a href="#" class="side-menu__toggler"><i class="muzex-icon-menu"></i></a>
             </div><!-- /.logo-box -->
             <div class="main-nav__main-navigation">
                 <ul class="main-nav__navigation-box">
@@ -10,13 +11,6 @@
                     <li><a href="{{ secure_url('about') }}" class="{{ Request::is('about') ? 'active' : '' }}">A propos</a></li>
                     <li><a href="{{ secure_url('arrets') }}" class="{{ Request::is('arrets') || Request::is('theme/*') || Request::is('subtheme/*') ? 'active' : '' }}">Arrêts résumés</a></li>
                     <li><a href="{{ secure_url('decisions') }}" class="{{ Request::is('decisions') || Request::is('decision/*') ? 'active' : '' }}">TF - Jurisprudence</a></li>
-                 {{--   <li class="dropdown">
-                        <a href="about.html">Votre compte</a>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="team.html">Team</a></li>
-                        </ul>
-                    </li>--}}
                     @guest()
                         <li><a href="{{ secure_url('access') }}">Accès</a></li>
                     @endguest
@@ -24,7 +18,6 @@
                 </ul><!-- /.main-nav__navigation-box -->
             </div><!-- /.main-nav__main-navigation -->
             <div class="main-nav__main-navigation main-nav__right">
-              {{--  <a href="#" class="search-popup__toggler"><i class="muzex-icon-search"></i></a>--}}
                 @auth()
                 <ul class="main-nav__navigation-box pl-5">
                    <li class="dropdown">
@@ -47,3 +40,5 @@
         </div><!-- /.inner-container -->
     </div><!-- /.container -->
 </nav><!-- /.main-nav-one -->
+
+
