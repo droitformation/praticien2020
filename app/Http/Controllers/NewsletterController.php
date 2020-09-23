@@ -25,7 +25,7 @@ class NewsletterController extends Controller
 
     public function preview($date = null)
     {
-        $monday = \Carbon\Carbon::today()->isMonday() ? \Carbon\Carbon::today()->subWeek() : \Carbon\Carbon::today()->firstWeekDay();
+        $monday = \Carbon\Carbon::today()->isMonday() ? \Carbon\Carbon::today()->subWeek() : \Carbon\Carbon::today()->subWeek()->startOfWeek();
         $date   = $date ? \Carbon\Carbon::parse($date) : $monday;
 
         $annonce = $this->annonce->active($date);
