@@ -25,7 +25,7 @@
                         <li><a class="{{ \Request::is('backend/theme/create') ? 'active': '' }}" href="{{ secure_url('backend/theme/create') }}">Ajouter domaine</a></li>
                     </ul>
                 </li>
-                @if(\Auth::user()->roles->contains('id',1))
+                @if(\Auth::check() && \Auth::user()->roles->contains('id',1))
                     <li><hr></li>
                     <li class="menu-title">Administrateur</li>
                     <li>
