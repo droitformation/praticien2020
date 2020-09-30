@@ -10,9 +10,18 @@
         </div>
 
         <div class="form-group">
-            <label for="published_at">Date de publication</label>
-            <input type="text" v-model="published_at" name="published_at" placeholder="" class="form-control width-sm" id="published_at">
+            <label>Date de publication</label>
             <span v-if="hint" class="d-block p-2 text-danger"><i class="fas fa-exclamation-triangle"></i> &nbsp;Choisir la date</span>
+
+            <flat-pickr
+                v-model="published_at"
+                :config="config"
+                class="form-control width-sm"
+                placeholder="Date"
+                @on-change="change"
+                name="published_at">
+            </flat-pickr>
+
         </div>
 
         <div class="form-group mb-0 mt-4 d-flex flex-row justify-content-between">
@@ -23,8 +32,10 @@
 </template>
 
 <script>
-    import flatpickr from "flatpickr";
+
     import { French } from "flatpickr/dist/l10n/fr.js";
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatpickr/dist/flatpickr.css';
 
     import moment from 'moment';
 
@@ -34,40 +45,39 @@
             return{
                 status: this.the_status ? this.the_status : (this.isFuture ? 'futur' : 'pending'),
                 hint:false,
-                published_at:this.the_date ?? null
+                published_at: this.the_date ? moment(this.the_date).format('YYYY-MM-DD') : null,
+                config: {
+                    altInput: true,
+                    altFormat: "j F Y",
+                    dateFormat: "Y-m-d",
+                    locale: French
+                },
             }
         },
-        mounted() {
-            let self = this;
-
-            const fp = flatpickr("#published_at", {
-                altInput: true,
-                altFormat: "j F Y",
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                locale: French,
-                onChange: function(selectedDates, dateStr, instance) {
-                    let today = moment(dateStr).isSame(moment(), 'day');
-                    self.isToday = today;
-                    self.hint = false;
-
-                    if(dateStr == ''){
-                        self.status = 'pending';
-                    }
-                    else{
-                        self.status = today ? 'publish' : 'futur';
-                    }
-                },
-            });
-        },
+        mounted() {  },
         computed: {
             isFuture(){
                 return moment().diff(this.published_at, 'days') < 0;
             },
         },
+        components: {
+            flatPickr
+        },
         methods: {
             moment: function () {
                 return moment();
+            },
+            change:function(selectedDates, dateStr, instance){
+                let today = moment(dateStr).isSame(moment(), 'day');
+                self.isToday = today;
+                self.hint = false;
+
+                if(dateStr == ''){
+                    self.status = 'pending';
+                }
+                else{
+                    self.status = today ? 'publish' : 'futur';
+                }
             },
             update : function(){
 
