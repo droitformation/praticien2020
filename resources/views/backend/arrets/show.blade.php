@@ -67,7 +67,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="header-title mt-0 mb-4"><i class="fas fa-bullhorn"></i> &nbsp;Publier</h4>
-                            <publication-component the_status="{{ $arret->status }}" the_date="{{ $arret->published_at->format('Y-m-d') }}"></publication-component>
+                            <publication-component the_status="{{ $arret->status }}" the_date="{{ $arret->published_at ? $arret->published_at->format('Y-m-d') : '' }}"></publication-component>
                         </div>
                     </div>
                 </div>

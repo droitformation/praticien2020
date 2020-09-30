@@ -31,7 +31,10 @@ class ArretEloquent implements ArretInterface{
     {
         return $this->arret->whereHas('themes', function ($query) use ($slug) {
             $query->where('slug', '=', $slug);
-        })->edition($edition)->where('published_at','<=',\Carbon\Carbon::today()->startOfDay())->orderBy('published_at','DESC')->paginate(10);
+        })->edition($edition)
+            ->where('published_at','<=',\Carbon\Carbon::today()->startOfDay())
+            ->where('status','=','publish')
+            ->orderBy('published_at','DESC')->paginate(10);
 	}
 
     public function byYear($year)
@@ -42,16 +45,16 @@ class ArretEloquent implements ArretInterface{
     public function create(array $data){
 
 		$arret = $this->arret->create(array_filter([
-                'id'           =>  $data['id'] ?? null,
-                'published_at' =>  $data['published_at'] ?? null,
-                'title'        =>  $data['title'],
-                'content'      =>  $data['content'] ?? null,
-                'status'       =>  $data['status'],
-                'slug'         =>  $data['slug'],
-                'guid'         =>  $data['guid'] ?? null,
-                'lang'         =>  $data['lang'] ?? null,
-                'created_at'   => date('Y-m-d G:i:s'),
-                'updated_at'   => date('Y-m-d G:i:s')
+            'id'           =>  $data['id'] ?? null,
+            'published_at' =>  $data['published_at'] ?? null,
+            'title'        =>  $data['title'],
+            'content'      =>  $data['content'] ?? null,
+            'status'       =>  $data['status'],
+            'slug'         =>  $data['slug'],
+            'guid'         =>  $data['guid'] ?? null,
+            'lang'         =>  $data['lang'] ?? null,
+            'created_at'   => date('Y-m-d G:i:s'),
+            'updated_at'   => date('Y-m-d G:i:s')
         ]));
 
 		if( ! $arret ) {

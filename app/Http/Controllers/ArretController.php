@@ -14,7 +14,7 @@ class ArretController extends Controller
         $this->arret = $arret;
         $this->theme = $theme;
 
-        view()->share('editions',array_combine(range(date('Y')-1,2010),range(date('Y'),2011)));
+        view()->share('editions',array_combine(range(date('Y')-1,2008),range(date('Y'),2009)));
     }
 
     public function index()
