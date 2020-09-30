@@ -6056,14 +6056,18 @@ label.error{
 /*--------------------------------------------------------------
 # Arrets
 --------------------------------------------------------------*/
-.arret-bloc{
+.arret-bloc-wrapper{
     display: block;
+    width: 30%;
+}
+
+.arret-bloc{
     background-color: var(--thm-blue);
     color: #fff;
+    display: block;
     padding: .25rem;
     text-align: center;
     margin: .30rem .25rem;
-    width: 30%;
     border: 1px solid #dee2e6;
 }
 

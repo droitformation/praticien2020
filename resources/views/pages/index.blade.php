@@ -13,7 +13,7 @@
                                 <div class="cta-two__icon m-2"><i class="fas fa-paragraph"></i></div><!-- /.cta-two__icon -->
                                 <div class="text-left m-2 ml-4">
                                     <a href="{{ secure_url('arrets') }}">
-                                        <h3 class="mb-0">Arrêts de l'ouvrage résumés</h3>
+                                        <h3 class="mb-0">Arrêts principaux résumés</h3>
                                         <span class="text-black-50">Consulter</span>
                                     </a>
                                 </div>

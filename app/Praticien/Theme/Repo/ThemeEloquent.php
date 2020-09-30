@@ -18,7 +18,7 @@ class ThemeEloquent implements ThemeInterface{
 
     public function getParents()
     {
-        return $this->theme->with(['subthemes'])->where('parent_id','=',0)->get();
+        return $this->theme->with(['subthemes'])->where('parent_id','=',0)->orderBy('name')->get();
     }
 
 	public function find($id)
@@ -28,7 +28,7 @@ class ThemeEloquent implements ThemeInterface{
 
     public function findParent($id)
     {
-        return $this->theme->where('parent_id','=',$id)->get();
+        return $this->theme->where('parent_id','=',$id)->orderBy('name')->get();
     }
 
     public function bySlug($slug)

@@ -25,7 +25,7 @@
                     <div class="col-lg-4 py-5">
                         <div class="sidebar position-relative">
 
-                            <a class="reset" href="{{ secure_url($slug.'/'.$theme->slug) }}">Tous</a>
+                            <a class="reset" href="{{ secure_url('theme/'.$theme->slug) }}">Tous</a>
 
                             @if(\Request::is('subtheme/*'))
                                 <p class="sidebar_link sidebar_link_main">
