@@ -140,6 +140,8 @@ class UserAboTest extends TestCase
             'cadence'      => 'daily',
         ]);
 
+        $user->abos()->delete();
+
         $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create(['name' => 'test 1']);
         $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create(['name' => 'test 1']);
 
@@ -159,9 +161,11 @@ class UserAboTest extends TestCase
             ]), 'published' => 1],
         ]);
 
-
-
         $this->assertEquals($expect->toArray(),$user->abonnements->toArray());
+
+        \Log::info(json_encode($expect));
+        \Log::info(json_encode($user->abonnements->toArray()));
+
     }
 
     public function testGetUsers()

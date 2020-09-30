@@ -135,7 +135,8 @@ class ArretBackendTest extends TestCase
                 'termes_rechercher' => '10a:LPE,37LA,8:LPE,37m:LA',
                 'auteur' => 'Coralie Ahmetaj',
             ],
-            'themes'  => [$theme3->id,$theme4->id],
+            'theme_id'   => $theme1->id,
+            'subthemes'  => [$theme3->id,$theme4->id],
         ];
 
         $response = $this->call('PUT', 'backend/arret/'.$arret->id, $data);

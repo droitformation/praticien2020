@@ -6,6 +6,7 @@ use App\Praticien\Arret\Repo\ArretInterface;
 use App\Praticien\Theme\Repo\ThemeInterface;
 use App\Praticien\Arret\Repo\MetaInterface;
 use App\Http\Requests\ArretCreateRequest;
+use App\Http\Requests\ArretUpdateRequest;
 
 class ArretController extends Controller
 {
@@ -70,7 +71,7 @@ class ArretController extends Controller
         return view('backend.arrets.show')->with(['arret' => $arret, 'themes' => $themes]);
     }
 
-    public function update(ArretCreateRequest $request)
+    public function update(ArretUpdateRequest $request)
     {
         $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
         $arret    = $this->arret->update($prepared);
