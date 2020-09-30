@@ -21,7 +21,7 @@
                             <select class="form-control custom-select" required name="metas[year]">
                                 @if(isset($editions))
                                     @foreach($editions as $start => $end)
-                                        <option {{ $loop->first ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
+                                        <option {{ $loop->first || old('metas.year') == $start.'-'.$end ? 'selected' : '' }} value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -29,7 +29,7 @@
 
                         <theme-component :themes="{{ $themes }}"></theme-component>
                         <hr>
-                        <atf-component></atf-component>
+                        <atf-component the_title="{{ old('title') }}" link="{{ old('metas.atf') }}"></atf-component>
 
                         <div class="form-group">
                             <label for="termes_rechercher">Termes de recherche</label>
@@ -42,17 +42,17 @@
                                 => <strong>295:LP:1 <span class="text-danger">,</span> 46:LTF:2 <span class="text-danger">,</span> 98:LTF</strong><br>
                                 S'il n’y a pas d’alinéa continuez la séquence avec le chiffre ou la lettre.</p>
                             </div>
-                            <input name="metas[termes_rechercher]" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
+                            <input name="metas[termes_rechercher]" value="{{ old('metas.termes_rechercher') }}" class="form-control" type="text" placeholder="numero:loi:alinéa:chiffre:lettre">
                         </div>
 
                         <div class="form-group">
                             <label for="content">Auteur(s)</label>
-                            <input name="metas[auteur]" class="form-control" value="" type="text">
+                            <input name="metas[auteur]" class="form-control" value="{{ old('metas.auteur') }}" type="text">
                         </div>
 
                         <div class="form-group">
                             <label for="content">Contenu<span class="text-danger">*</span></label>
-                            <textarea name="content" required class="form-control redactor"></textarea>
+                            <textarea name="content" required class="form-control redactor">{!! old('content') !!}</textarea>
                         </div>
 
                     </div>
@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <h4 class="header-title mt-0 mb-4"><i class="fas fa-bullhorn"></i> &nbsp;Publier</h4>
 
-                            <publication-component></publication-component>
+                            <publication-component the_status="{{ old('status') }}"></publication-component>
 
                         </div>
                     </div>
