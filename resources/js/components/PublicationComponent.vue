@@ -2,7 +2,7 @@
     <div>
         <div class="form-group">
             <label>Status</label>
-            <select class="form-control custom-select" name="status" @change="update" v-model="status">
+            <select class="form-control" name="status" @change="update" v-model="status">
                 <option value="pending">Brouillon</option>
                 <option value="publish">Publié</option>
                 <option value="futur">Date ultérieure</option>
@@ -23,6 +23,8 @@
             </flat-pickr>
 
         </div>
+
+        {{ status }}
 
         <div class="form-group mb-0 mt-4 d-flex flex-row justify-content-between">
             <button v-if="!the_status || status == 'pending'" class="btn btn-outline-primary btn-block mr-1" type="submit">Enregistrer brouillon</button>

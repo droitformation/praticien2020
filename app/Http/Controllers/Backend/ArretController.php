@@ -21,7 +21,6 @@ class ArretController extends Controller
         $this->meta  = $meta;
 
         view()->share('editions',array_combine(range(date('Y')-1,2008),range(date('Y'),2009)));
-
     }
 
     public function index()
