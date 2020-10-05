@@ -51,6 +51,7 @@ class ArretController extends Controller
     public function store(ArretCreateRequest $request)
     {
         $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($request->except('_token'));
+
         $arret    = $this->arret->create($prepared);
 
         flash('Arrêt crée','success');

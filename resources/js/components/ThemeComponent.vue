@@ -5,6 +5,7 @@
             <Select2 v-model="selected" :options="themes" @select="isSelected($event)" :settings="{dropdownCssClass:'', placeholder: 'Choix'}" />
             <input v-if="selected" name="theme_id" :value="selected" type="hidden">
         </div>
+
         <div class="form-group" v-show="subthemes.length || others.length">
             <label>Sous-thèmes</label>
             <Select2 ref="other" v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
@@ -36,6 +37,7 @@
             isSelected : function($event){
                 console.log($event);
                 this.subthemes = $event.subthemes;
+                this.selected = $event.id;
             },
             createTag : function(params){
                 let term = $.trim(params.term);

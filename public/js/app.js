@@ -2376,6 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['themes', 'current_theme', 'current_subthemes'],
@@ -2398,6 +2399,7 @@ __webpack_require__.r(__webpack_exports__);
     isSelected: function isSelected($event) {
       console.log($event);
       this.subthemes = $event.subthemes;
+      this.selected = $event.id;
     },
     createTag: function createTag(params) {
       var term = $.trim(params.term);

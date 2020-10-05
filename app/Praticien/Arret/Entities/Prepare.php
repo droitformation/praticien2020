@@ -4,6 +4,9 @@ class Prepare
 {
     static function prepare($data)
     {
+        $published_at = isset($data['published_at']) ? $data['published_at'] : null;
+        $published_at = $data['status'] == 'publish' ? \Carbon\Carbon::today()->startOfDay() : $published_at;
+
         return array_filter([
             'id'           => $data['id'] ?? null,
             'metas'        => $data['metas'],
@@ -11,7 +14,7 @@ class Prepare
             'title'        => $data['title'],
             'slug'         => str_slug($data['title']),
             'content'      => $data['content'],
-            'published_at' => $data['published_at'],
+            'published_at' => $published_at,
             'status'       => ($data['status'] == 'futur' || $data['status'] == 'publish') ? 'publish' : 'pending',
             'lang'         => $data['lang'] ?? null,
         ]);
