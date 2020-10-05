@@ -50,8 +50,8 @@ class Arret extends Model {
 
     public function scopeSearch($query,$terms)
     {
-        if($terms && !empty($terms)) {
-            $terms = prepareSearchTerms($terms);
+        if($terms && !empty($terms)){
+                $terms = prepareSearchTerms($terms);
             $query->whereRaw('MATCH (text_content) AGAINST (? IN BOOLEAN MODE)', array($terms));
         }
     }

@@ -22,6 +22,11 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->with(['themes'])->orderBy('published_at','DESC')->paginate(10);
     }
 
+    public function getBackend(){
+
+        return $this->arret->with(['themes'])->orderBy('published_at','DESC')->get();
+    }
+
 	public function find($id)
     {
 		return $this->arret->with(['themes.subthemes'])->find($id);
@@ -39,7 +44,7 @@ class ArretEloquent implements ArretInterface{
 
     public function byYear($year)
     {
-        return $this->arret->whereMeta('year',$year)->take(100)->get();
+        return $this->arret->whereMeta('year',$year)->select('id','published_at','title','status','slug','lang')->get();
     }
 
     public function create(array $data){
