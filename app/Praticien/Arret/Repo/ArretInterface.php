@@ -13,5 +13,5 @@ interface ArretInterface {
 	public function delete($id);
 
     public function searchTerm($term);
-    public function searchLoi($params);
+    public function searchLoi($params,$year = null);
 }

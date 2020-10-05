@@ -60,7 +60,10 @@ class Arret extends Model {
     {
         if($params && !empty($params)) {
             $params = prepareParams($params);
-            $query->whereMeta('termes_rechercher','like' ,$params.'%')->orWhereMeta('termes_rechercher','like' ,':'.$params.'%');
+            $query->whereMeta('termes_rechercher','LIKE' ,'%'.$params.'%')
+                ->orWhereMeta('termes_rechercher','LIKE' ,':'.$params.'%')
+                ->orWhereMeta('termes_rechercher', ':'.$params)
+                ->orWhereMeta('termes_rechercher', $params);
         }
     }
 

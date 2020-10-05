@@ -10,6 +10,7 @@ class SearchController extends Controller
     public function __construct(ArretInterface $arret)
     {
         $this->arret = $arret;
+        view()->share('editions',array_combine(range(date('Y')-1,2008),range(date('Y'),2009)));
     }
 
     public function searchTerm(Request $request)
@@ -21,7 +22,7 @@ class SearchController extends Controller
 
     public function searchLoi(Request $request)
     {
-        $arrets = $this->arret->searchLoi($request->input('params'));
+        $arrets = $this->arret->searchLoi($request->input('params'),$request->input('year',null));
 
         return view('arrets.results')->with(['arrets' => $arrets, 'params' => $request->input('params')]);
     }

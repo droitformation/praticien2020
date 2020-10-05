@@ -26,9 +26,9 @@
                         <input class="form-control" name="params[lettre]" type="text" placeholder="Lettre">
                         @if(!empty($editions))
                             <select class="custom-select" name="year">
-                                <option selected>Édition</option>
-                                @foreach($editions as $edition)
-                                    <option value="{{ $edition }}">{{ $edition }}</option>
+                                <option value="" selected>Édition</option>
+                                @foreach($editions as $start => $end)
+                                    <option value="{{ $start.'-'.$end }}">{{ $start.'/'.$end }}</option>
                                 @endforeach
                             </select>
                         @endif
@@ -37,7 +37,6 @@
                         </div>
                     </div>
                 </form>
-
 
             </div>
         </div>

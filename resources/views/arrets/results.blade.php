@@ -24,7 +24,7 @@
                         @include('arrets.partials.arret', ['arret' => $arret])
                     @endforeach
                 @else
-                    <p class="mt-4">Rien pour <strong>{{ $term }}</strong></p>
+                    <p class="mt-4">Rien pour <strong>{{ $term ?? frontendParams($params) }}</strong></p>
                 @endif
 
                 @if($arrets instanceof \Illuminate\Pagination\LengthAwarePaginator )

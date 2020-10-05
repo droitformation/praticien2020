@@ -170,11 +170,12 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->search($term)->get();
 	}
 
-    public function searchLoi($params)
+    public function searchLoi($params,$year = null)
     {
         return $this->arret->loi($params)
             ->where('published_at','<=',\Carbon\Carbon::today()->startOfDay())
-            ->where('status','=','publish')
-            ->orderBy('published_at','DESC')->paginate(10);
+            ->where('status','=','publish')->edition($year)
+            ->orderBy('published_at','DESC')
+            ->paginate(10);
     }
 }

@@ -784,10 +784,17 @@ function frontendParams($params){
     $params = array_filter($params);
 
     $s = '';
+    $dict = [
+        'article' => 'Art.',
+        'loi'     => '',
+        'alinea'  => 'al.',
+        'chiffre' => 'ch.',
+        'lettre'  => 'let.',
+    ];
 
     foreach ($params as $name => $param){
-        $s .= $name.': '.$param.', ';
+        $s .= $dict[$name].' '.$param.' ';
     }
 
-    return trim($s,', ');
+    return trim($s);
 }
