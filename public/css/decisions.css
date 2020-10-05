@@ -152,6 +152,13 @@
     color: #fff;
     border-radius: 0;
     padding: 5px 10px;
+    border: none;
+}
+
+.btn-search:hover{
+    background-color: #807055;
+    color: #fff;
+    border: none;
 }
 
 .input-publication{
