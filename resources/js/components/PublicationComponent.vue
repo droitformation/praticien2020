@@ -24,8 +24,6 @@
 
         </div>
 
-        {{ status }}
-
         <div class="form-group mb-0 mt-4 d-flex flex-row justify-content-between">
             <button v-if="!the_status || status == 'pending'" class="btn btn-outline-primary btn-block mr-1" type="submit">Enregistrer brouillon</button>
             <button v-if="status != 'pending'" class="btn btn-primary btn-block ml-1 mt-0" type="submit">Publier</button>
