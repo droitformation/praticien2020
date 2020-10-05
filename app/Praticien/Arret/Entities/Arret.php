@@ -59,11 +59,12 @@ class Arret extends Model {
     public function scopeLoi($query,$params)
     {
         if($params && !empty($params)) {
-            $params = prepareParams($params);
-            $query->whereMeta('termes_rechercher','LIKE' ,'%'.$params.'%')
-                ->orWhereMeta('termes_rechercher','LIKE' ,':'.$params.'%')
-                ->orWhereMeta('termes_rechercher', ':'.$params)
-                ->orWhereMeta('termes_rechercher', $params);
+            $p = prepareParams($params);
+            $query->whereMeta('termes_rechercher','LIKE' ,'%'.$p.'%')
+                ->orWhereMeta('termes_rechercher','LIKE' ,':'.$p.'%')
+                ->orWhereMeta('termes_rechercher', ':'.$p)
+                ->orWhereMeta('termes_rechercher', $p)
+            ->orWhere('content','LIKE','%'.prepareParamsContent($params).'%');
         }
     }
 

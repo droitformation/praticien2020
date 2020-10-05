@@ -779,6 +779,25 @@ function prepareParams($params){
     return implode(':',array_filter($params));
 }
 
+function prepareParamsContent($params){
+    $params = array_filter($params);
+
+    $s = '';
+    $dict = [
+        'article' => 'Art.',
+        'loi'     => '',
+        'alinea'  => 'al.',
+        'chiffre' => 'ch.',
+        'lettre'  => 'let.',
+    ];
+
+    foreach ($params as $name => $param){
+        $s .= $dict[$name].' '.$param.' ';
+    }
+
+    return trim($s);
+}
+
 function frontendParams($params){
 
     $params = array_filter($params);
