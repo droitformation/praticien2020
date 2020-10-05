@@ -6058,7 +6058,7 @@ label.error{
 --------------------------------------------------------------*/
 .arret-bloc-wrapper{
     display: block;
-    width: 30%;
+    width: 32.5%;
 }
 
 .arret-bloc{
@@ -6067,7 +6067,7 @@ label.error{
     display: block;
     padding: .25rem;
     text-align: center;
-    margin: .30rem .25rem;
+    margin: .6rem 0;
     border: 1px solid #dee2e6;
 }
 

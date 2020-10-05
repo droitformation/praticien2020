@@ -19,6 +19,9 @@ Route::get('access', ['uses' => 'FrontendController@access']);
 Route::get('contact', ['uses' => 'FrontendController@contact']);
 Route::post('sendMessage', ['uses' => 'FrontendController@sendMessage']);
 
+Route::post('searchTerm', ['uses' => 'SearchController@searchTerm']);
+Route::post('searchLoi', ['uses' => 'SearchController@searchLoi']);
+
 Route::match(['get', 'post'],'decisions', ['uses' => 'DecisionController@index']);
 Route::get('decision/{id}/{year}', ['uses' => 'DecisionController@show']);
 Route::match(['get', 'post'],'categorie/{id}', ['uses' => 'DecisionController@categorie']);
@@ -168,6 +171,17 @@ Route::get('users','TransfertController@users');
 Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
+
+
+    $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
+    $arrets = $repo->getAll();
+
+    foreach ($arrets as $arret){
+        $arret->text_content = strip_tags($arret->content);
+        $arret->save();
+    }
+
+    exit;
 
     $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorker');
 

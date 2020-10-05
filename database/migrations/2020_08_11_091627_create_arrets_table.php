@@ -17,6 +17,7 @@ class CreateArretsTable extends Migration
             $table->id();
             $table->text('title');
             $table->longText('content')->nullable();
+            $table->longText('text_content')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->string('slug');
             $table->string('guid')->nullable();
@@ -25,6 +26,9 @@ class CreateArretsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        \DB::statement('ALTER TABLE arrets ADD FULLTEXT fulltext_index (content)');
+        \DB::statement('ALTER TABLE arrets ADD FULLTEXT fulltext_index_content (text_content)');
     }
 
     /**

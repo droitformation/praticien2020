@@ -49,6 +49,7 @@ class ArretEloquent implements ArretInterface{
             'published_at' =>  $data['published_at'] ?? null,
             'title'        =>  $data['title'],
             'content'      =>  $data['content'] ?? null,
+            'text_content' =>  $data['content'] ? strip_tags($data['content']): null,
             'status'       =>  $data['status'],
             'slug'         =>  $data['slug'],
             'guid'         =>  $data['guid'] ?? null,
@@ -83,6 +84,7 @@ class ArretEloquent implements ArretInterface{
             'published_at' =>  $data['published_at'] ?? null,
             'title'        =>  $data['title'],
             'content'      =>  $data['content'] ?? null,
+            'text_content' =>  $data['content'] ? strip_tags($data['content']): null,
             'status'       =>  $data['status'],
             'slug'         =>  $data['slug'],
             'guid'         =>  $data['guid'] ?? null,
@@ -126,6 +128,10 @@ class ArretEloquent implements ArretInterface{
 
         $arret->fill($data);
 
+		if(isset($data['content'])){
+            $arret->text_content = strip_tags($data['content']);
+        }
+
 		if(isset($data['published_at'])){
             $arret->published_at = $data['published_at'];
         }
@@ -159,4 +165,16 @@ class ArretEloquent implements ArretInterface{
 		return $arret->delete($id);
 	}
 
+    public function searchTerm($term)
+    {
+        return $this->arret->search($term)->get();
+	}
+
+    public function searchLoi($params)
+    {
+        return $this->arret->loi($params)
+            ->where('published_at','<=',\Carbon\Carbon::today()->startOfDay())
+            ->where('status','=','publish')
+            ->orderBy('published_at','DESC')->paginate(10);
+    }
 }

@@ -154,4 +154,32 @@ class ArretBackendTest extends TestCase
         $this->assertDatabaseHas('meta', ['key' => 'termes_rechercher', 'value' => '10a:LPE,37LA,8:LPE,37m:LA']);
         $this->assertDatabaseHas('meta', ['key' => 'year', 'value' => '2018-2019']);
     }
+
+    public function testSearchArret()
+    {
+        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
+        $arret  = factory(\App\Praticien\Arret\Entities\Arret::class)->create([
+            'title'        => 'ATF 146 II 36',
+            'status'       => 'publish',
+            'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
+            'published_at' => '2020-09-30',
+        ]);
+
+        $arret->themes()->attach([$theme1->id]);
+        $arret->setMeta(['year' => '2019-2020','termes_rechercher' => '8:LPE,10a:LPE,37LA,37m:LA']);
+
+        $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
+
+        $params = '8:LPE';
+
+        $result = $repo->searchLoi($params);
+
+        $this->assertEquals(1,$result->count());
+
+        $params = '37m:LA';
+
+        $result = $repo->searchLoi($params);
+
+        $this->assertEquals(1,$result->count());
+    }
 }

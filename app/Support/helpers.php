@@ -774,3 +774,20 @@ function prepareSearchTerms($terms){
         return '+"'.$term.'"';
     })->implode(' ');
 }
+
+function prepareParams($params){
+    return implode(':',array_filter($params));
+}
+
+function frontendParams($params){
+
+    $params = array_filter($params);
+
+    $s = '';
+
+    foreach ($params as $name => $param){
+        $s .= $name.': '.$param.', ';
+    }
+
+    return trim($s,', ');
+}

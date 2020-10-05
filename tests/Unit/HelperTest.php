@@ -278,5 +278,4 @@ class HelperTest extends TestCase
 
         $this->assertEquals($expected,$result);
     }
-
 }

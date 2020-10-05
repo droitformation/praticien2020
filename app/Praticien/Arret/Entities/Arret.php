@@ -8,7 +8,7 @@ class Arret extends Model {
 
     use Metable,SoftDeletes;
 
-    protected $fillable = ['id','published_at','title','content','status','slug','guid','lang'];
+    protected $fillable = ['id','published_at','title','content','text_content','status','slug','guid','lang'];
     protected $dates    = ['published_at'];
 
     public function getTitleLinkAttribute()
@@ -45,6 +45,22 @@ class Arret extends Model {
     {
         if(isset($edition)){
             $query->whereMeta('year', $edition);
+        }
+    }
+
+    public function scopeSearch($query,$terms)
+    {
+        if($terms && !empty($terms)) {
+            $terms = prepareSearchTerms($terms);
+            $query->whereRaw('MATCH (text_content) AGAINST (? IN BOOLEAN MODE)', array($terms));
+        }
+    }
+
+    public function scopeLoi($query,$params)
+    {
+        if($params && !empty($params)) {
+            $params = prepareParams($params);
+            $query->whereMeta('termes_rechercher','like' ,$params.'%')->orWhereMeta('termes_rechercher','like' ,':'.$params.'%');
         }
     }
 

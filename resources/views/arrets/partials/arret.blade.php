@@ -10,6 +10,7 @@
         <h3>{!! $arret->title_link !!}</h3>
         <span class="d-block badge badge-default">{{ $arret->getMeta('year') }}</span>
     </div>
+
     <p>{!! wpautop($arret->content) !!}</p>
 
     @if($arret->getMeta('comment'))
