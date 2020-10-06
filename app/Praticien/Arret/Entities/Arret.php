@@ -48,6 +48,23 @@ class Arret extends Model {
         }
     }
 
+    public function scopeSort($query, $col, $sort)
+    {
+        if(isset($col) && isset($sort)){
+
+            if($col == 'title'){
+                $query->orderBy($col,$sort);
+            }
+
+            if($col == 'theme'){
+                $query->with('themes', function ($query) use ($sort) {
+                    $query->orderBy('name',$sort);
+                });
+            }
+
+        }
+    }
+
     public function scopeSearch($query,$terms)
     {
         if($terms && !empty($terms)){

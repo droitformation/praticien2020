@@ -65,6 +65,7 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
     Route::get('arret/year/{year}','Backend\ArretController@year');
     Route::post('arret/atf','Backend\ArretController@atf');
+    Route::get('getArrets','Backend\ArretController@getArrets');
     Route::resource('arret', 'Backend\ArretController');
 
     Route::resource('theme', 'Backend\ThemeController');

@@ -18,7 +18,7 @@
                         <h3 class="header-title mt-0 mb-4">Domaines</h3>
 
                         @if(!$themes->isEmpty())
-                            <table id="arret_list" class="table table-striped table-bordered dataTable">
+                            <table id="theme_list" class="table table-striped table-bordered dataTable">
                                 <thead>
                                 <tr>
                                     <th>Nom</th>

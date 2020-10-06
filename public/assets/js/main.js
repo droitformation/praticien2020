@@ -22,12 +22,33 @@ $(document).ready( function () {
         }
     };
 
-    $('#arret_list').DataTable({
+    $('#theme_list').DataTable({
         "pageLength": 10,
         "order": [[ 1, "desc" ]],
         language: lang
     });
 
+    let base_url = location.protocol + "//" + location.host+"/";
+
+    $('#arret_list').DataTable({
+        "pageLength": 10,
+        "order": [[ 2, "desc" ]],
+        language: lang,
+        processing: true,
+        serverSide: true,
+        columns: [
+            { data: 'title' },
+            { data: 'edition' ,"orderable": false },
+            { data: 'theme' },
+            { data: 'gestion' ,"orderable": false },
+        ],
+        "ajax": {
+            "url": base_url + 'backend/getArrets',
+            "data": function ( d ) {
+                d.year = $('#arret_list').data('year');
+            }
+        }
+    });
 
     let init = function()
     {

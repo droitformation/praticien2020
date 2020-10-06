@@ -6,6 +6,7 @@ interface ArretInterface {
     public function getNbr();
 	public function find($data);
     public function byCategory($slug,$edition = null);
+    public function ajaxByYear($year,$search,$sort,$col,$start,$take,$draw);
     public function getBackend();
     public function byYear($year);
 	public function create(array $data);

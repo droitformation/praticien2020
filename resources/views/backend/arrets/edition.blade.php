@@ -17,8 +17,21 @@
                 <div class="card-body">
                     <h3 class="header-title mt-0 mb-4">Le droit pour le praticien | <span class="text-primary">Édition {{ $year }}</span></h3>
 
-                    @if(!$arrets->isEmpty())
-                        <table id="arret_list" class="table table-striped table-bordered dataTable">
+                    <table id="arret_list" data-year="{{ $year }}" class="table table-striped table-bordered dataTable">
+                        <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Edition</th>
+                            <th>Thème principal</th>
+                            <th class="text-right">Gestion</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+
+                    {{--@if(!$arrets->isEmpty())
+                        <table id="arret_list" data-year="{{ $year }}" class="table table-striped table-bordered dataTable">
                             <thead>
                             <tr>
                                 <th>Titre</th>
@@ -43,7 +56,7 @@
 
                     @if($arrets instanceof \Illuminate\Pagination\LengthAwarePaginator )
                         {!! $arrets->links() !!}
-                    @endif
+                    @endif--}}
 
                 </div> <!-- end card body-->
             </div> <!-- end card -->

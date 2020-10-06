@@ -95,4 +95,28 @@ class ArretController extends Controller
 
         return response()->json(['url' => $url]);
     }
+
+    public function getArrets(Request $request)
+    {
+        ## Read value
+        $year  = $request->get('year');
+        $draw  = $request->get('draw');
+        $start = $request->get("start");
+        $take  = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $col = $columnName_arr[$columnIndex]['data']; // Column name
+        $sort = $order_arr[0]['dir']; // asc or desc
+        $search = $search_arr['value']; // Search value
+
+        // Total records
+        $data = $this->arret->ajaxByYear($year,$search,$sort,$col,$start,$take,$draw);
+
+        return response()->json($data);
+    }
 }

@@ -47,6 +47,51 @@ class ArretEloquent implements ArretInterface{
         return $this->arret->whereMeta('year',$year)->select('id','published_at','title','status','slug','lang')->get();
     }
 
+    public function ajaxByYear($year,$search,$sort,$col,$start,$take,$draw)
+    {
+        $col = 'title';
+
+        $totalRecords       = $this->arret->whereMeta('year',$year)->count();
+        $totalRecordsFilter = $this->arret->whereMeta('year',$year)->where(function($query) use ($search) {
+                $query->where('title', 'like', '%'.$search.'%')
+                    ->orWhereHas('themes', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%'.$search.'%');
+                    });
+            })->count();
+
+        // Fetch records
+        $records = $this->arret->select('id','published_at','title','status','slug','lang')
+            ->whereMeta('year',$year)
+            ->where(function($query) use ($search) {
+                $query->where('title', 'like', '%'.$search.'%')
+                    ->orWhereHas('themes', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%'.$search.'%');
+                    });
+            })
+            ->sort($col,$sort)
+            ->skip($start)
+            ->take($take)
+            ->get();
+
+        $data = [];
+
+        foreach($records as $record){
+            $data[] = array(
+                "title"    => $record->title,
+                "edition"  => $record->getMeta('year'),
+                "theme"    => $record->main_theme ? $record->main_theme->name : '',
+                "gestion"  => '<a class="btn btn-sm btn-primary" href="'.secure_url('backend/arret/'.$record->id).'"><i class="fas fa-edit"></i></a>',
+            );
+        }
+
+        return [
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordsFilter,
+            "aaData" => $data
+        ];
+    }
+
     public function create(array $data){
 
 		$arret = $this->arret->create(array_filter([
