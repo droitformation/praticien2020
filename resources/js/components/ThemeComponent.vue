@@ -6,9 +6,9 @@
             <input v-if="selected" name="theme_id" :value="selected" type="hidden">
         </div>
 
-        <div class="form-group" v-show="subthemes.length || others.length">
+        <div class="form-group" v-show="subthemes.length > 0 || others.length > 0">
             <label>Sous-thèmes</label>
-            <Select2 ref="other" v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
+            <Select2 ref="other" v-if="subthemes" v-model="others" :options="subthemes" :settings="{multiple:true, tags:true, placeholder: 'Sous-thèmes', createTag: createTag}" />
             <input v-if="others" v-for="other in others" name="subthemes[]" :value="other" type="hidden">
         </div>
     </div>
@@ -25,13 +25,14 @@
             return{
                 selected : this.current_theme ? this.current_theme.id : null,
                 others   : this.current_subthemes ? this.current_subthemes : [],
-                subthemes: this.current_theme ? this.current_theme.subthemes : [ 346, 367 ] ,
+                subthemes: this.current_theme && this.current_theme.subthemes ? this.current_theme.subthemes : [] ,
                 url: location.protocol + "//" + location.host+"/",
             }
         },
         mounted() {
-            console.log(this.$refs.other.select2);
-            this.$refs.other.select2.val(this.others).trigger('change');
+            if(this.$refs.other){
+                this.$refs.other.select2.val(this.others).trigger('change');
+            }
         },
         methods: {
             isSelected : function($event){

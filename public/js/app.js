@@ -2387,13 +2387,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selected: this.current_theme ? this.current_theme.id : null,
       others: this.current_subthemes ? this.current_subthemes : [],
-      subthemes: this.current_theme ? this.current_theme.subthemes : [346, 367],
+      subthemes: this.current_theme && this.current_theme.subthemes ? this.current_theme.subthemes : [],
       url: location.protocol + "//" + location.host + "/"
     };
   },
   mounted: function mounted() {
-    console.log(this.$refs.other.select2);
-    this.$refs.other.select2.val(this.others).trigger('change');
+    if (this.$refs.other) {
+      this.$refs.other.select2.val(this.others).trigger('change');
+    }
   },
   methods: {
     isSelected: function isSelected($event) {
@@ -46271,8 +46272,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.subthemes.length || _vm.others.length,
-            expression: "subthemes.length || others.length"
+            value: _vm.subthemes.length > 0 || _vm.others.length > 0,
+            expression: "subthemes.length > 0 || others.length > 0"
           }
         ],
         staticClass: "form-group"
@@ -46280,25 +46281,27 @@ var render = function() {
       [
         _c("label", [_vm._v("Sous-thèmes")]),
         _vm._v(" "),
-        _c("Select2", {
-          ref: "other",
-          attrs: {
-            options: _vm.subthemes,
-            settings: {
-              multiple: true,
-              tags: true,
-              placeholder: "Sous-thèmes",
-              createTag: _vm.createTag
-            }
-          },
-          model: {
-            value: _vm.others,
-            callback: function($$v) {
-              _vm.others = $$v
-            },
-            expression: "others"
-          }
-        }),
+        _vm.subthemes
+          ? _c("Select2", {
+              ref: "other",
+              attrs: {
+                options: _vm.subthemes,
+                settings: {
+                  multiple: true,
+                  tags: true,
+                  placeholder: "Sous-thèmes",
+                  createTag: _vm.createTag
+                }
+              },
+              model: {
+                value: _vm.others,
+                callback: function($$v) {
+                  _vm.others = $$v
+                },
+                expression: "others"
+              }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _vm._l(_vm.others, function(other) {
           return _vm.others
