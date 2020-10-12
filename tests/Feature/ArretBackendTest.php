@@ -59,6 +59,28 @@ class ArretBackendTest extends TestCase
         $this->assertDatabaseHas('themes', ['name' => 'other', 'slug' => 'other', 'parent_id' => 5]);
     }
 
+    public function testPrepareArretOneTheme()
+    {
+        $data = [
+            'metas' => [
+                'year' => '2019-2020',
+                'atf'  => 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F146-II-36%3Afr&lang=fr&zoom=&type=show_document',
+                'termes_rechercher' => '8:LPE,10a:LPE,37LA,37m:LA'
+            ],
+            'theme_id'     => 5,
+            'status'       => 'futur',
+            'title'        => 'ATF 146 II 36',
+            'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
+            'published_at' => '2020-09-30',
+        ];
+
+        $prepared = \App\Praticien\Arret\Entities\Prepare::prepare($data);
+
+        $this->assertTrue(isset($prepared['themes']));
+        $this->assertTrue(in_array(5,$prepared['themes']));
+        $this->assertEquals(1,count($prepared['themes']));
+    }
+
     public function testCreateArret()
     {
         $data = [
@@ -170,13 +192,19 @@ class ArretBackendTest extends TestCase
 
         $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
 
-        $params = '8:LPE';
+        $params = [
+            'article' => '8',
+            'loi'     => 'LPE',
+        ];
 
         $result = $repo->searchLoi($params);
 
         $this->assertEquals(1,$result->count());
 
-        $params = '37m:LA';
+        $params = [
+            'article' => '37m',
+            'loi'     => 'LA',
+        ];
 
         $result = $repo->searchLoi($params);
 

@@ -10,7 +10,7 @@ class Prepare
         return array_filter([
             'id'           => $data['id'] ?? null,
             'metas'        => $data['metas'],
-            'themes'       => isset($data['subthemes']) && !empty($data['subthemes']) ? self::themes($data['subthemes'], $data['theme_id']) : null,
+            'themes'       => isset($data['subthemes']) && !empty($data['subthemes']) ? self::themes($data['subthemes'], $data['theme_id']) : [$data['theme_id']],
             'title'        => $data['title'],
             'slug'         => str_slug($data['title']),
             'content'      => $data['content'],
