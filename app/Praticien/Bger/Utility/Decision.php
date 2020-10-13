@@ -1,6 +1,7 @@
 <?php namespace App\Praticien\Bger\Utility;
 
 use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
 use \ForceUTF8\Encoding;
 
 class Decision {
@@ -12,10 +13,7 @@ class Decision {
 	function __construct()
     {
         $this->dispatch = new \App\Praticien\Bger\Utility\Dispatch();
-		$this->html     = new Client();
-
-        // Hackery to allow HTTPS
-        $this->html->setClient(new \GuzzleHttp\Client(['timeout' => 60, 'verify' => false]));
+        $this->html     = new Client(HttpClient::create(['timeout' => 60, 'verify_host' => false]));
 	}
 
     public function setDecision($decision)

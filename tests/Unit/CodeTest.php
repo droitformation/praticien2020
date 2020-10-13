@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Mail;
+use App\Praticien\Code\Entities\Code as Code;
+use App\Praticien\User\Entities\User as User;
 
 class CodeTest extends TestCase
 {
@@ -17,7 +19,7 @@ class CodeTest extends TestCase
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
 
-        $user = factory(\App\Praticien\User\Entities\User::class)->create();
+        $user = User::factory()->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
     }

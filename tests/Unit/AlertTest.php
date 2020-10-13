@@ -4,6 +4,9 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Praticien\Abo\Entities\Abo as Abo;
+use App\Praticien\Abo\Entities\Abo_keyword as Abo_keyword;
+use App\Praticien\User\Entities\User as User;
 
 class AlertTest extends TestCase
 {
@@ -102,16 +105,16 @@ class AlertTest extends TestCase
         $make      = new \tests\factories\ObjectFactory();
         $decisions = $make->makeDecisions($publication_at,$data);
 
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+        $user = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(), 'cadence' => 'daily',
         ]);
 
-        $abo1 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => 174]);
-        $abo2 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => 175]);
-        $abo3 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => 176]);
+        $abo1 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => 174]);
+        $abo2 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => 175]);
+        $abo3 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => 176]);
 
-        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => '"Accumasa laoreelentesque"']);
-        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => '"à nul A égét 44",BGFA']);
+        $keyword = Abo_keyword::factory()->create(['abo_id' => $abo1->id, 'keywords' => '"Accumasa laoreelentesque"']);
+        $keyword = Abo_keyword::factory()->create(['abo_id' => $abo2->id, 'keywords' => '"à nul A égét 44",BGFA']);
 
         return [$user,$decisions];
     }

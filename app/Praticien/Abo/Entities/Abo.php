@@ -1,12 +1,20 @@
 <?php namespace App\Praticien\Abo\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Abo extends Model
 {
+    use HasFactory;
+
     protected $table    = 'abos';
     public $timestamps  = false;
     protected $fillable = ['user_id', 'categorie_id','toPublish'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\AboFactory::new();
+    }
 
     public function keywords()
     {

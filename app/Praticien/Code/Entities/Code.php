@@ -1,11 +1,19 @@
 <?php namespace App\Praticien\Code\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Code extends Model {
 
+    use HasFactory;
+
     protected $fillable = ['code','valid_at','user_id','updated_at'];
     protected $dates    = ['valid_at'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\CodeFactory::new();
+    }
 
     public function user()
     {

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Praticien\Decision\Entities\Decision as Decision;
 
 class ArchiveTest extends TestCase
 {
@@ -29,8 +30,8 @@ class ArchiveTest extends TestCase
 
     public function testArchiveYear()
     {
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create(['numero' => '4A_123/2017', 'categorie_id' => 174,'publication_at' => \Carbon\Carbon::today()]);
-        $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create(['numero' => '5A_23/2019', 'categorie_id' => 175,'publication_at' => \Carbon\Carbon::today()->addDay(1)]);
+        $decision1 = Decision::factory()->create(['numero' => '4A_123/2017', 'categorie_id' => 174,'publication_at' => \Carbon\Carbon::today()]);
+        $decision2 = Decision::factory()->create(['numero' => '5A_23/2019', 'categorie_id' => 175,'publication_at' => \Carbon\Carbon::today()->addDay(1)]);
 
         $table = new \App\Praticien\Bger\Utility\Table();
         // Make archives

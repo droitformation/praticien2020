@@ -2,15 +2,21 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Theme extends Model {
 
-    use SoftDeletes;
+    use SoftDeletes,HasFactory;
 
     protected $table = 'themes';
 
     protected $fillable = ['id','name','slug','parent_id'];
     protected $dates    = ['deleted_at'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\ThemeFactory::new();
+    }
 
     public function getCanBeDeletedAttribute()
     {

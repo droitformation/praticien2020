@@ -6,6 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use App\Praticien\User\Entities\User as User;
+use App\Praticien\Theme\Entities\Theme as Theme;
+use App\Praticien\Arret\Entities\Arret as Arret;
+
 class ArretBackendTest extends TestCase
 {
     use RefreshDatabase;
@@ -16,7 +20,8 @@ class ArretBackendTest extends TestCase
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
 
-        $user = factory(\App\Praticien\User\Entities\User::class)->create();
+        $user = User::factory()->create();
+
         $user->roles()->attach(1);
         $this->actingAs($user);
     }
@@ -123,13 +128,13 @@ class ArretBackendTest extends TestCase
 
     public function testUpdateArret()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
-        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+        $theme1 = Theme::factory()->create();
+        $theme2 = Theme::factory()->create(['parent_id' => $theme1->id]);
 
-        $theme3 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
-        $theme4 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme3->id]);
+        $theme3 = Theme::factory()->create();
+        $theme4 = Theme::factory()->create(['parent_id' => $theme3->id]);
 
-        $arret = factory(\App\Praticien\Arret\Entities\Arret::class)->create([
+        $arret = Arret::factory()->create([
             'title'        => 'ATF 146 II 36',
             'status'       => 'publish',
             'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',
@@ -179,8 +184,8 @@ class ArretBackendTest extends TestCase
 
     public function testSearchArret()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
-        $arret  = factory(\App\Praticien\Arret\Entities\Arret::class)->create([
+        $theme1 = Theme::factory()->create();
+        $arret  = Arret::factory()->create([
             'title'        => 'ATF 146 II 36',
             'status'       => 'publish',
             'content'      => 'art. 8 et 10a LPE, art. 37 et 37m LA; Fames integer pésuéré egéstat vestibulum.',

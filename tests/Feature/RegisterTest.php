@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+use App\Praticien\Code\Entities\Code as Code;
+
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
@@ -26,7 +28,7 @@ class RegisterTest extends TestCase
     {
         $response = $this->get('/access');
 
-        $code = factory(\App\Praticien\Code\Entities\Code::class)->create();
+        $code = Code::factory()->create();
 
         $data = [
             'first_name'    => 'Marc',
@@ -59,7 +61,7 @@ class RegisterTest extends TestCase
     }
     public function testRegisterNotValidCode()
     {
-        $code = factory(\App\Praticien\Code\Entities\Code::class)->create([
+        $code = Code::factory()->create([
             'valid_at' => \Carbon\Carbon::yesterday()->toDateString(),
         ]);
 

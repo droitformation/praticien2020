@@ -817,3 +817,30 @@ function frontendParams($params){
 
     return trim($s);
 }
+
+function paramsForContent($params){
+    $dispositions = explode(',',$params);
+    $data = [];
+
+    foreach ($dispositions as $disposition){
+        $terms  = explode(':',$disposition);
+
+        $string = '';
+
+        foreach ($terms as $i => $term){
+            if($i == 0){
+                $string .= 'Art. '.$term;
+            }
+            elseif($i == 1){
+                $string .= ' '.$term;
+            }
+            else{
+                $string .= ' al. '.$term;
+            }
+        }
+
+        $data[] = $string;
+    }
+
+    return $data;
+}

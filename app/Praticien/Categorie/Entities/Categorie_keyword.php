@@ -1,13 +1,21 @@
 <?php namespace App\Praticien\Categorie\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Categorie_keyword extends Model {
+
+    use HasFactory;
 
     protected $table = 'categorie_keywords';
 	protected $fillable = ['keywords','categorie_id'];
 
     public $timestamps  = false;
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\CategorieKeywordFactory::new();
+    }
 
     public function getKeywordsListAttribute()
     {

@@ -3,13 +3,19 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Zoha\Metable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Arret extends Model {
 
-    use Metable,SoftDeletes;
+    use Metable,SoftDeletes,HasFactory;
 
     protected $fillable = ['id','published_at','title','content','text_content','status','slug','guid','lang'];
     protected $dates    = ['published_at'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\ArretFactory::new();
+    }
 
     public function getTitleLinkAttribute()
     {

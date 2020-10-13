@@ -3,6 +3,10 @@
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Praticien\User\Entities\User as User;
+use App\Praticien\Theme\Entities\Theme as Theme;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+
 class SubscribeAboTest extends TestCase
 {
     use RefreshDatabase;
@@ -22,7 +26,7 @@ class SubscribeAboTest extends TestCase
 
     public function testSubscribeToCategorie()
     {
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+        $user = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
             'cadence'      => 'daily',
         ]);
@@ -30,8 +34,8 @@ class SubscribeAboTest extends TestCase
         $user->roles()->attach(2);
         $this->actingAs($user);
 
-        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie1 = Categorie::factory()->create();
+        $categorie2 = Categorie::factory()->create();
 
         /*  user_id: this.user_id, categorie_id: this.categorie_id, keywords: this.words, toPublish: this.aPublier */
 

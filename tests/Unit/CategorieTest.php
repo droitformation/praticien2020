@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+use App\Praticien\Decision\Entities\Decision as Decision;
 
 class CategorieTest extends TestCase
 {
@@ -36,7 +38,7 @@ class CategorieTest extends TestCase
 
         $this->assertEquals($string,$query);
 
-        $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create([
+        $categorie = Categorie::factory()->create([
             'name' => $name,
             'name_de' => 'Das nichtgut (en général) de',
             'name_it' => 'El nobueno (en général) it'
@@ -60,7 +62,7 @@ class CategorieTest extends TestCase
 
         $this->assertEquals($string,$query);
 
-        $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create([
+        $categorie = Categorie::factory()->create([
             'name' => $name,
             'name_de' => 'Das nichtgut (en général) de',
             'name_it' => 'El nobueno (en général) it'
@@ -78,24 +80,24 @@ class CategorieTest extends TestCase
 
         $publication_at = \Carbon\Carbon::today()->toDateString();
 
-        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie3 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie4 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie1 = Categorie::factory()->create();
+        $categorie2 = Categorie::factory()->create();
+        $categorie3 = Categorie::factory()->create();
+        $categorie4 = Categorie::factory()->create();
 
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = Decision::factory()->create([
             'publication_at' => $publication_at,
             'categorie_id'   => $categorie4->id,
             'texte'          => '<div>Dapibus ante accumasa laoreelentesque lorém arcû in BGFA éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien</div>.'
         ]);
 
-        $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision2 = Decision::factory()->create([
             'publication_at' => $publication_at,
             'categorie_id'   => $categorie4->id,
             'texte'          => '<div>Dapibus anuismod Procédure enim imperdiet CPC ligula àc voluptà torquent sapien placérat liçlà à, nullä ultrices consequat liçlà</div>.'
         ]);
 
-        $decision3 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision3 = Decision::factory()->create([
             'publication_at' => $publication_at,
             'categorie_id'   => $categorie4->id,
             'texte'          => '<div> Ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus  egéstat ligula àc voluptà torquent sapien placérat, nullä ultrices</div>.'

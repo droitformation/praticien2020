@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Praticien\User\Entities\User as User;
 
 class ContributeurTest extends TestCase
 {
@@ -24,7 +25,7 @@ class ContributeurTest extends TestCase
 
     public function testHasAccessToBackend()
     {
-        $contributeur = factory(\App\Praticien\User\Entities\User::class)->create([
+        $contributeur = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
         ]);
 

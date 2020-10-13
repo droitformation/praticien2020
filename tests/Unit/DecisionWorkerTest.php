@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+use App\Praticien\Decision\Entities\Decision as Decision;
 
 class DecisionWorkerTest extends TestCase
 {

@@ -120,21 +120,6 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
 });
 
-Route::group(['prefix' => 'api'], function () {
-
-    Route::post('/decisions','Api\DecisionController@index');
-
-/*    Route::post('/search','Api\MainController@search');
-    Route::get('/categories','Api\MainController@categories');
-    Route::get('/categorie/{id}','Api\MainController@categorie');
-    Route::get('/decision/{id}/{year}','Api\MainController@decision');
-
-    Route::post('/user','Api\UserController@show');
-    Route::post('/abo/make','Api\AboController@make');
-    Route::post('/abo/remove','Api\AboController@remove');
-    Route::post('/abo/cadence','Api\AboController@cadence');*/
-});
-
 Route::get('alert', function () {
 
     $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
@@ -164,8 +149,6 @@ Route::get('handlealert', function () {
 /*
  * Transfert
  * */
-
-
 Route::get('posts','TransfertController@posts');
 Route::get('themes','TransfertController@themes');
 Route::get('users','TransfertController@users');
@@ -173,13 +156,16 @@ Route::get('codes','TransfertController@codes');
 
 Route::get('test', function() {
 
-
     $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
     $arrets = $repo->getAll();
+    $arret = $repo->find(34194);
+    echo '<pre>';
+    print_r(paramsForContent($arret->getMeta('termes_rechercher')));
+    echo '</pre>';
+    exit;
 
     foreach ($arrets as $arret){
-        $arret->text_content = strip_tags($arret->content);
-        $arret->save();
+
     }
 
     exit;

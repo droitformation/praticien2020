@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+use App\Praticien\Decision\Entities\Decision as Decision;
 
 class DecisionRepoTest extends TestCase
 {
@@ -26,7 +28,7 @@ class DecisionRepoTest extends TestCase
     {
         $date = \Carbon\Carbon::today();
 
-        $decision = factory(\App\Praticien\Decision\Entities\Decision::class)->create(['numero' => '4A_123/2017','publication_at' => $date]);
+        $decision = Decision::factory()->create(['numero' => '4A_123/2017','publication_at' => $date]);
 
         $repo = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
 
@@ -39,8 +41,8 @@ class DecisionRepoTest extends TestCase
     {
         $today = \Carbon\Carbon::today();
 
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create(['numero' => '4A_123/2017','publication_at' => $today]);
-        $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create(['numero' => '4A_123/2017','publication_at' => $today->addDay(1)]);
+        $decision1 = Decision::factory()->create(['numero' => '4A_123/2017','publication_at' => $today]);
+        $decision2 = Decision::factory()->create(['numero' => '4A_123/2017','publication_at' => $today->addDay(1)]);
 
         $repo = \App::make('App\Praticien\Decision\Repo\DecisionInterface');
 
@@ -53,7 +55,7 @@ class DecisionRepoTest extends TestCase
     {
         $date = \Carbon\Carbon::today()->toDateString();
 
-        $decision = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision = Decision::factory()->create([
             'publication_at' => $date,
             'texte' =>
                 '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod metus enim imperdiet egéstat ligula àc voluptà torquent sapien
@@ -100,7 +102,7 @@ class DecisionRepoTest extends TestCase
     {
         $date = \Carbon\Carbon::today()->toDateTimeString();
 
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = Decision::factory()->create([
             'publication_at' => $date,
             'numero' => '3A_223/2017',
             'texte' =>
@@ -113,7 +115,7 @@ class DecisionRepoTest extends TestCase
                 çunc, primiés?</div>',
         ]);
 
-        $decision2 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision2 = Decision::factory()->create([
             'publication_at' => $date,
             'numero' => '4A_253/2019',
             'texte' => '<div>Dapibus à nul Assurance de Protection Juridique SA égét 44 3€ dapidûs quisque à nullä dui cctus malet, consequat liçlà</div>.'
@@ -144,25 +146,25 @@ class DecisionRepoTest extends TestCase
         $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorkerInterface');
 
         // Control
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'
         ]);
 
         // BGFA => categorie 244
-        $decision2 =  factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision2 =  Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'
         ]);
 
         // LLCA => categorie 244
-        $decision3 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision3 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul de LLCA de chose égét 44 3€ quisque à nullä dui cctus malet, consequat liçlà</div>.'
         ]);
 
         // "Assistance judiciaire", CPC => categorie 207
-        $decision4 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision4 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul de Assistance judiciaire égét 44 3€ quisque à nullä dui cctus CPC, consequat liçlà</div>.'
         ]);
@@ -182,25 +184,25 @@ class DecisionRepoTest extends TestCase
         $date = \Carbon\Carbon::today()->startOfDay()->toDateTimeString();
 
         // Control
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'
         ]);
 
         // BGFA => categorie 244
-        $decision2 =  factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision2 =  Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul A égét 44 3€ BGFA quisque à nullä dui cctus malet, consequat liçlà</div>.'
         ]);
 
         // LLCA => categorie 244
-        $decision3 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision3 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul de LLCA de chose égét 44 3€ quisque à nullä dui cctus malet, consequat liçlà</div>.'
         ]);
 
         // "Assistance judiciaire", CPC => categorie 207
-        $decision4 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision4 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus à nul de Assistance judiciaire égét 44 3€ quisque à nullä dui cctus CPC, consequat liçlà</div>.'
         ]);
@@ -227,7 +229,7 @@ class DecisionRepoTest extends TestCase
         $date = \Carbon\Carbon::today()->startOfDay()->toDateTimeString();
 
         // Control
-        $decision1 = factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+        $decision1 = Decision::factory()->create([
             'publication_at' => $date,
             'texte' => '<div>Dapibus ante accumasa laoreelentesque lorém arcû in quisqué éuismod m44equat liçlà</div>.'
         ]);

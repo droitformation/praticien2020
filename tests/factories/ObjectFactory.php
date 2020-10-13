@@ -1,5 +1,16 @@
 <?php namespace tests\factories;
 
+use App\Praticien\User\Entities\User as User;
+use App\Praticien\Decision\Entities\Decision as Decision;
+use App\Praticien\Abo\Entities\Abo as Abo;
+
+use App\Praticien\Code\Entities\Code as Code;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+use App\Praticien\Abo\Entities\Abo_keyword as Abo_keyword;
+use App\Praticien\Arret\Entities\Arret as Arret;
+use App\Praticien\Theme\Entities\Theme as Theme;
+use App\Praticien\Categorie\Entities\Categorie_keyword as Categorie_keyword;
+
 class ObjectFactory
 {
     protected $faker;
@@ -20,7 +31,7 @@ class ObjectFactory
         $email      = isset($data['email']) ? $data['email'] : $this->faker->email;
         $cadence    = isset($data['cadence']) ? $data['cadence'] : 'daily';
 
-        return factory(\App\Praticien\User\Entities\User::class)->create([
+        return User::factory()->create([
             'first_name'   => $first_name,
             'last_name'    => $last_name,
             'email'        => $email,
@@ -40,7 +51,7 @@ class ObjectFactory
             $categorie = $categorie->id;
         }
 
-        return factory(\App\Praticien\Abo\Entities\Abo::class)->create([
+        return Abo::factory()->create([
             'user_id'       => $user->id,
             'categorie_id'  => $categorie,
             'keywords'      => $keywords,
@@ -53,13 +64,13 @@ class ObjectFactory
             $abos[] = $this->makeAbo($user, $new['categorie'], $new['keywords']);
         }
 
-        return $abos;
+        return $abos ?? [];
     }
 
     public function makeDecisions($publication_at, $data)
     {
         return collect($data)->map(function ($new) use ($publication_at) {
-            return factory(\App\Praticien\Decision\Entities\Decision::class)->create([
+            return Decision::factory()->create([
                 'publication_at' => $publication_at,
                 'decision_at'    => $this->faker->dateTime,
                 'categorie_id'   => $new['categorie_id'],

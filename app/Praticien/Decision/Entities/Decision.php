@@ -4,13 +4,19 @@ namespace App\Praticien\Decision\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Praticien\Decision\Traits\FullTextSearch;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Decision extends Model
 {
-    use FullTextSearch;
+    use FullTextSearch,HasFactory;
 
     protected $table = 'decisions';
     protected $dates = ['publication_at','decision_at'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\DecisionFactory::new();
+    }
 
     /**
      * The columns of the full text index

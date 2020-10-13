@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Praticien\Theme\Entities\Theme as Theme;
+use App\Praticien\Arret\Entities\Arret as Arret;
 
 class ThemeTest extends TestCase
 {
@@ -62,9 +64,9 @@ class ThemeTest extends TestCase
 
     public function testThemeCanBeDeleted()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
-        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
-        $arret  = factory(\App\Praticien\Arret\Entities\Arret::class)->create();
+        $theme1 = Theme::factory()->create();
+        $theme2 = Theme::factory()->create(['parent_id' => $theme1->id]);
+        $arret  = Arret::factory()->create();
 
         $arret->themes()->attach([$theme1->id,$theme2->id]);
         $arret = $arret->fresh();
@@ -75,8 +77,8 @@ class ThemeTest extends TestCase
 
     public function testThemeCanBeDeleted2()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create();
-        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+        $theme1 = Theme::factory()->create();
+        $theme2 = Theme::factory()->create(['parent_id' => $theme1->id]);
 
         $this->assertTrue($theme2->can_be_deleted);
         $this->assertTrue($theme1->can_be_deleted);

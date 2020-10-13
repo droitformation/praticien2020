@@ -1,11 +1,12 @@
 <?php
+namespace Database\Seeders;
 
 class RoleTableSeeder extends \Illuminate\Database\Seeder  {
 
 	public function run()
 	{
 		// Uncomment the below to wipe the table clean before populating
-		DB::table('roles')->truncate();
+        \DB::table('roles')->truncate();
 
 		$roles = array(
 			['name' => 'Administrateur', 'description' => 'Administrateur backend'],
@@ -14,7 +15,7 @@ class RoleTableSeeder extends \Illuminate\Database\Seeder  {
 		);
 
 		// Uncomment the below to run the seeder
-		DB::table('roles')->insert($roles);
+		\DB::table('roles')->insert($roles);
 	}
 
 }

@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Praticien\User\Entities\User as User;
+use App\Praticien\Theme\Entities\Theme as Theme;
 
 class ArretFrontendTest extends TestCase
 {
@@ -16,7 +18,7 @@ class ArretFrontendTest extends TestCase
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
 
-        $user = factory(\App\Praticien\User\Entities\User::class)->create();
+        $user = User::factory()->create();
         $user->roles()->attach(2);
         $this->actingAs($user);
     }
@@ -29,8 +31,8 @@ class ArretFrontendTest extends TestCase
 
     public function testCreateArretForFuture()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['name' => 'TEST']);
-        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+        $theme1 = Theme::factory()->create(['name' => 'TEST']);
+        $theme2 = Theme::factory()->create(['parent_id' => $theme1->id]);
 
         $published_at = \Carbon\Carbon::today()->addDays(5)->toDateTimeString();
 
@@ -59,8 +61,8 @@ class ArretFrontendTest extends TestCase
 
     public function testCreateArretForNow()
     {
-        $theme1 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['name' => 'TEST']);
-        $theme2 = factory(\App\Praticien\Theme\Entities\Theme::class)->create(['parent_id' => $theme1->id]);
+        $theme1 = Theme::factory()->create(['name' => 'TEST']);
+        $theme2 = Theme::factory()->create(['parent_id' => $theme1->id]);
 
         $published_at = \Carbon\Carbon::today()->toDateTimeString();
 

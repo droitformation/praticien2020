@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Praticien\User\Entities\User as User;
 
 class UserBackendTest extends TestCase
 {
@@ -18,7 +19,7 @@ class UserBackendTest extends TestCase
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
 
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+        $user = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
         ]);
 
@@ -36,7 +37,7 @@ class UserBackendTest extends TestCase
 
     public function testUpdateUserFromBackend()
     {
-        $abonne = factory(\App\Praticien\User\Entities\User::class)->create([
+        $abonne = User::factory()->create([
             'first_name'    => 'Jane',
             'last_name'     => 'Doe',
             'email'         => 'cindy.leschaud@gmail.com',

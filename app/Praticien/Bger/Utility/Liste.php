@@ -1,6 +1,7 @@
 <?php namespace App\Praticien\Bger\Utility;
 
 use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
 
 /*
 * Class to prepare Lists
@@ -22,11 +23,7 @@ class Liste
     public function __construct()
     {
         $this->clean = new \App\Praticien\Bger\Utility\Clean();
-        $this->html  = new Client();
-
-        //  Hackery to allow HTTPS
-        $guzzleclient = new \GuzzleHttp\Client(['timeout' => 60, 'verify' => false,]);
-        $this->html->setClient($guzzleclient);
+        $this->html  = new Client(HttpClient::create(['timeout' => 60, 'verify_host' => false]));
 
         $this->mainListUrl = 'http://relevancy.bger.ch/php/aza/http/index_aza.php?lang=fr&mode=index';
         $this->keys        = collect(['numero','categorie','subcategorie','publication_at','decision_at']);

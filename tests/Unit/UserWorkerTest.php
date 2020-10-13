@@ -3,6 +3,11 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Praticien\Code\Entities\Code as Code;
+use App\Praticien\User\Entities\User as User;
+use App\Praticien\Abo\Entities\Abo as Abo;
+use App\Praticien\Abo\Entities\Abo_keyword as Abo_keyword;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
 
 class UserWorkerTest extends TestCase
 {
@@ -25,11 +30,11 @@ class UserWorkerTest extends TestCase
     {
         $worker = \App::make('App\Praticien\User\Worker\SubscriptionWorker');
 
-        $user      = factory(\App\Praticien\User\Entities\User::class)->create();
-        $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $user      = User::factory()->create();
+        $categorie = Categorie::factory()->create();
 
-        $abo     = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie->id]);
-        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo->id, 'keywords' => 'Lorem, ipsum dolor']);
+        $abo     = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie->id]);
+        $keyword = Abo_keyword::factory()->create(['abo_id' => $abo->id, 'keywords' => 'Lorem, ipsum dolor']);
 
         $this->assertTrue($user->abos->contains('categorie_id',$categorie->id));
 
@@ -45,8 +50,8 @@ class UserWorkerTest extends TestCase
     {
         $worker = \App::make('App\Praticien\User\Worker\SubscriptionWorker');
 
-        $user      = factory(\App\Praticien\User\Entities\User::class)->create();
-        $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $user      = User::factory()->create();
+        $categorie = Categorie::factory()->create();
 
         $this->assertTrue($user->abos->isEmpty());
 
@@ -66,11 +71,11 @@ class UserWorkerTest extends TestCase
     {
         $worker = \App::make('App\Praticien\User\Worker\SubscriptionWorker');
 
-        $user      = factory(\App\Praticien\User\Entities\User::class)->create();
-        $categorie = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $user      = User::factory()->create();
+        $categorie = Categorie::factory()->create();
 
-        $abo     = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie->id]);
-        $keyword = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo->id, 'keywords' => 'Lorem, ipsum dolor']);
+        $abo     = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie->id]);
+        $keyword = Abo_keyword::factory()->create(['abo_id' => $abo->id, 'keywords' => 'Lorem, ipsum dolor']);
 
         $this->assertTrue($user->abos->contains('categorie_id',$categorie->id));
 

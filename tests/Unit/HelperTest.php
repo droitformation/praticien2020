@@ -5,6 +5,10 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Praticien\Abo\Entities\Abo as Abo;
+use App\Praticien\Abo\Entities\Abo_keyword as Abo_keyword;
+use App\Praticien\Categorie\Entities\Categorie as Categorie;
+use App\Praticien\User\Entities\User as User;
 
 class HelperTest extends TestCase
 {
@@ -138,19 +142,19 @@ class HelperTest extends TestCase
 
     public function testGetAboCategorie()
     {
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+        $user = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
             'cadence'      => 'daily',
         ]);
 
-        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie1 = Categorie::factory()->create();
+        $categorie2 = Categorie::factory()->create();
 
-        $abo1 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id, 'toPublish' => true]);
-        $abo2 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id]);
+        $abo1 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id, 'toPublish' => true]);
+        $abo2 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id]);
 
-        $keywords1 = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo1->id, 'keywords' => 'Lorem, ipsum dolor']);
-        $keywords2 = factory(\App\Praticien\Abo\Entities\Abo_keyword::class)->create(['abo_id' => $abo2->id, 'keywords' => 'Amet sin not']);
+        $keywords1 = Abo_keyword::factory()->create(['abo_id' => $abo1->id, 'keywords' => 'Lorem, ipsum dolor']);
+        $keywords2 = Abo_keyword::factory()->create(['abo_id' => $abo2->id, 'keywords' => 'Amet sin not']);
 
         $user = $user->fresh();
 
@@ -163,16 +167,16 @@ class HelperTest extends TestCase
 
     public function testGetAboCategorieNOKeywords()
     {
-        $user = factory(\App\Praticien\User\Entities\User::class)->create([
+        $user = User::factory()->create([
             'active_until' => \Carbon\Carbon::today()->startOfDay()->addMonth()->toDateTimeString(),
             'cadence'      => 'daily',
         ]);
 
-        $categorie1 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
-        $categorie2 = factory(\App\Praticien\Categorie\Entities\Categorie::class)->create();
+        $categorie1 = Categorie::factory()->create();
+        $categorie2 = Categorie::factory()->create();
 
-        $abo1 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id, 'toPublish' => true]);
-        $abo2 = factory(\App\Praticien\Abo\Entities\Abo::class)->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id]);
+        $abo1 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie1->id, 'toPublish' => true]);
+        $abo2 = Abo::factory()->create(['user_id' => $user->id, 'categorie_id' => $categorie2->id]);
 
         $user = $user->fresh();
 
