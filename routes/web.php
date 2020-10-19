@@ -120,10 +120,15 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
 
 });
 
+/*
+ * Previews
+ * */
+
 Route::get('alert', function () {
 
     $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
     $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
+
     $user  = $repo->find(15);
 
     $repo      = App::make('App\Praticien\Decision\Repo\DecisionInterface');
@@ -154,11 +159,15 @@ Route::get('themes','TransfertController@themes');
 Route::get('users','TransfertController@users');
 Route::get('codes','TransfertController@codes');
 
+/*
+ * Tests
+ * */
 Route::get('test', function() {
 
     $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
     $arrets = $repo->getAll();
-    $arret = $repo->find(34194);
+    $arret = $repo->find(34219);
+
     echo '<pre>';
     print_r(paramsForContent($arret->getMeta('termes_rechercher')));
     echo '</pre>';
@@ -453,8 +462,6 @@ exit;
 });
 
 Route::get('test_convert', function() {
-
-
     // set location of docx text content file
     $xmlFile = public_path('Droitfiscalinternational.docx');
 

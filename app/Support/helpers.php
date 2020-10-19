@@ -89,6 +89,24 @@ function weekRange($start = null){
     return collect($dates);
 }
 
+function newsletterDateRange($start = null){
+
+    $dates = [];
+
+    $end_date = $start ? \Carbon\Carbon::parse($start)->startOfWeek()->addWeek() : \Carbon\Carbon::today()->startOfWeek()->addWeek();
+    $end      = $end_date;
+
+    $start_date = $start ? \Carbon\Carbon::parse($start)->startOfWeek() : \Carbon\Carbon::today()->startOfWeek();
+
+    for($date = $start_date; $date->lte($end); $date->addDay()) {
+        if($date->isWeekday()){
+            $dates[] = $date->toDateTimeString();
+        }
+    }
+
+    return collect($dates);
+}
+
 function generateDateRange($start_date, $end_date)
 {
     $dates = [];

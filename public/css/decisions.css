@@ -227,3 +227,10 @@ strong.block{
     font-size: 15px;
     line-height: 22px;
 }
+
+.pagination_wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

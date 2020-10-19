@@ -27,11 +27,11 @@ class NewsletterController extends Controller
     public function index($date = null)
     {
         $monday = \Carbon\Carbon::today()->isMonday() ? \Carbon\Carbon::today()->subWeek() : \Carbon\Carbon::today()->subWeek()->startOfWeek();
-        $date = $date ? \Carbon\Carbon::parse($date) : $monday;
+        $date   = $date ? \Carbon\Carbon::parse($date) : $monday;
 
-        $annonce = $this->annonce->active($date);
+        $annonce = $this->annonce->active(\Carbon\Carbon::today());
 
-        $dates = weekRange($date->toDateString());
+        $dates = newsletterDateRange($date->toDateString());
 
         $start = $dates->first();
         $end   = $dates->last();

@@ -33,6 +33,7 @@ class AnnonceEloquent implements AnnonceInterface{
 			'title'       => $data['title'],
             'link'        => $data['link'] ?? null,
             'content'     => $data['content'] ?? null,
+            'image'       => $data['image'] ?? null,
             'start_at'    => $data['start_at'],
             'end_at'      => $data['end_at'],
             'created_at'  => date('Y-m-d G:i:s'),

@@ -46,5 +46,4 @@
         </table>
     @endif
 
-    {{--  'publication_at', 'decision_at', 'categorie_id', 'remarque', 'link', 'numero', 'texte', 'langue', 'publish', 'updated' --}}
 @endsection

@@ -68,6 +68,28 @@ class HelperTest extends TestCase
         $this->assertEquals(collect($expected),$result);
     }
 
+    public function testNewsletterDatesRange()
+    {
+        $start_date = \Carbon\Carbon::createFromDate(2020, 10, 12)->startOfDay();
+
+        $expected = [
+            \Carbon\Carbon::createFromDate(2020, 10, 12)->startOfDay()->toDateTimeString(),
+            \Carbon\Carbon::createFromDate(2020, 10, 13)->startOfDay()->toDateTimeString(),
+            \Carbon\Carbon::createFromDate(2020, 10, 14)->startOfDay()->toDateTimeString(),
+            \Carbon\Carbon::createFromDate(2020, 10, 15)->startOfDay()->toDateTimeString(),
+            \Carbon\Carbon::createFromDate(2020, 10, 16)->startOfDay()->toDateTimeString(),
+            \Carbon\Carbon::createFromDate(2020, 10, 19)->startOfDay()->toDateTimeString(),
+        ];
+
+        $result = newsletterDateRange();
+
+        $this->assertEquals(6,count($result));
+
+        $result = newsletterDateRange($start_date);
+
+        $this->assertEquals(collect($expected),$result);
+    }
+
     public function testYearsRangeForArchivesSearch()
     {
         $expected = [2013,2014];

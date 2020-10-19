@@ -308,9 +308,8 @@ class DecisionEloquent implements DecisionInterface{
         // For dev
         //$cast         = 'Year(publication_at) as year';
 
-        \Log::info('table : '.$table.' connection: '.$conn);
-
         $model = $this->decision->setTable($table)->setConnection($conn)
+            ->with(['categorie'])
             ->select($table.'.id',$table.'.numero',$table.'.categorie_id',$table.'.remarque',$table.'.publication_at',$table.'.decision_at',$table.'.langue',$table.'.publish')
             ->selectRaw($cast);
 

@@ -126,6 +126,7 @@
                 d._token = $("meta[name='_token']").attr('content')
             }
         },*/
+        "dom": 'fl<"pagination_wrap"ip>t',
         "pageLength": 25,
         select: true,
         "columns": [
