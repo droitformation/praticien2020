@@ -470,3 +470,52 @@ Route::get('test_convert', function() {
     $htmlWriter->save(public_path('test.html'));
     exit;
 });
+
+
+Route::get('categorie_convert', function() {
+
+    $table = 'decisions';
+
+    $model = new \App\Praticien\Decision\Entities\Decision();
+    //$decisions = $model->setConnection('sqlite')->setTable($table)->whereMonth('publication_at', '01')->get();
+
+    $results = collect(config('keywords'))->mapWithKeys(function ($keywords, $categorie_id) use ($model,$table) {
+         return [$categorie_id => collect($keywords)->map(function ($keyword) use ($categorie_id,$model,$table){
+
+             return $model->setConnection('mysql')
+                 ->setTable($table)
+                 //->whereMonth('publication_at',12)
+                 ->search($keyword)
+                 ->groupBy('id')
+                 ->get();
+
+         })->flatten(1)->unique()];
+     })->reject(function ($result, $key) {
+         return $result->isEmpty();
+     })->map(function ($decisions, $categorie_id) {
+
+        return $decisions->map(function ($decision, $key) use ($categorie_id) {
+            $decision->other_categories()->attach($categorie_id);
+        });
+
+    });
+
+    echo '<pre>';
+    print_r($results);
+    echo '</pre>';
+    exit;
+
+    \DB::connection('sqlite')->table('archive_2014')
+        ->whereMonth('publication_at', '01')->orderBy('id')
+        ->chunk(10, function ($decisions) {
+            foreach ($decisions as $decision) {
+                echo $decision->numero.'<br>';
+               /* $exist = \DB::connection($this->connection)->table($name)->where("id", $decision->id)->get();
+
+                if($exist->isEmpty()){
+                    \DB::connection($this->connection)->table($name)->insert((array) $decision);
+                }*/
+            }
+    });
+
+});

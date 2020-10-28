@@ -68,7 +68,7 @@ class Table
             }
         });
 
-        // Delete after from main table because elese chunl doesn't get all recordss
+        // Delete after from main table because else chunk doesn't get all recordss
         \DB::connection($this->main_connection)->table($this->mainTable)->whereIn("id", $this->delete)->delete();
     }
 

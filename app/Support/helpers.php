@@ -137,7 +137,7 @@ function archiveTableForDates($start_date, $end_date){
         $years[] = $date->year;
     }
 
-    return $years;
+    return array_reverse($years);
 }
 
 function formatDateOrRange($date){
@@ -791,6 +791,16 @@ function prepareSearchTerms($terms){
 
         return '+"'.$term.'"';
     })->implode(' ');
+}
+
+function prepareSearchTermsLite($terms){
+    return collect($terms)->map(function ($term) {
+        $term = str_replace(',',' ',$term);
+        $term = str_replace(';',' ',$term);
+        $term = trim(str_replace('"', '', $term));
+
+        return 'texte LIKE "%'.$term.'%"';
+    })->implode(' AND ');
 }
 
 function prepareParams($params){

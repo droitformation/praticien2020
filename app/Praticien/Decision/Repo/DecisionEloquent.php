@@ -207,17 +207,6 @@ class DecisionEloquent implements DecisionInterface{
         $terms = implode(' ',$terms);
         $terms = str_replace(';',' ',$terms);
 
-        $sql = $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
-            ->with(['categorie'])
-            ->search($terms)
-            ->categorie($categorie)
-            ->published($published)
-            ->publicationAt($publication_at)
-            ->groupBy('id')
-            ->toSql();
-
-       // \Log::info(json_encode($params));
-
         return $this->decision->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
             ->with(['categorie'])
             ->search($terms)
@@ -264,6 +253,9 @@ class DecisionEloquent implements DecisionInterface{
                     ->select($name.'.id',$name.'.numero',$name.'.categorie_id',$name.'.remarque',$name.'.publication_at',$name.'.decision_at',$name.'.langue',$name.'.publish')
                     ->selectRaw($cast)
                     ->where($name.'.categorie_id', '=' ,$categorie_id)
+                    ->orWhereHas('other_categories', function (Builder $query) use ($categorie_id) {
+                        $query->where('id', '=', $categorie_id);
+                    })
                     ->orderBy('publication_at')
                     ->get();
 
@@ -289,6 +281,9 @@ class DecisionEloquent implements DecisionInterface{
             //$conn    = $this->main_connection;
 
             if (Schema::connection($conn)->hasTable($name)) {
+
+                \Log::info('connexion '.$conn.' name '.$name.' year '.$year);
+
                 $result  = $this->searchTable($name,$conn,$params,$year);
                 $results = $results->merge($result);
             }
@@ -303,15 +298,8 @@ class DecisionEloquent implements DecisionInterface{
         $published    = isset($params['published']) && $params['published'] == 1 ? $params['published'] : null;
         $categorie_id = isset($params['categorie_id']) ? $params['categorie_id'] : null;
 
-        // For live
-        $cast         = $year == date('Y') ? 'Year(publication_at) as year' : "strftime('%Y',publication_at) as year";
-        // For dev
-        //$cast         = 'Year(publication_at) as year';
-
-        $model = $this->decision->setTable($table)->setConnection($conn)
-            ->with(['categorie'])
-            ->select($table.'.id',$table.'.numero',$table.'.categorie_id',$table.'.remarque',$table.'.publication_at',$table.'.decision_at',$table.'.langue',$table.'.publish')
-            ->selectRaw($cast);
+        $model = $this->decision->setConnection($conn)->setTable($table)->select('id','numero','categorie_id','remarque','publication_at','decision_at','langue','publish')
+            ->with(['categorie']);
 
         if($terms){
             $terms = array_map('addSlashes', $terms->toArray());
@@ -332,7 +320,10 @@ class DecisionEloquent implements DecisionInterface{
         }
 
         if($categorie_id){
-            $model->where('categorie_id', '=' ,$categorie_id);
+            $model->where('categorie_id', '=' ,$categorie_id)
+                ->orWhereHas('other_categories', function ($query) use ($categorie_id) {
+                    $query->where('categorie_id', '=', $categorie_id);
+                });
         }
 
         return $model->get();

@@ -126,8 +126,8 @@
                 d._token = $("meta[name='_token']").attr('content')
             }
         },*/
-        "dom": 'fl<"pagination_wrap"ip>t',
-        "pageLength": 25,
+        "dom": 'fl<"pagination_wrap"ip>t<"pagination_wrap"ip>',
+        "pageLength": 50,
         select: true,
         "columns": [
             { "data": "publication_at" },

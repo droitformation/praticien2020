@@ -57,6 +57,14 @@ class Decision extends Model
         }
     }
 
+    public function scopeSearchLite($query,$terms)
+    {
+        if($terms && !empty($terms)) {
+            $terms = prepareSearchTermsLite($terms);
+            $query->whereRaw($terms);
+        }
+    }
+
     public function scopeSearchxp($query,$terms)
     {
         if($terms && !empty($terms)) {
