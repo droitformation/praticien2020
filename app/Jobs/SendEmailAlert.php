@@ -42,10 +42,10 @@ class SendEmailAlert implements ShouldQueue
 
         // No alerts today
         if($users->isEmpty()){
-            \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Aucune alertes'));
+            \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\SuccessNotification('Aucune alertes'));
         }
 
-        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\SuccessNotification('Envoi des alertes commencé'));
+        \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\SuccessNotification('Envoi des alertes commencé'));
 
         $i = 1;
         // Loop all users and send the alerts
@@ -54,7 +54,7 @@ class SendEmailAlert implements ShouldQueue
             $when = now()->addSeconds($i);
 
             //\Mail::to($user['user']->email)->send(new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos']));
-            \Mail::to('cindy.leschaud@gmail.com')->later($when, new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos'])); // Testing
+            \Mail::to('droitformation.web@gmail.com')->later($when, new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos'])); // Testing
 
             $alert->sent($user['user']);// Mark as sent
         }

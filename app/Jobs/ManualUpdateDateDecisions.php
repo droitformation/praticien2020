@@ -35,6 +35,6 @@ class ManualUpdateDateDecisions implements ShouldQueue
         $worker = \App::make('App\Praticien\Decision\Worker\DecisionWorkerInterface');
         $worker->setMissingDates($this->dates)->update();
 
-        \Mail::to('cindy.leschaud@gmail.com')->queue(new \App\Mail\SuccessNotification('Mise à jour des décisions commencé'));
+        \Mail::to('droitformation.web@gmail.com')->queue(new \App\Mail\SuccessNotification('Mise à jour des décisions commencé'));
     }
 }
