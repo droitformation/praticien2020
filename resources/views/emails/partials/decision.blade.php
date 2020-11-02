@@ -38,8 +38,7 @@
 
                                             <strong>{{ $decision->decision_at->formatLocalized("%d %B %Y") }}</strong><br/>
                                             {{ $decision->categorie->name }}<br/>
-                                            {{ $decision->remarque }}
-
+                                            {!! $decision->remarque !!}
                                         </td>
                                     </tr>
                                     <tr><td height="15"></td></tr>
