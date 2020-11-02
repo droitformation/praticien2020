@@ -124,398 +124,408 @@ Route::group(['prefix' => 'backend' ,'middleware' => ['auth','admin']], function
  * Previews
  * */
 
-Route::get('alert', function () {
+Route::group(['middleware' => ['auth','admin']], function () {
 
-    $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
-    $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
+    Route::get('alert', function () {
 
-    $user  = $repo->find(15);
+        $repo  = \App::make('App\Praticien\User\Repo\UserInterface');
+        $alert = \App::make('App\Praticien\Bger\Worker\AlertInterface');
 
-    $repo      = App::make('App\Praticien\Decision\Repo\DecisionInterface');
-    $decisions = $repo->search(['terms' => null, 'categorie' => 226, 'published' => 1, 'publication_at' => '2019-05-10']);
+        $user  = $repo->find(15);
 
-    $alert->setCadence('daily')->setDate(weekRange('2020-09-08')->toArray());
-    $abos = $alert->getUserAbos($user);
+        $repo      = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+        $decisions = $repo->search(['terms' => null, 'categorie' => 226, 'published' => 1, 'publication_at' => '2019-05-10']);
 
-    return new \App\Mail\AlerteDecision($user, weekRange('2020-09-08')->toArray(), $abos);
-});
+        $alert->setCadence('daily')->setDate(weekRange('2020-09-08')->toArray());
+        $abos = $alert->getUserAbos($user);
 
-Route::get('handlealert', function () {
-
-    $alert = new \App\Jobs\SendEmailAlert(weekRange('2019-05-10')->toArray(), 'weekly');
-    $abos  = $alert->handle();
-
-    foreach ($abos as $abo){
-        echo (new \App\Mail\AlerteDecision($abo['user'], weekRange('2019-05-10')->toArray(), $abo['abos']))->render();
-    }
-    return view('test');
-});
-
-/*
- * Transfert
- * */
-Route::get('posts','TransfertController@posts');
-Route::get('themes','TransfertController@themes');
-Route::get('users','TransfertController@users');
-Route::get('codes','TransfertController@codes');
-
-/*
- * Tests
- * */
-Route::get('test', function() {
-
-    $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
-    $arrets = $repo->getAll();
-    $arret = $repo->find(34219);
-
-    echo '<pre>';
-    print_r(paramsForContent($arret->getMeta('termes_rechercher')));
-    echo '</pre>';
-    exit;
-
-    foreach ($arrets as $arret){
-
-    }
-
-    exit;
-
-    $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorker');
-
-    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
-
-    $decisions = $repo->searchDecision(['terms' => ['Tappy'], 'categorie' => 218, 'published' => null, 'publication_at' => '2020-09-18']);
-
-    echo '<pre>';
-    print_r($decisions);
-    echo '</pre>';
-    exit;
-
-   // print_r($decisions->pluck('decisions')->flatten(1));
-    echo '</pre>';
-    exit;
-
-    $user = \App\Praticien\User\Entities\User::find(4);
-    $alert = new \App\Praticien\User\Entities\Alert($user,'daily','2020-09-14');
-
-    echo '<pre>';
-    print_r($alert->status());
-    echo '</pre>';
-    exit;
-
-    $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
-    $url    = 'newsletter/preview';
-    $date   = '2020-09-04';
-
-    $url = $date ? $url.'/'.$date : $url;
-
-    $worker->setUrl($url)->send_test();
-
-    exit;
-
-    $codes = \App\Praticien\Wordpress\Entities\Code::get();
-
-    echo '<pre>';
-    print_r($codes);
-    echo '</pre>';
-    exit;
-
-    $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
-
-    $decisions = $repo->search(['terms' => ['Haldy','Bohnet'], 'categorie' => 247, 'published' => null, 'publication_at' => '2020-09-07']);
-
-    echo '<pre>';
-    print_r($decisions);
-    echo '</pre>';
-    exit;
-  /*  $text   = '';
-    $result = strip_word_html($text);
-
-    echo '<pre>';
-    print_r($result);
-    echo '</pre>';
-    exit;*/
-
-    $atf = 'ATF 143 III 113';
-    $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
-
-    return \App\Praticien\Arret\Entities\Atf::url($atf);
-
-    $atf    = str_replace('ATF ','',$atf);
-    $atf    = str_replace(' ','-',$atf);
-
-    $client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
-    $goutte = new \Goutte\Client;
-
-    $goutte->setClient($client);
-
-    $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
-    $fail = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2FATF%20134-III-1%3Afr&lang=fr&zoom=&type=show_document';
-
-    $response = $client->get($url);
-    $crawler  = $goutte->request('GET', $fail);
-
-    $content = $crawler->filter('.content .big')->each(function ($node) {
-        return $node->text();
+        return new \App\Mail\AlerteDecision($user, weekRange('2020-09-08')->toArray(), $abos);
     });
 
-    echo '<pre>';
-    print_r($content);
-    print_r($response->getBody());
-    echo '</pre>';
-    exit;
+    Route::get('handlealert', function () {
 
-    exit;
-/*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
+        $alert = new \App\Jobs\SendEmailAlert(weekRange('2019-05-10')->toArray(), 'weekly');
+        $abos  = $alert->handle();
 
-    echo '<pre>';
-    print_r($metas->pluck('meta_key')->unique());
-    echo '</pre>';
-    exit;*/
+        foreach ($abos as $abo){
+            echo (new \App\Mail\AlerteDecision($abo['user'], weekRange('2019-05-10')->toArray(), $abo['abos']))->render();
+        }
+        return view('test');
+    });
 
-/*
+    /*
+     * Transfert
+     * */
+    Route::get('posts','TransfertController@posts');
+    Route::get('themes','TransfertController@themes');
+    Route::get('users','TransfertController@users');
+    Route::get('codes','TransfertController@codes');
 
-    $user = \App\Praticien\Wordpress\Entities\User::find(15);
-    $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
+    /*
+     * Tests
+     * */
 
-    echo '<pre>';
-    print_r($converted);
-    echo '</pre>';
-    exit;
+    Route::get('test', function() {
 
-    $users = \App\Praticien\Wordpress\Entities\User::all();
+        $repo   = \App::make('App\Praticien\Arret\Repo\ArretInterface');
+        $model  = new \App\Praticien\Arret\Entities\Arret();
+        $arrets  = $model->whereMeta('year','2019-2020')->get();
 
-    $roles = [];
+        foreach ($arrets as $arret){
+            if($arret->getMeta('termes_rechercher')){
+                echo '<pre>';
+                print_r(paramsForContent($arret->getMeta('termes_rechercher')));
+                echo '</pre>';
 
-    foreach ($users as $user){
+                $dispositions = implode(', ',paramsForContent($arret->getMeta('termes_rechercher')));
+
+                echo $arret->id;
+                $arret->createMeta('dispositions', $dispositions);
+
+            }
+        }
+
+        exit;
+        exit;
+
+        $worker = \App::make('App\Praticien\Categorie\Worker\CategorieWorker');
+
+        $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+
+        $decisions = $repo->searchDecision(['terms' => ['Tappy'], 'categorie' => 218, 'published' => null, 'publication_at' => '2020-09-18']);
+
+        echo '<pre>';
+        print_r($decisions);
+        echo '</pre>';
+        exit;
+
+       // print_r($decisions->pluck('decisions')->flatten(1));
+        echo '</pre>';
+        exit;
+
+        $user = \App\Praticien\User\Entities\User::find(4);
+        $alert = new \App\Praticien\User\Entities\Alert($user,'daily','2020-09-14');
+
+        echo '<pre>';
+        print_r($alert->status());
+        echo '</pre>';
+        exit;
+
+        $worker = \App::make('App\Praticien\Newsletter\Worker\NewsletterWorker');
+        $url    = 'newsletter/preview';
+        $date   = '2020-09-04';
+
+        $url = $date ? $url.'/'.$date : $url;
+
+        $worker->setUrl($url)->send_test();
+
+        exit;
+
+        $codes = \App\Praticien\Wordpress\Entities\Code::get();
+
+        echo '<pre>';
+        print_r($codes);
+        echo '</pre>';
+        exit;
+
+        $repo = App::make('App\Praticien\Decision\Repo\DecisionInterface');
+
+        $decisions = $repo->search(['terms' => ['Haldy','Bohnet'], 'categorie' => 247, 'published' => null, 'publication_at' => '2020-09-07']);
+
+        echo '<pre>';
+        print_r($decisions);
+        echo '</pre>';
+        exit;
+      /*  $text   = '';
+        $result = strip_word_html($text);
+
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        exit;*/
+
+        $atf = 'ATF 143 III 113';
+        $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
+
+        return \App\Praticien\Arret\Entities\Atf::url($atf);
+
+        $atf    = str_replace('ATF ','',$atf);
+        $atf    = str_replace(' ','-',$atf);
+
+        $client = new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]);
+        $goutte = new \Goutte\Client;
+
+        $goutte->setClient($client);
+
+        $url = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2F'.$atf.'%3Afr&lang=fr&zoom=&type=show_document';
+        $fail = 'http://relevancy.bger.ch/php/clir/http/index.php?highlight_docid=atf%3A%2F%2FATF%20134-III-1%3Afr&lang=fr&zoom=&type=show_document';
+
+        $response = $client->get($url);
+        $crawler  = $goutte->request('GET', $fail);
+
+        $content = $crawler->filter('.content .big')->each(function ($node) {
+            return $node->text();
+        });
+
+        echo '<pre>';
+        print_r($content);
+        print_r($response->getBody());
+        echo '</pre>';
+        exit;
+
+        exit;
+    /*    $metas = \App\Praticien\Wordpress\Entities\UserMeta::get();
+
+        echo '<pre>';
+        print_r($metas->pluck('meta_key')->unique());
+        echo '</pre>';
+        exit;*/
+
+    /*
+
+        $user = \App\Praticien\Wordpress\Entities\User::find(15);
         $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
+
         echo '<pre>';
         print_r($converted);
         echo '</pre>';
         exit;
-        $roles[] = array_keys($converted['roles']);
-    }
 
-    echo '<pre>';
-    print_r(array_unique(array_flatten($roles)));
-    echo '</pre>';
-    exit;
+        $users = \App\Praticien\Wordpress\Entities\User::all();
 
-    exit;*/
-    /*
-    $user = \App\Praticien\Wordpress\Entities\User::find(15);
+        $roles = [];
 
-    $results = $user->abos->map(function ($abo, $key) {
-            return $abo->refCategorie;
-        })->unique()->map(function ($categorie, $key) use ($user) {
-            $words = $user->abos->where('refCategorie', $categorie);
+        foreach ($users as $user){
+            $converted = \App\Praticien\Wordpress\Convert\User::convert($user);
+            echo '<pre>';
+            print_r($converted);
+            echo '</pre>';
+            exit;
+            $roles[] = array_keys($converted['roles']);
+        }
 
-            return [
-                'categorie_id' => $categorie,
-                'keywords'     => $words->pluck('keywords')->unique()->toArray(),
-                'isPub'        => !$user->published->where('refCategorie', $categorie)->pluck('ispub')->unique()->isEmpty()
-            ];
-        })->toArray();
+        echo '<pre>';
+        print_r(array_unique(array_flatten($roles)));
+        echo '</pre>';
+        exit;
 
-    echo '<pre>';
-    print_r($results);
-    print_r($user->abos->toArray());
-    print_r($user->published->toArray());
-    echo '</pre>';
-    exit;
+        exit;*/
+        /*
+        $user = \App\Praticien\Wordpress\Entities\User::find(15);
 
-    /*    $abo = \App\Praticien\Abo\Entities\Abo::create([
+        $results = $user->abos->map(function ($abo, $key) {
+                return $abo->refCategorie;
+            })->unique()->map(function ($categorie, $key) use ($user) {
+                $words = $user->abos->where('refCategorie', $categorie);
+
+                return [
+                    'categorie_id' => $categorie,
+                    'keywords'     => $words->pluck('keywords')->unique()->toArray(),
+                    'isPub'        => !$user->published->where('refCategorie', $categorie)->pluck('ispub')->unique()->isEmpty()
+                ];
+            })->toArray();
+
+        echo '<pre>';
+        print_r($results);
+        print_r($user->abos->toArray());
+        print_r($user->published->toArray());
+        echo '</pre>';
+        exit;
+
+        /*    $abo = \App\Praticien\Abo\Entities\Abo::create([
+                'user_id'      => 1,
+                'categorie_id' => 1,
+                'keywords'     => 'words',
+            ]);
+
+
+        $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create([
             'user_id'      => 1,
             'categorie_id' => 1,
             'keywords'     => 'words',
         ]);
 
+        echo '<pre>';
+        print_r($abo);
+        echo '</pre>';
+        exit;*/
+        //
+        // $wordpress = new \App\Praticien\Wordpress\Category();
+      //  $results = $wordpress->getCategories();
+        /* $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
+             //->where('parent','=',0)
+             ->where('count','>',0)
+             ->get();
 
-    $abo = factory(\App\Praticien\Abo\Entities\Abo::class)->create([
-        'user_id'      => 1,
-        'categorie_id' => 1,
-        'keywords'     => 'words',
-    ]);
+         $results = $categories->map(function ($categorie, $key) {
+             $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
 
-    echo '<pre>';
-    print_r($abo);
-    echo '</pre>';
-    exit;*/
-    //
-    // $wordpress = new \App\Praticien\Wordpress\Category();
-  //  $results = $wordpress->getCategories();
-    /* $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
-         //->where('parent','=',0)
-         ->where('count','>',0)
-         ->get();
+             $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
+             $repo->create($convert);
+         });
+         exit;
+           */
 
-     $results = $categories->map(function ($categorie, $key) {
-         $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
+         /*
+        $results = collect($results)->mapToGroups(function ($categorie, $key) {
+            $id = $categorie->parent > 0 ? $categorie->parent : $categorie->term_id;
+            return [$id => $categorie];
+        });
 
-         $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-         $repo->create($convert);
-     });
-     exit;
-       */
+        $results = $wordpress->getTree(0);
 
-     /*
-    $results = collect($results)->mapToGroups(function ($categorie, $key) {
-        $id = $categorie->parent > 0 ? $categorie->parent : $categorie->term_id;
-        return [$id => $categorie];
-    });
+        $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
+            //->where('parent','=',0)
+            ->where('count','>',0)
+            ->get();
 
-    $results = $wordpress->getTree(0);
+        $results = $categories->map(function ($categorie, $key) {
+            $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
 
-    $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
-        //->where('parent','=',0)
-        ->where('count','>',0)
-        ->get();
-
-    $results = $categories->map(function ($categorie, $key) {
-        $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
+            $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
+            $repo->create($convert);
+        });
 
         $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-        $repo->create($convert);
-    });
-
-    $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-    $results = $repo->getTree(0);
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';
-    exit;
-    */
-
-
-/*    $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
-        //->where('parent','=',0)
-        ->where('count','>',0)
-        ->get();
-
-    $results = $categories->map(function ($categorie, $key) {
-        $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
-
-        $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-        $repo->create($convert);
-    });*/
-
-/**/
-    $wordpress = \App::make('App\Praticien\Wordpress\Repo\PostRepo');
-    $results = $wordpress->getAll();
-
-    foreach ($results as $result){
-        $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
+        $results = $repo->getTree(0);
 
         echo '<pre>';
-        print_r($arret);
+        print_r($results);
+        echo '</pre>';
+        exit;
+        */
+
+
+    /*    $categories = \App\Praticien\Wordpress\Entites\Taxonomy::where('taxonomy', 'category')
+            //->where('parent','=',0)
+            ->where('count','>',0)
+            ->get();
+
+        $results = $categories->map(function ($categorie, $key) {
+            $convert = \App\Praticien\Wordpress\Convert\Theme::convert($categorie);
+
+            $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
+            $repo->create($convert);
+        });*/
+
+    /**/
+        $wordpress = \App::make('App\Praticien\Wordpress\Repo\PostRepo');
+        $results = $wordpress->getAll();
+
+        foreach ($results as $result){
+            $arret = \App\Praticien\Wordpress\Convert\Arret::convert($result);
+
+            echo '<pre>';
+            print_r($arret);
+            echo '</pre>';
+            exit;
+
+            $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
+            $repo->create($arret);
+        }
+
+        $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
+        $cat = $repo->find(71);
+
+        echo '<pre>';
+        print_r($cat->parent);
         echo '</pre>';
         exit;
 
+    exit;
+        $txt = $results->first();
+
+        \File::put(base_path('tests/datadump/post.json'),json_encode($txt->toArray()));
+
+        $arret = \App\Praticien\Wordpress\Convert\Arret::convert($results->first());
+
         $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
         $repo->create($arret);
-    }
+        exit;
 
-    $repo = \App::make('App\Praticien\Theme\Repo\ThemeInterface');
-    $cat = $repo->find(71);
+        $results = $results->map(function ($arret) {
 
-    echo '<pre>';
-    print_r($cat->parent);
-    echo '</pre>';
-    exit;
+            return App\Praticien\Wordpress\Convert\Arret::convert($arret);
 
-exit;
-    $txt = $results->first();
+            $categories = $arret->taxonomies->where('taxonomy','category')->map(function ($categorie) {
+                return $categorie->term;
+            });
 
-    \File::put(base_path('tests/datadump/post.json'),json_encode($txt->toArray()));
+            echo '<pre>';
+            print_r($categories);
+            echo '</pre>';
 
-    $arret = \App\Praticien\Wordpress\Convert\Arret::convert($results->first());
+        });
 
-    $repo = \App::make('App\Praticien\Arret\Repo\ArretInterface');
-    $repo->create($arret);
-    exit;
 
-    $results = $results->map(function ($arret) {
+     /*   $results = $results->map(function ($arret) {
+            return App\Praticien\Wordpress\Convert\Arret::convert($arret);
+        });
+     */
 
-        return App\Praticien\Wordpress\Convert\Arret::convert($arret);
+        echo '<pre>';
+        print_r($results);
+        echo '</pre>';
+        exit;
 
-        $categories = $arret->taxonomies->where('taxonomy','category')->map(function ($categorie) {
-            return $categorie->term;
+    });
+
+    Route::get('test_convert', function() {
+        // set location of docx text content file
+        $xmlFile = public_path('Droitfiscalinternational.docx');
+
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($xmlFile);
+        $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
+        $htmlWriter->save(public_path('test.html'));
+        exit;
+    });
+
+
+    Route::get('categorie_convert', function() {
+
+        $table = 'decisions';
+
+        $model = new \App\Praticien\Decision\Entities\Decision();
+        //$decisions = $model->setConnection('sqlite')->setTable($table)->whereMonth('publication_at', '01')->get();
+
+        $results = collect(config('keywords'))->mapWithKeys(function ($keywords, $categorie_id) use ($model,$table) {
+             return [$categorie_id => collect($keywords)->map(function ($keyword) use ($categorie_id,$model,$table){
+
+                 return $model->setConnection('mysql')
+                     ->setTable($table)
+                     //->whereMonth('publication_at',12)
+                     ->search($keyword)
+                     ->groupBy('id')
+                     ->get();
+
+             })->flatten(1)->unique()];
+         })->reject(function ($result, $key) {
+             return $result->isEmpty();
+         })->map(function ($decisions, $categorie_id) {
+
+            return $decisions->map(function ($decision, $key) use ($categorie_id) {
+                $decision->other_categories()->attach($categorie_id);
+            });
+
         });
 
         echo '<pre>';
-        print_r($categories);
+        print_r($results);
         echo '</pre>';
+        exit;
 
-    });
+        \DB::connection('sqlite')->table('archive_2014')
+            ->whereMonth('publication_at', '01')->orderBy('id')
+            ->chunk(10, function ($decisions) {
+                foreach ($decisions as $decision) {
+                    echo $decision->numero.'<br>';
+                   /* $exist = \DB::connection($this->connection)->table($name)->where("id", $decision->id)->get();
 
-
- /*   $results = $results->map(function ($arret) {
-        return App\Praticien\Wordpress\Convert\Arret::convert($arret);
-    });
- */
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';
-    exit;
-
-});
-
-Route::get('test_convert', function() {
-    // set location of docx text content file
-    $xmlFile = public_path('Droitfiscalinternational.docx');
-
-    $phpWord = \PhpOffice\PhpWord\IOFactory::load($xmlFile);
-    $htmlWriter = new \PhpOffice\PhpWord\Writer\HTML($phpWord);
-    $htmlWriter->save(public_path('test.html'));
-    exit;
-});
-
-
-Route::get('categorie_convert', function() {
-
-    $table = 'decisions';
-
-    $model = new \App\Praticien\Decision\Entities\Decision();
-    //$decisions = $model->setConnection('sqlite')->setTable($table)->whereMonth('publication_at', '01')->get();
-
-    $results = collect(config('keywords'))->mapWithKeys(function ($keywords, $categorie_id) use ($model,$table) {
-         return [$categorie_id => collect($keywords)->map(function ($keyword) use ($categorie_id,$model,$table){
-
-             return $model->setConnection('mysql')
-                 ->setTable($table)
-                 //->whereMonth('publication_at',12)
-                 ->search($keyword)
-                 ->groupBy('id')
-                 ->get();
-
-         })->flatten(1)->unique()];
-     })->reject(function ($result, $key) {
-         return $result->isEmpty();
-     })->map(function ($decisions, $categorie_id) {
-
-        return $decisions->map(function ($decision, $key) use ($categorie_id) {
-            $decision->other_categories()->attach($categorie_id);
+                    if($exist->isEmpty()){
+                        \DB::connection($this->connection)->table($name)->insert((array) $decision);
+                    }*/
+                }
         });
 
     });
-
-    echo '<pre>';
-    print_r($results);
-    echo '</pre>';
-    exit;
-
-    \DB::connection('sqlite')->table('archive_2014')
-        ->whereMonth('publication_at', '01')->orderBy('id')
-        ->chunk(10, function ($decisions) {
-            foreach ($decisions as $decision) {
-                echo $decision->numero.'<br>';
-               /* $exist = \DB::connection($this->connection)->table($name)->where("id", $decision->id)->get();
-
-                if($exist->isEmpty()){
-                    \DB::connection($this->connection)->table($name)->insert((array) $decision);
-                }*/
-            }
-    });
-
 });

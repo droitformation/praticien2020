@@ -11,6 +11,10 @@
         <span class="d-block badge badge-default">{{ $arret->getMeta('year') }}</span>
     </div>
 
+    @if($arret->getMeta('dispositions'))
+        <p>{{ $arret->getMeta('dispositions') }}</p>
+    @endif
+
     <p>{!! wpautop($arret->content) !!}</p>
 
     @if($arret->getMeta('comment'))
