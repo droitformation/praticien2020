@@ -53,7 +53,7 @@ class SendEmailAlert implements ShouldQueue
             $i++;
             $when = now()->addSeconds($i);
 
-            //\Mail::to($user['user']->email)->send(new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos']));
+            \Mail::to($user['user']->email)->send(new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos']));
             \Mail::to('droitformation.web@gmail.com')->later($when, new \App\Mail\AlerteDecision($user['user'], $this->publication_at, $user['abos'])); // Testing
 
             $alert->sent($user['user']);// Mark as sent
