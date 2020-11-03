@@ -37,7 +37,7 @@ class NewsletterWorker
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
-        $monday = \Carbon\Carbon::today()->isMonday() ? \Carbon\Carbon::today()->subWeek() : \Carbon\Carbon::today()->firstWeekDay();
+        $monday = \Carbon\Carbon::today()->isMonday() ? \Carbon\Carbon::today()->subWeek() : \Carbon\Carbon::today()->subWeek()->startOfWeek();
         $date   = $this->date ? \Carbon\Carbon::parse($this->date) : $monday;
 
         $dates = weekRange($date->toDateString());
