@@ -19,6 +19,7 @@ class CreateCodesTable extends Migration
             $table->dateTime('valid_at');
             $table->integer('user_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

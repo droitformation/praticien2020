@@ -2,10 +2,11 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Code extends Model {
 
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $fillable = ['code','valid_at','user_id','updated_at'];
     protected $dates    = ['valid_at'];
