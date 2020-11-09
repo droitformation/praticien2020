@@ -261,7 +261,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td valign="top" width="580">
-                                                        <a style="text-decoration: none;" href="{{ url('http://droitpraticien.ch') }}">
+                                                        <a style="text-decoration: none;" href="{{ url('http://droitpourlepraticien.ch') }}">
                                                             <img class="banner" src="{{ secure_asset('images/bigImg.png') }}" alt="Logo" title="Logo" width="580" height="89" border="0">
                                                         </a>
                                                     </td>
@@ -371,7 +371,7 @@
                                                                                 <div class='contentEditableContainer contentTextEditable'>
                                                                                     <div class='contentEditable' style='text-align: center;color:#AAAAAA;'>
                                                                                         <p>
-                                                                                            <strong>Ceci est une alerte email de <a style="color: #0f4060;" href="http:// www.droitpraticien.ch"> www.droitpraticien.ch</a></strong>
+                                                                                            <strong>Ceci est une alerte email de <a style="color: #0f4060;" href="http:// www.droitpourlepraticien.ch"> www.droitpourlepraticien.ch</a></strong>
                                                                                         </p>
                                                                                         <p style="color:#585858;  margin-top: 5px;">
                                                                                             Faculté de droit<br/>

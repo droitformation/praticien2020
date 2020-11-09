@@ -58,7 +58,7 @@
                     <div class="col-lg-4">
                         <p>
                             Vingt-six domaines du droit sont couverts grâce à la collaboration du corps professoral et intermédiaire de la Faculté.
-                            Le site Internet <strong>www.droitpraticien.ch</strong> permet de retrouver en format électronique tous les résumés de jurisprudence des dix dernières années,
+                            Le site Internet <strong>www.droitpourlepraticien.ch</strong> permet de retrouver en format électronique tous les résumés de jurisprudence des dix dernières années,
                             ainsi que les arrêts récents du Tribunal fédéral, classés par thèmes.
                         </p>
                     </div><!-- /.col-lg-4 -->

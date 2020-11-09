@@ -38,7 +38,7 @@ class ArretInsertTest extends TestCase
             'content'      => '<p>The content</p>',
             'status'       => 'publish',
             'slug'         => 'un-arret-en-suisse-(f)',
-            'guid'         => 'http://droitpraticien.ch?page=123',
+            'guid'         => 'http://droitpourlepraticien.ch?page=123',
             'lang'         => 'f',
             'metas'        => collect([
                 ['meta_key' => 'atf', 'meta_value' => 'Lien vers atf'],
@@ -69,7 +69,7 @@ class ArretInsertTest extends TestCase
             'content'      => '<p>The content</p>',
             'status'       => 'publish',
             'slug'         => 'un-arret-en-suisse-(f)',
-            'guid'         => 'http://droitpraticien.ch?page=123',
+            'guid'         => 'http://droitpourlepraticien.ch?page=123',
             'lang'         => 'f',
         ]);
 
@@ -90,7 +90,7 @@ class ArretInsertTest extends TestCase
         $post->post_content = '<p>The content</p>';
         $post->post_status  = 'publish';
         $post->post_name    = 'un-arret-en-suisse-(f)';
-        $post->guid         = 'http://droitpraticien.ch?page=123';
+        $post->guid         = 'http://droitpourlepraticien.ch?page=123';
 
         $metas1 = new \stdClass();
         $metas1->meta_key   = 'atf';

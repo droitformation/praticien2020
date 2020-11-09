@@ -105,7 +105,7 @@
                 <tr bgcolor="0f4060"><td height="20"></td></tr>
                 <tr bgcolor="0f4060">
                     <td align="center" mc:edit="copy1" style="color: #d9e6ef; font-size: 13px; font-weight: normal; font-family: Helvetica, Arial, sans-serif;" class="prefooter-header">
-                        Vous recevez cette newsletter depuis le site <a style="color: #fff;" href="{{ secure_url('/') }}">www.droitpraticien.ch</a>
+                        Vous recevez cette newsletter depuis le site <a style="color: #fff;" href="{{ secure_url('/') }}">www.droitpourlepraticien.ch</a>
                     </td>
                 </tr>
                 <tr bgcolor="0f4060"><td height="5"></td></tr>

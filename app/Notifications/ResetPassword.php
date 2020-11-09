@@ -57,7 +57,7 @@ class ResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('info@droitpraticien.ch', 'Droit pour le praticien')
+            ->from('info@droitpourlepraticien.ch', 'Droit pour le praticien')
             ->subject('Droit pour le praticien | Réinitialisation de mot de passe')
             ->greeting('Bonjour,')
             ->line('Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.
