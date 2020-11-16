@@ -63,7 +63,7 @@
                                         <td>{{ $code->user_id ? 'Utilisé' : 'Non utilisé' }}</td>
                                         <td>
                                             @if(isset($code->user))
-                                               <a href="{{ secure_url('user/'. $code->user->id) }}">{{ $code->user->name }}</a>
+                                               <a href="{{ secure_url('backend/user/'. $code->user->id) }}">{{ $code->user->name }}</a>
                                             @elseif($code->user_id && !isset($code->user))
                                                 <p>Utilisateur supprimé, id: {{ $code->user_id }}</p>
                                             @endif
