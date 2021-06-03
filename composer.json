@@ -11,6 +11,7 @@
         "php": "^7.4",
         "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-dompdf": "^0.8.7",
+        "deployer/deployer": "^6.8",
         "fabpot/goutte": "^4.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
